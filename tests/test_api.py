@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import sys
 
 # Compatibility for Python 3.8 - MUST be before any other imports
