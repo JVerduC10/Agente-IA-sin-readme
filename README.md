@@ -98,6 +98,38 @@ curl -X POST "http://localhost:8000/chat" \
 }
 ```
 
+## Búsqueda de porcentajes
+
+El sistema incluye funcionalidad especializada para consultas sobre porcentajes relacionados con género. Cuando detecta consultas que contienen "%" o "porcentaje" junto con "mujer" o "hombre", automáticamente:
+
+1. Realiza búsquedas web usando DuckDuckGo
+2. Extrae datos de porcentajes de las páginas encontradas
+3. Calcula la mediana de los valores encontrados
+4. Devuelve el resultado con las fuentes
+
+### Ejemplo de uso
+
+```bash
+curl -X POST "http://127.0.0.1:8000/chat" \
+     -H "Content-Type: application/json" \
+     -d '{"prompt":"¿Qué porcentaje de mujeres votó al partido Verde en 2024?"}'
+```
+
+**Respuesta típica**:
+```json
+{
+  "answer": "42.3% (mediana)\n- Resultados electorales 2024 (https://example.com/resultados)\n- Análisis de voto femenino (https://example.com/analisis)\n- Estadísticas oficiales (https://example.com/stats)"
+}
+```
+
+### Características de la búsqueda
+
+- **Sin claves API**: Utiliza DuckDuckGo Search, no requiere claves de pago
+- **Sin límites estrictos**: No hay restricciones de rate limiting externas
+- **Extracción inteligente**: Busca patrones de porcentajes en el texto extraído
+- **Agregación robusta**: Calcula la mediana para obtener valores representativos
+- **Fallback automático**: Si no encuentra datos suficientes, usa el flujo LLM normal
+
 ## Tests
 
 El proyecto incluye una suite completa de tests usando pytest.

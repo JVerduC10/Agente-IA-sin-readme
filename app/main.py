@@ -1,4 +1,5 @@
 import logging
+import re
 import sys
 from functools import lru_cache
 
@@ -13,6 +14,9 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, field_validator
 from pydantic_settings import BaseSettings
+
+from scripts.search_engine import search_web
+from scripts.extract import scrape_pct, aggregate
 
 # Configuración simplificada de logging
 logging.basicConfig(
@@ -158,9 +162,41 @@ def _handle_groq_response(response: requests.Response) -> str:
     },
 )
 async def chat(msg: Msg, settings: Settings = Depends(get_settings)) -> ChatResponse:
-    """Chat endpoint with optimized error handling"""
+    """Chat endpoint with optimized error handling and percentage search"""
     logger.info(f"Processing chat request with prompt length: {len(msg.prompt)}")
 
+    # Detectar si el prompt contiene consultas de porcentajes
+    prompt_lower = msg.prompt.lower()
+    is_percentage_query = ("%" in msg.prompt or "porcentaje" in prompt_lower) and (
+        "mujer" in prompt_lower or "hombre" in prompt_lower
+    )
+
+    if is_percentage_query:
+        try:
+            logger.info("Processing percentage query with web search")
+            hits = await search_web(msg.prompt, k=8)
+            vals = []
+            for h in hits:
+                try:
+                    vals.extend(await scrape_pct(h["url"]))
+                except Exception as e:
+                    logger.warning(f"Failed to scrape {h['url']}: {str(e)}")
+                    continue
+
+            pct = aggregate(vals)
+            if pct is None:
+                raise HTTPException(404, "Datos insuficientes")
+
+            fuentes = "\n".join(f"- {h['title']} ({h['url']})" for h in hits[:3])
+            return ChatResponse(answer=f"{pct:.1f}% (mediana)\n{fuentes}")
+
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.error(f"Error in percentage search: {str(e)}")
+            # Fallback to normal LLM processing
+
+    # Flujo LLM habitual
     try:
         response = requests.post(
             settings.GROQ_BASE_URL,
