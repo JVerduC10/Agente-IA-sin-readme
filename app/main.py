@@ -1,8 +1,14 @@
 from __future__ import annotations
 
 import logging
+import sys
 from functools import lru_cache
-from typing import Dict, List
+
+# Compatibility for Python 3.8
+if sys.version_info < (3, 9):
+    from typing_extensions import Dict, List
+else:
+    from typing import Dict, List
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException
