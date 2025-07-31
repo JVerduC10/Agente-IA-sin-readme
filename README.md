@@ -98,6 +98,40 @@ curl -X POST "http://localhost:8000/chat" \
 }
 ```
 
+## Interfaz web
+
+El proyecto incluye una interfaz web de chat simple y funcional para interactuar con el agente.
+
+### Uso de la interfaz web
+
+1. **Ejecutar el servidor**:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+
+2. **Abrir la interfaz**:
+   - Navega a la carpeta `static/` del proyecto
+   - Abre el archivo `index.html` en tu navegador
+   - O accede directamente: `file:///ruta/al/proyecto/static/index.html`
+
+3. **Ejemplo de uso**:
+   - Escribe tu pregunta en el campo de texto
+   - Presiona "Enviar" o Enter
+   - El agente responderá en tiempo real
+
+### Características de la interfaz
+
+- **Diseño limpio**: Interfaz minimalista sin frameworks externos
+- **Chat en tiempo real**: Comunicación directa con la API
+- **Responsive**: Se adapta a diferentes tamaños de pantalla
+- **Manejo de errores**: Muestra mensajes informativos si hay problemas de conexión
+
+### Archivos de la interfaz
+
+- `static/index.html`: Estructura HTML del chat
+- `static/styles.css`: Estilos CSS personalizados
+- `static/chat.js`: Lógica JavaScript para la comunicación con la API
+
 ## Búsqueda de porcentajes
 
 El sistema incluye funcionalidad especializada para consultas sobre porcentajes relacionados con género. Cuando detecta consultas que contienen "%" o "porcentaje" junto con "mujer" o "hombre", automáticamente:

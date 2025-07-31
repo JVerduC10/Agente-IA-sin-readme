@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 class Settings(BaseSettings):
     GROQ_API_KEY: str = "test_key"
     MAX_PROMPT_LEN: int = 1000
-    ALLOWED_ORIGINS: str = "http://localhost"
+    ALLOWED_ORIGINS: str = "http://localhost,file://"
     GROQ_BASE_URL: str = "https://api.groq.com/openai/v1/chat/completions"
     GROQ_MODEL: str = "llama3-8b-8192"
     REQUEST_TIMEOUT: int = 30
