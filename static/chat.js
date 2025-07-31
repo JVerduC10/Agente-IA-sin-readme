@@ -3,20 +3,7 @@ const form = document.getElementById("form");
 const promptInput = document.getElementById("prompt");
 const messagesDiv = document.getElementById("messages");
 
-// Generar session_id único para esta sesión
-const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-// Palabras clave que indican búsqueda web
-const webSearchKeywords = [
-  'actualidad', 'reciente', 'últimas noticias', 'hoy', '2024', '2025',
-  'actual', 'ahora', 'últimamente', 'recientemente', 'novedades',
-  'qué pasó', 'qué está pasando', 'situación actual', 'estado actual'
-];
-
-function needsWebSearch(text) {
-  const textLower = text.toLowerCase();
-  return webSearchKeywords.some(keyword => textLower.includes(keyword));
-}
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -26,13 +13,6 @@ form.addEventListener("submit", async (e) => {
   append("user", text);
   promptInput.value = "";
   
-  // Mostrar indicador de búsqueda si es necesario
-  const isWebSearch = needsWebSearch(text);
-  if (isWebSearch) {
-    append("system", "🔍 Buscando información reciente...");
-  }
-  
-  // Mostrar indicador de carga
   const loadingId = append("bot", "⏳ Procesando...");
   
   try {
@@ -40,8 +20,7 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        prompt: text,
-        session_id: sessionId
+        prompt: text
       }),
     });
     
@@ -94,7 +73,6 @@ promptInput.addEventListener("keypress", (e) => {
   }
 });
 
-// Mensaje de bienvenida
 window.addEventListener('load', () => {
-  append("system", "¡Hola! Soy tu asistente de búsqueda de información y análisis. Puedo ayudarte con consultas generales y buscar información reciente. ¿En qué puedo ayudarte?");
+  append("system", "¡Hola! Soy tu asistente de chat. ¿En qué puedo ayudarte?");
 });

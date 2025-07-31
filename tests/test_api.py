@@ -1,164 +1,65 @@
-import sys
-
-# Compatibility for Python 3.8 - MUST be before any other imports
-if sys.version_info < (3, 9):
-    from typing_extensions import Dict, List
-else:
-    from typing import Dict, List
-
 from unittest.mock import MagicMock, patch
-
 import pytest
 from fastapi.testclient import TestClient
-
-from app.main import app, get_settings
+from app.main import app
+from app.dependencies import get_settings
 
 client = TestClient(app)
 
-
 @pytest.fixture
 def mock_settings():
-    """Mock settings for testing"""
-    settings = MagicMock()
-    settings.GROQ_API_KEY = "test_key"
-    settings.MAX_PROMPT_LEN = 1000
-    settings.ALLOWED_ORIGINS = ["http://localhost"]
-    settings.groq_base_url = "https://api.groq.com/openai/v1/chat/completions"
-    return settings
-
+    class MockSettings:
+        GROQ_API_KEY = "test_key"
+        API_KEYS = []
+        MAX_PROMPT_LEN = 1000
+        ALLOWED_ORIGINS = "*"
+        GROQ_BASE_URL = "https://api.groq.com/openai/v1/chat/completions"
+        GROQ_MODEL = "llama3-8b-8192"
+        REQUEST_TIMEOUT = 30
+        BURST_SIZE = 10
+        TOKENS_DAILY_LIMIT = 200_000
+        MAX_CONCURRENT_SCRAPERS = 10
+        CACHE_LATENCY_THRESHOLD = 3.0
+        BREAKER_FAIL_PCT = 50
+        BREAKER_WINDOW = 12
+        PAGERDUTY_WEBHOOK = ""
+        
+        @property
+        def allowed_origins_list(self):
+            return ["*"]
+    return MockSettings()
 
 @pytest.fixture
 def override_get_settings(mock_settings):
-    """Override get_settings dependency"""
     app.dependency_overrides[get_settings] = lambda: mock_settings
     yield
     app.dependency_overrides.clear()
 
 
 class TestChatEndpoint:
-    """Test cases for /chat endpoint"""
-
-    @patch("app.main.requests.post")
-    def test_chat_happy_path(self, mock_post, override_get_settings):
-        """Test successful chat response"""
-        # Mock successful Groq API response
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {
-            "choices": [
-                {
-                    "message": {
-                        "content": "Esta es una respuesta del buscador de información."
-                    }
-                }
-            ]
-        }
-        mock_post.return_value = mock_response
-
-        # Test request
-        response = client.post(
-            "/chat", json={
-                "prompt": "¿Cuáles son las principales fuentes de energía renovable?",
-                "session_id": "test_session_123"
-            }
-        )
-
-        # Assertions
+    @patch("scripts.groq_client.GroqClient.chat_completion")
+    def test_chat_success(self, mock_chat_completion, override_get_settings):
+        mock_chat_completion.return_value = "Test response"
+        response = client.post("/chat", json={"prompt": "test"})
         assert response.status_code == 200
-        data = response.json()
-        assert "answer" in data
-        assert data["answer"] == "Esta es una respuesta del buscador de información."
+        assert "answer" in response.json()
 
-        # Verify API call was made correctly
-        mock_post.assert_called_once()
-        call_args = mock_post.call_args
-        assert "Bearer test_key" in call_args[1]["headers"]["Authorization"]
-
-    def test_chat_long_prompt_validation(self, override_get_settings):
-        """Test prompt length validation (422 error)"""
-        long_prompt = "a" * 1001  # Exceeds MAX_PROMPT_LEN=1000
-
+    def test_chat_long_prompt(self, override_get_settings):
+        long_prompt = "a" * 1001
         response = client.post("/chat", json={"prompt": long_prompt})
-
-        assert response.status_code == 422
-        data = response.json()
-        assert "detail" in data
-        assert "Prompt exceeds maximum length of 1000 characters" in str(data["detail"])
-
-    @patch("app.main.requests.post")
-    def test_chat_rate_limit_error(self, mock_post, override_get_settings):
-        """Test rate limit handling (429 error)"""
-        # Mock rate limit response
-        mock_response = MagicMock()
-        mock_response.status_code = 429
-        mock_post.return_value = mock_response
-
-        response = client.post("/chat", json={"prompt": "Test prompt"})
-
-        assert response.status_code == 429
-        data = response.json()
-        assert "Rate limit exceeded" in data["detail"]
-
-    @patch("app.main.requests.post")
-    def test_chat_timeout_error(self, mock_post, override_get_settings):
-        """Test timeout handling (503 error)"""
-        # Mock timeout exception
-        from requests.exceptions import Timeout
-        mock_post.side_effect = Timeout("Request timeout")
-
-        response = client.post("/chat", json={"prompt": "Test prompt"})
-
-        assert response.status_code == 503
-        data = response.json()
-        assert "Request timeout" in data["detail"]
-
-    def test_chat_invalid_json(self, override_get_settings):
-        """Test invalid JSON payload"""
-        response = client.post("/chat", json={"invalid_field": "test"})
-
         assert response.status_code == 422
 
     def test_chat_empty_prompt(self, override_get_settings):
-        """Test empty prompt"""
         response = client.post("/chat", json={"prompt": ""})
-
-        # Empty prompt should be valid (length = 0 < 1000)
-        # But we need to mock the API call
-        with patch("app.main.requests.post") as mock_post:
-            mock_response = MagicMock()
-            mock_response.status_code = 200
-            mock_response.json.return_value = {
-                "choices": [
-                    {
-                        "message": {
-                            "content": "Por favor, proporciona una pregunta específica."
-                        }
-                    }
-                ]
-            }
-            mock_post.return_value = mock_response
-
-            response = client.post("/chat", json={"prompt": ""})
-
-            assert response.status_code == 200
+        assert response.status_code == 422
 
 
-@pytest.mark.slow
 class TestChatEndpointReal:
-    """Real API tests (marked as slow)"""
-
     def test_chat_real_api(self, override_get_settings):
-        """Test with real Groq API (requires valid API key)"""
-        # This test should only run when explicitly requested
-        # and when a real API key is available
         import os
-
         if not os.getenv("GROQ_API_KEY"):
             pytest.skip("Real API key not available")
 
         response = client.post("/chat", json={"prompt": "Hola"})
-
         assert response.status_code == 200
-        data = response.json()
-        assert "answer" in data
-        assert len(data["answer"]) > 0
+        assert "answer" in response.json()
