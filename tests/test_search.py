@@ -1,8 +1,10 @@
-import pytest
 import asyncio
-from app.main import app
-from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
+
+import pytest
+from fastapi.testclient import TestClient
+
+from app.main import app
 
 
 @patch("app.main.search_web", new_callable=AsyncMock)

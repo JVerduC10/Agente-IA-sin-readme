@@ -15,8 +15,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, field_validator
 from pydantic_settings import BaseSettings
 
+from scripts.extract import aggregate, scrape_pct
 from scripts.search_engine import search_web
-from scripts.extract import scrape_pct, aggregate
 
 # Configuración simplificada de logging
 logging.basicConfig(

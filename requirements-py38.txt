@@ -1,10 +1,13 @@
 # Dependencias principales para Python 3.8
+aiohttp>=3.9.5
+ddgs>=4.0.9
 fastapi==0.100.1
 httpx==0.25.2
-uvicorn[standard]==0.23.2
 pydantic==2.4.2
 pydantic-settings==2.0.3
 requests==2.31.0
+trafilatura>=1.6.1
+uvicorn[standard]==0.23.2
 
 # Dependencias de testing
 pytest==7.4.3

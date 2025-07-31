@@ -1,6 +1,7 @@
-import aiohttp
 import re
 import statistics
+
+import aiohttp
 import trafilatura
 
 
