@@ -5,9 +5,9 @@ from unittest.mock import MagicMock, patch
 
 # Compatibility for Python 3.8
 if sys.version_info < (3, 9):
-    import typing_extensions
-
-    sys.modules["typing"] = typing_extensions
+    from typing_extensions import Dict, List
+else:
+    from typing import Dict, List
 
 import pytest
 from fastapi.testclient import TestClient
