@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from app.dependencies import get_settings
 from app.routers import chat, health
@@ -13,6 +15,9 @@ app = FastAPI(
 app.include_router(health.router)
 app.include_router(chat.router)
 
+# Servir archivos estáticos
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 settings = get_settings()
 app.add_middleware(
     CORSMiddleware,
@@ -24,7 +29,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Simple Chat API is running", "version": "1.0.0"}
+    return FileResponse("static/index.html")
 
 if __name__ == "__main__":
     import uvicorn
