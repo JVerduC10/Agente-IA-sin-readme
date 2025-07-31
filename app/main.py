@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from functools import lru_cache
-from typing import List
+from typing import Dict, List
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException
@@ -189,7 +189,7 @@ async def chat(msg: Msg, settings: Settings = Depends(get_settings)) -> ChatResp
 
 # Endpoint raíz optimizado
 @app.get("/")
-async def root() -> dict[str, str]:
+async def root() -> Dict[str, str]:
     """Root endpoint"""
     return {"message": "IA Agent - Restaurant Assistant API v2.0"}
 
