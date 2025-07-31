@@ -43,11 +43,10 @@ class TestRateLimitHandling:
 
     @patch("app.main.requests.post")
     def test_rate_limit_error_returns_503(self, mock_post, override_get_settings):
-        """Test that rate limit error returns 503 Service Unavailable"""
+        """Test that rate limit error returns 429 Rate Limit Exceeded"""
         # Mock rate limit response from Groq API
         mock_response = MagicMock()
         mock_response.status_code = 429
-        mock_response.text = "Rate limit exceeded"
         mock_post.return_value = mock_response
 
         # Make request to /chat endpoint
@@ -56,11 +55,10 @@ class TestRateLimitHandling:
         )
 
         # Assertions
-        assert response.status_code == 503
+        assert response.status_code == 429
         data = response.json()
         assert "detail" in data
         assert "Rate limit exceeded" in data["detail"]
-        assert "Please try again later" in data["detail"]
 
     @patch("app.main.requests.post")
     def test_timeout_error_returns_503(self, mock_post, override_get_settings):
@@ -96,14 +94,13 @@ class TestRateLimitHandling:
 
     @patch("app.main.requests.post")
     def test_api_error_codes_return_503(self, mock_post, override_get_settings):
-        """Test that various API error codes return 503"""
+        """Test that various API error codes return 502"""
         error_codes = [500, 502, 503, 504]
 
         for error_code in error_codes:
             # Mock API error response
             mock_response = MagicMock()
             mock_response.status_code = error_code
-            mock_response.text = f"API Error {error_code}"
             mock_post.return_value = mock_response
 
             # Make request to /chat endpoint
@@ -112,10 +109,10 @@ class TestRateLimitHandling:
             )
 
             # Assertions
-            assert response.status_code == 503
+            assert response.status_code == 502
             data = response.json()
             assert "detail" in data
-            assert f"External API error: {error_code}" in data["detail"]
+            assert "AI service error" in data["detail"]
 
     @patch("app.main.requests.post")
     def test_unexpected_exception_returns_500(self, mock_post, override_get_settings):
@@ -141,7 +138,6 @@ class TestRateLimitHandling:
         def mock_requests_post(*args, **kwargs):
             mock_response = MagicMock()
             mock_response.status_code = 429
-            mock_response.text = "Rate limit exceeded via monkeypatch"
             return mock_response
 
         # Use monkeypatch to replace requests.post
@@ -151,6 +147,6 @@ class TestRateLimitHandling:
         response = client.post("/chat", json={"prompt": "Test prompt with monkeypatch"})
 
         # Assertions
-        assert response.status_code == 503
+        assert response.status_code == 429
         data = response.json()
         assert "Rate limit exceeded" in data["detail"]

@@ -2,6 +2,8 @@ import logging
 import re
 import sys
 from functools import lru_cache
+from datetime import datetime, timedelta
+from typing import Optional
 
 # Compatibility for Python 3.8
 if sys.version_info < (3, 9):
@@ -53,6 +55,7 @@ def get_settings() -> Settings:
 # Modelos Pydantic optimizados
 class Msg(BaseModel):
     prompt: str
+    session_id: Optional[str] = None
 
     @field_validator("prompt")
     @classmethod
@@ -77,11 +80,24 @@ class ErrorResponse(BaseModel):
     detail: str
 
 
+# Memoria de conversación simple (en producción usar Redis o base de datos)
+conversation_memory: Dict[str, List[Dict[str, str]]] = {}
+MEMORY_CLEANUP_INTERVAL = timedelta(hours=2)
+last_cleanup = datetime.now()
+
 # Constantes
 SYSTEM_PROMPT = (
     "Eres un asistente de búsqueda de información y análisis de datos. "
-    "Responde en español de forma concisa y cita siempre la fuente."
+    "Responde en español de forma concisa y cita siempre la fuente. "
+    "Si tienes información de búsquedas web recientes, úsala para dar respuestas más actualizadas."
 )
+
+# Palabras clave que indican necesidad de búsqueda web
+WEB_SEARCH_KEYWORDS = [
+    "actualidad", "reciente", "últimas noticias", "hoy", "2024", "2025", 
+    "actual", "ahora", "últimamente", "recientemente", "novedades",
+    "qué pasó", "qué está pasando", "situación actual", "estado actual"
+]
 
 # Crear aplicación FastAPI
 app = FastAPI(
@@ -127,29 +143,120 @@ def _create_headers(api_key: str) -> dict:
 
 
 def _handle_groq_response(response: requests.Response) -> str:
-    """Maneja la respuesta de la API de Groq."""
-    if response.status_code == 200:
-        result = response.json()
-        return result["choices"][0]["message"]["content"]
+    """Handle Groq API response and extract answer."""
+    # Check for HTTP errors first
+    if response.status_code == 401:
+        logger.error("Invalid API key")
+        raise HTTPException(status_code=401, detail="Invalid API key")
+    elif response.status_code == 429:
+        logger.error("Rate limit exceeded")
+        raise HTTPException(status_code=429, detail="Rate limit exceeded")
+    elif response.status_code >= 400:
+        logger.error(f"HTTP error from Groq API: {response.status_code}")
+        raise HTTPException(status_code=502, detail="AI service error")
+    
+    try:
+        data = response.json()
+        
+        if "choices" not in data or not data["choices"]:
+            logger.error("Invalid response structure from Groq API")
+            raise HTTPException(
+                status_code=502, detail="Invalid response from AI service"
+            )
+        
+        choice = data["choices"][0]
+        if "message" not in choice or "content" not in choice["message"]:
+            logger.error("Missing content in Groq API response")
+            raise HTTPException(
+                status_code=502, detail="Invalid response structure from AI service"
+            )
+        
+        return choice["message"]["content"].strip()
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error processing Groq response: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error processing AI response")
 
-    # Manejo específico de códigos de error
-    if response.status_code == 429:
-        logger.warning("Rate limit exceeded")
-        raise HTTPException(
-            status_code=503, detail="Rate limit exceeded. Please try again later."
-        )
 
-    if response.status_code == 408:
-        logger.warning("Request timeout")
-        raise HTTPException(
-            status_code=503, detail="Request timeout. Please try again."
-        )
+def _cleanup_old_conversations():
+    """Limpia conversaciones antiguas de la memoria."""
+    global last_cleanup, conversation_memory
+    now = datetime.now()
+    if now - last_cleanup > MEMORY_CLEANUP_INTERVAL:
+        # Mantener solo las últimas 100 conversaciones para evitar uso excesivo de memoria
+        if len(conversation_memory) > 100:
+            # Mantener solo las 50 más recientes
+            sorted_sessions = sorted(conversation_memory.items(), 
+                                   key=lambda x: len(x[1]), reverse=True)
+            conversation_memory = dict(sorted_sessions[:50])
+        last_cleanup = now
 
-    # Para otros códigos de error, mantener el mensaje genérico
-    logger.error(f"Groq API error: {response.status_code} - {response.text}")
-    raise HTTPException(
-        status_code=503, detail=f"External API error: {response.status_code}"
-    )
+
+def _get_conversation_context(session_id: str) -> str:
+    """Obtiene el contexto de la conversación para una sesión."""
+    if not session_id or session_id not in conversation_memory:
+        return ""
+    
+    messages = conversation_memory[session_id]
+    if not messages:
+        return ""
+    
+    # Incluir solo los últimos 4 intercambios para no sobrecargar el contexto
+    recent_messages = messages[-8:]  # 4 preguntas + 4 respuestas
+    context_parts = []
+    
+    for msg in recent_messages:
+        if msg["role"] == "user":
+            context_parts.append(f"Usuario: {msg['content']}")
+        else:
+            context_parts.append(f"Asistente: {msg['content']}")
+    
+    return "\n".join(context_parts)
+
+
+def _save_to_conversation(session_id: str, role: str, content: str):
+    """Guarda un mensaje en la memoria de conversación."""
+    if not session_id:
+        return
+    
+    if session_id not in conversation_memory:
+        conversation_memory[session_id] = []
+    
+    conversation_memory[session_id].append({
+        "role": role,
+        "content": content,
+        "timestamp": datetime.now().isoformat()
+    })
+    
+    # Mantener solo los últimos 20 mensajes por sesión
+    if len(conversation_memory[session_id]) > 20:
+        conversation_memory[session_id] = conversation_memory[session_id][-20:]
+
+
+def _needs_web_search(prompt: str) -> bool:
+    """Determina si una consulta necesita búsqueda web."""
+    prompt_lower = prompt.lower()
+    return any(keyword in prompt_lower for keyword in WEB_SEARCH_KEYWORDS)
+
+
+def _perform_web_search(query: str) -> str:
+    """Realiza búsqueda web y retorna información relevante."""
+    try:
+        hits = search_web(query, num_results=5)
+        if not hits:
+            return ""
+        
+        # Formatear resultados de búsqueda
+        search_results = []
+        for hit in hits[:3]:  # Solo los 3 primeros resultados
+            search_results.append(f"- {hit['title']}: {hit.get('snippet', 'Sin descripción')} ({hit['url']})")
+        
+        return "\n".join(search_results)
+    except Exception as e:
+        logger.error(f"Error in web search: {str(e)}")
+        return ""
 
 
 # Endpoint principal de chat optimizado
@@ -162,9 +269,19 @@ def _handle_groq_response(response: requests.Response) -> str:
     },
 )
 async def chat(msg: Msg, settings: Settings = Depends(get_settings)) -> ChatResponse:
-    """Chat endpoint with optimized error handling and percentage search"""
-    logger.info(f"Processing chat request with prompt length: {len(msg.prompt)}")
-
+    """Endpoint principal para chat con memoria y búsqueda web mejorada."""
+    logger.info(f"Chat request received: {msg.prompt[:50]}...")
+    
+    # Limpiar conversaciones antiguas periódicamente
+    _cleanup_old_conversations()
+    
+    # Guardar mensaje del usuario en memoria
+    if msg.session_id:
+        _save_to_conversation(msg.session_id, "user", msg.prompt)
+    
+    # Obtener contexto de conversación
+    conversation_context = _get_conversation_context(msg.session_id) if msg.session_id else ""
+    
     # Detectar si el prompt contiene consultas de porcentajes
     prompt_lower = msg.prompt.lower()
     is_percentage_query = ("%" in msg.prompt or "porcentaje" in prompt_lower) and (
@@ -188,24 +305,49 @@ async def chat(msg: Msg, settings: Settings = Depends(get_settings)) -> ChatResp
                 raise HTTPException(404, "Datos insuficientes")
 
             fuentes = "\n".join(f"- {h['title']} ({h['url']})" for h in hits[:3])
-            return ChatResponse(answer=f"{pct:.1f}% (mediana)\n{fuentes}")
+            answer = f"{pct:.1f}% (mediana)\n{fuentes}"
+            
+            # Guardar respuesta en memoria
+            if msg.session_id:
+                _save_to_conversation(msg.session_id, "assistant", answer)
+            
+            return ChatResponse(answer=answer)
 
         except HTTPException:
             raise
         except Exception as e:
             logger.error(f"Error in percentage search: {str(e)}")
             # Fallback to normal LLM processing
+    
+    # Verificar si necesita búsqueda web para información reciente
+    web_search_results = ""
+    if _needs_web_search(msg.prompt):
+        logger.info("Web search needed for recent information")
+        web_search_results = _perform_web_search(msg.prompt)
+    
+    # Construir prompt con contexto y búsqueda web si aplica
+    enhanced_prompt = msg.prompt
+    if conversation_context:
+        enhanced_prompt = f"Contexto de conversación anterior:\n{conversation_context}\n\nPregunta actual: {msg.prompt}"
+    
+    if web_search_results:
+        enhanced_prompt += f"\n\nInformación web reciente encontrada:\n{web_search_results}\n\nUsa esta información para dar una respuesta actualizada."
 
     # Flujo LLM habitual
     try:
         response = requests.post(
             settings.GROQ_BASE_URL,
             headers=_create_headers(settings.GROQ_API_KEY),
-            json=_create_groq_payload(msg.prompt, settings),
+            json=_create_groq_payload(enhanced_prompt, settings),
             timeout=settings.REQUEST_TIMEOUT,
         )
 
         answer = _handle_groq_response(response)
+        
+        # Guardar respuesta en memoria
+        if msg.session_id:
+            _save_to_conversation(msg.session_id, "assistant", answer)
+        
         logger.info("Chat request processed successfully")
         return ChatResponse(answer=answer)
 

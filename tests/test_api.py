@@ -57,7 +57,10 @@ class TestChatEndpoint:
 
         # Test request
         response = client.post(
-            "/chat", json={"prompt": "¿Cuáles son las principales fuentes de energía renovable?"}
+            "/chat", json={
+                "prompt": "¿Cuáles son las principales fuentes de energía renovable?",
+                "session_id": "test_session_123"
+            }
         )
 
         # Assertions
@@ -84,27 +87,24 @@ class TestChatEndpoint:
 
     @patch("app.main.requests.post")
     def test_chat_rate_limit_error(self, mock_post, override_get_settings):
-        """Test rate limit handling (503 error)"""
+        """Test rate limit handling (429 error)"""
         # Mock rate limit response
         mock_response = MagicMock()
         mock_response.status_code = 429
-        mock_response.text = "Rate limit exceeded"
         mock_post.return_value = mock_response
 
         response = client.post("/chat", json={"prompt": "Test prompt"})
 
-        assert response.status_code == 503
+        assert response.status_code == 429
         data = response.json()
         assert "Rate limit exceeded" in data["detail"]
 
     @patch("app.main.requests.post")
     def test_chat_timeout_error(self, mock_post, override_get_settings):
         """Test timeout handling (503 error)"""
-        # Mock timeout response
-        mock_response = MagicMock()
-        mock_response.status_code = 408
-        mock_response.text = "Request timeout"
-        mock_post.return_value = mock_response
+        # Mock timeout exception
+        from requests.exceptions import Timeout
+        mock_post.side_effect = Timeout("Request timeout")
 
         response = client.post("/chat", json={"prompt": "Test prompt"})
 
