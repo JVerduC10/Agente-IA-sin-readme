@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import sys
-from unittest.mock import MagicMock, patch
 
-# Compatibility for Python 3.8
+# Compatibility for Python 3.8 - MUST be before any other imports
 if sys.version_info < (3, 9):
     from typing_extensions import Dict, List
 else:
     from typing import Dict, List
+
+from unittest.mock import MagicMock, patch
 
 import pytest
 import requests
