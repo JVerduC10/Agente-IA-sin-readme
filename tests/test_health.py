@@ -5,7 +5,8 @@ import sys
 # Compatibility for Python 3.8
 if sys.version_info < (3, 9):
     import typing_extensions
-    sys.modules['typing'] = typing_extensions
+
+    sys.modules["typing"] = typing_extensions
 
 from fastapi.testclient import TestClient
 
