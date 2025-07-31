@@ -1,4 +1,4 @@
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 
 
 async def search_web(query: str, k: int = 8) -> list[dict]:
