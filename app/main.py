@@ -4,7 +4,8 @@ from typing import List
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, BaseSettings, validator
+from pydantic import BaseModel, field_validator
+from pydantic_settings import BaseSettings
 import requests
 import os
 from functools import lru_cache
@@ -37,12 +38,13 @@ logger = logging.getLogger(__name__)
 
 # Configuración con Pydantic BaseSettings
 class Settings(BaseSettings):
-    groq_api_key: str
-    max_prompt_len: int = 1000
-    allowed_origins: List[str] = ["http://localhost"]
+    GROQ_API_KEY: str
+    MAX_PROMPT_LEN: int = 1000
+    ALLOWED_ORIGINS: List[str] = ["http://localhost"]
     groq_base_url: str = "https://api.groq.com/openai/v1/chat/completions"
     
-    @validator('allowed_origins', pre=True)
+    @field_validator('ALLOWED_ORIGINS', mode='before')
+    @classmethod
     def parse_allowed_origins(cls, v):
         if isinstance(v, str):
             return [origin.strip() for origin in v.split(',')]
@@ -61,11 +63,12 @@ def get_settings():
 class Msg(BaseModel):
     prompt: str
     
-    @validator('prompt')
-    def validate_prompt_length(cls, v, values, config, field):
+    @field_validator('prompt')
+    @classmethod
+    def validate_prompt_length(cls, v):
         settings = get_settings()
-        if len(v) > settings.max_prompt_len:
-            raise ValueError(f'Prompt exceeds maximum length of {settings.max_prompt_len} characters')
+        if len(v) > settings.MAX_PROMPT_LEN:
+            raise ValueError(f'Prompt exceeds maximum length of {settings.MAX_PROMPT_LEN} characters')
         return v
 
 class ChatResponse(BaseModel):
@@ -90,12 +93,12 @@ async def startup_event():
     settings = get_settings()
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.allowed_origins,
+        allow_origins=settings.ALLOWED_ORIGINS,
         allow_credentials=True,
         allow_methods=["GET", "POST"],
         allow_headers=["*"],
     )
-    logger.info(f"Application started with CORS origins: {settings.allowed_origins}")
+    logger.info(f"Application started with CORS origins: {settings.ALLOWED_ORIGINS}")
 
 # System prompt para el asistente de restaurantes
 SYSTEM_PROMPT = (
@@ -120,7 +123,7 @@ async def chat(msg: Msg, settings: Settings = Depends(get_settings)):
         logger.info(f"Processing chat request with prompt length: {len(msg.prompt)}")
         
         headers = {
-            "Authorization": f"Bearer {settings.groq_api_key}",
+            "Authorization": f"Bearer {settings.GROQ_API_KEY}",
             "Content-Type": "application/json"
         }
         
