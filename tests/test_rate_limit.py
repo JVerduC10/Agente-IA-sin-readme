@@ -11,10 +11,12 @@ client = TestClient(app)
 def mock_settings():
     """Mock settings for testing"""
     settings = MagicMock()
-    settings.groq_api_key = "test_key"
-    settings.max_prompt_len = 1000
-    settings.allowed_origins = ["http://localhost"]
-    settings.groq_base_url = "https://api.groq.com/openai/v1/chat/completions"
+    settings.GROQ_API_KEY = "test_key"
+    settings.MAX_PROMPT_LEN = 1000
+    settings.ALLOWED_ORIGINS = ["http://localhost"]
+    settings.GROQ_BASE_URL = "https://api.groq.com/openai/v1/chat/completions"
+    settings.GROQ_MODEL = "llama3-8b-8192"
+    settings.REQUEST_TIMEOUT = 30
     return settings
 
 @pytest.fixture

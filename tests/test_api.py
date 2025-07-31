@@ -12,9 +12,9 @@ client = TestClient(app)
 def mock_settings():
     """Mock settings for testing"""
     settings = MagicMock()
-    settings.groq_api_key = "test_key"
-    settings.max_prompt_len = 1000
-    settings.allowed_origins = ["http://localhost"]
+    settings.GROQ_API_KEY = "test_key"
+    settings.MAX_PROMPT_LEN = 1000
+    settings.ALLOWED_ORIGINS = ["http://localhost"]
     settings.groq_base_url = "https://api.groq.com/openai/v1/chat/completions"
     return settings
 
@@ -72,7 +72,7 @@ class TestChatEndpoint:
         assert response.status_code == 422
         data = response.json()
         assert "detail" in data
-        assert "Prompt exceeds maximum length" in str(data["detail"])
+        assert "Prompt exceeds maximum length of 1000 characters" in str(data["detail"])
     
     @patch('app.main.requests.post')
     def test_chat_rate_limit_error(self, mock_post, override_get_settings):
