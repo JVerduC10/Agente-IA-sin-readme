@@ -2,10 +2,10 @@
 fastapi==0.104.1
 httpx>=0.27.0,<0.28.0
 uvicorn[standard]==0.24.0
-pydantic==2.5.0
-pydantic-settings==2.1.0
+pydantic>=2.0.0,<3.0.0
+pydantic-settings>=2.0.0,<3.0.0
 requests==2.31.0
 
 # Dependencias de testing
-pytest==7.4.3
-pytest-asyncio==0.21.1
+pytest>=7.0.0,<8.0.0
+pytest-asyncio>=0.21.0,<1.0.0
