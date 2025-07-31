@@ -1,8 +1,6 @@
-import json
 from unittest.mock import MagicMock, patch
 
 import pytest
-import pytest_asyncio
 from fastapi.testclient import TestClient
 
 from app.main import app, get_settings
