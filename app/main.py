@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 class Settings(BaseSettings):
     GROQ_API_KEY: str = "test_key"
     MAX_PROMPT_LEN: int = 1000
-    ALLOWED_ORIGINS: str = "http://localhost,file://"
+    ALLOWED_ORIGINS: str = "*"
     GROQ_BASE_URL: str = "https://api.groq.com/openai/v1/chat/completions"
     GROQ_MODEL: str = "llama3-8b-8192"
     REQUEST_TIMEOUT: int = 30
@@ -79,23 +79,23 @@ class ErrorResponse(BaseModel):
 
 # Constantes
 SYSTEM_PROMPT = (
-    "Eres un asistente experto para el sector restaurante. "
+    "Eres un asistente de búsqueda de información y análisis de datos. "
     "Responde en español de forma concisa y cita siempre la fuente."
 )
 
 # Crear aplicación FastAPI
 app = FastAPI(
-    title="IA Agent - Restaurant Assistant",
+    title="IA Agent - Information Search & Analytics",
     version="2.0.0",
-    description="Robust FastAPI restaurant assistant with Groq integration",
+    description="Robust FastAPI information search and analytics assistant with Groq integration",
 )
 
 # Configurar CORS al inicializar
 settings = get_settings()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins_list,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
@@ -231,7 +231,7 @@ async def chat(msg: Msg, settings: Settings = Depends(get_settings)) -> ChatResp
 @app.get("/")
 async def root() -> Dict[str, str]:
     """Root endpoint"""
-    return {"message": "IA Agent - Restaurant Assistant API v2.0"}
+    return {"message": "IA Agent - Information Search & Analytics API v2.0"}
 
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
-# IA.AGENT - Asistente de Restaurante
+# IA.AGENT - Buscador de Información y Analíticas
 
-Un agente de IA robusto y especializado para el sector restaurante, construido con FastAPI y la API de Groq.
+Un agente de IA robusto para búsqueda de información y análisis de datos, construido con FastAPI y la API de Groq.
 
 ## Características
 
-- 🤖 **Asistente especializado**: Enfocado en consultas del sector restaurante
+- 🤖 **Buscador inteligente**: Especializado en búsqueda de información y análisis de datos
 - ⚡ **FastAPI**: Framework moderno y rápido para APIs
 - 🧠 **Groq API**: Integración con modelos de IA de alta velocidad
 - 📝 **Documentación automática**: Swagger UI y ReDoc incluidos
@@ -74,13 +74,13 @@ Endpoint principal para interactuar con el asistente:
 ```bash
 curl -X POST "http://localhost:8000/chat" \
      -H "Content-Type: application/json" \
-     -d '{"prompt": "¿Cuáles son los mejores ingredientes para una pizza margherita?"}'
+     -d '{"prompt": "¿Cuáles son las principales causas del cambio climático?"}'
 ```
 
 **Respuesta exitosa (200)**:
 ```json
 {
-  "answer": "Los mejores ingredientes para una pizza margherita son..."
+  "answer": "Las principales causas del cambio climático incluyen..."
 }
 ```
 

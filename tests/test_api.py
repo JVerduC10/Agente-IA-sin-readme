@@ -48,7 +48,7 @@ class TestChatEndpoint:
             "choices": [
                 {
                     "message": {
-                        "content": "Esta es una respuesta del asistente de restaurante."
+                        "content": "Esta es una respuesta del buscador de información."
                     }
                 }
             ]
@@ -57,14 +57,14 @@ class TestChatEndpoint:
 
         # Test request
         response = client.post(
-            "/chat", json={"prompt": "¿Cuáles son los mejores ingredientes para pizza?"}
+            "/chat", json={"prompt": "¿Cuáles son las principales fuentes de energía renovable?"}
         )
 
         # Assertions
         assert response.status_code == 200
         data = response.json()
         assert "answer" in data
-        assert data["answer"] == "Esta es una respuesta del asistente de restaurante."
+        assert data["answer"] == "Esta es una respuesta del buscador de información."
 
         # Verify API call was made correctly
         mock_post.assert_called_once()
