@@ -34,16 +34,16 @@ No quería otra interfaz aburrida de chat, así que diseñé:
 ##  Estructura del Proyecto
 
 ```
-├── app/                    # Backend FastAPI
+├── servidor/                    # Backend FastAPI
 │   ├── routers/           # Endpoints de la API
 │   │   ├── chat.py        # Endpoint principal de chat
 │   │   └── health.py      # Health checks
 │   ├── main.py            # Aplicación principal
 │   ├── settings.py        # Configuración
 │   └── security.py        # Autenticación
-├── scripts/               # Utilidades
+├── herramientas/               # Utilidades
 │   └── groq_client.py     # Cliente Groq API
-├── src/                   # Frontend React
+├── interfaz/                   # Frontend React
 │   ├── components/        # Componentes React
 │   │   ├── forms/         # ChatWidget con temperatura
 │   │   ├── layout/        # Header, Footer
@@ -53,8 +53,8 @@ No quería otra interfaz aburrida de chat, así que diseñé:
 │   │   └── ThemeContext.tsx # Tema
 │   ├── types/             # Tipos TypeScript
 │   └── utils/             # Utilidades
-├── static/                # Frontend estático alternativo
-├── tests/                 # Tests automatizados
+├── archivos_estaticos/                # Frontend estático alternativo
+├── pruebas/                 # Tests automatizados
 └── docs/                  # Documentación
     ├── TEMPERATURE_FEATURE.md
     ├── SETUP_INSTRUCTIONS.md
@@ -85,7 +85,7 @@ cp .env.example .env
 # Abre .env y pon tu GROQ_API_KEY ahí
 
 # ¡Y ya está! Arranca el servidor
-python -m app.main
+python -m servidor.main
 ```
 
 ### Si quieres el frontend completo (React)
@@ -171,7 +171,7 @@ GROQ_MODEL=deepseek-r1-distill-llama-70b  # El modelo que más me gusta usar
 ```
 
 ### Ajustando las temperaturas a tu gusto
-Si mis valores por defecto no te convencen, puedes cambiarlos fácilmente en `app/routers/chat.py`:
+Si mis valores por defecto no te convencen, puedes cambiarlos fácilmente en `servidor/routers/chat.py`:
 
 ```python
 # Estos son los valores que yo uso, pero puedes experimentar
@@ -181,6 +181,56 @@ temperature_map = {
     "general": 0.7        # El punto dulce que encontré
 }
 ```
+
+## 🌐 Motor de Búsqueda Web Inteligente
+
+He expandido el agente para funcionar como un motor de búsqueda inteligente que combina búsqueda web, lectura de contenido y RAG en un flujo iterativo automático.
+
+### Cómo funciona el sistema de búsqueda web
+
+Cuando usas el modo `web`, el agente ejecuta un ciclo inteligente:
+
+1. **Búsqueda inicial**: Usa la API de Bing para encontrar resultados relevantes
+2. **Lectura de contenido**: Extrae y limpia el texto de las páginas web encontradas
+3. **Análisis RAG**: Procesa el contenido con el modelo de lenguaje para generar una respuesta
+4. **Evaluación iterativa**: Determina si necesita más información y refina la búsqueda
+5. **Respuesta final**: Combina toda la información en una respuesta coherente
+
+### Usar la búsqueda web
+
+```bash
+# Búsqueda web con el nuevo modo
+curl -X POST "http://localhost:8000/api/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "¿Cuáles son las últimas noticias sobre inteligencia artificial?",
+    "query_type": "web"
+  }'
+```
+
+### Configuración de búsqueda web
+
+En tu archivo `.env` puedes controlar el comportamiento:
+
+```env
+# API de búsqueda (requiere Bing Search API)
+SEARCH_API_KEY=tu_bing_api_key
+SEARCH_ENDPOINT=https://api.bing.microsoft.com/v7.0/search
+
+# Configuración de scraping
+WEB_SCRAPE_TIMEOUT=10           # Timeout para leer páginas
+MAX_SEARCH_RESULTS=5            # Resultados por búsqueda
+MAX_PAGE_LENGTH=8000            # Caracteres máximos por página
+MAX_SEARCH_ITERATIONS=3         # Máximo de iteraciones de búsqueda
+```
+
+### Características avanzadas
+
+- **Refinamiento automático**: El sistema mejora las consultas de búsqueda automáticamente
+- **Extracción concurrente**: Lee múltiples páginas web en paralelo para mayor velocidad
+- **Limpieza inteligente**: Extrae solo el contenido relevante, eliminando navegación y publicidad
+- **Manejo de errores**: Continúa funcionando aunque algunas páginas no se puedan leer
+- **Integración RAG**: Usa el contenido web como contexto para generar respuestas más precisas
 
 ## 🔍 Búsqueda RAG con detección automática de dominio
 

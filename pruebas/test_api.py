@@ -4,7 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.dependencies import get_settings
-from app.main import app
+from servidor.main import app
 
 client = TestClient(app)
 
@@ -17,7 +17,7 @@ def mock_settings():
         MAX_PROMPT_LEN = 1000
         ALLOWED_ORIGINS = "*"
         GROQ_BASE_URL = "https://api.groq.com/openai/v1/chat/completions"
-        GROQ_MODEL = "llama3-8b-8192"
+        GROQ_MODEL = "deepseek-r1-distill-llama-70b"
         REQUEST_TIMEOUT = 30
         BURST_SIZE = 10
         TOKENS_DAILY_LIMIT = 200_000
@@ -26,10 +26,27 @@ def mock_settings():
         BREAKER_FAIL_PCT = 50
         BREAKER_WINDOW = 12
         PAGERDUTY_WEBHOOK = ""
+        
+        # Configuraciones de búsqueda web
+        SEARCH_API_KEY = "test_search_key"
+        SEARCH_ENDPOINT = "https://api.bing.microsoft.com/v7.0/search"
+        WEB_SCRAPE_TIMEOUT = 10
+        MAX_SEARCH_RESULTS = 5
+        MAX_PAGE_LENGTH = 8000
+        MAX_SEARCH_ITERATIONS = 3
 
         @property
         def allowed_origins_list(self):
             return ["*"]
+            
+        @property
+        def temperature_map(self):
+            return {
+                "scientific": 0.1,
+                "creative": 1.3,
+                "general": 0.7,
+                "web": 0.7
+            }
 
     return MockSettings()
 

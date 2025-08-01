@@ -3,11 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.dependencies import get_settings
-from app.routers import chat, health
+from servidor.dependencies import get_settings
+from servidor.routers import chat, health
 # Importación lazy de search para evitar problemas con ChromaDB
 try:
-    from app.routers import search
+    from servidor.routers import search
     search_available = True
 except ImportError as e:
     print(f"Warning: RAG search not available: {e}")
