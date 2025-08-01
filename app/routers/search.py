@@ -4,10 +4,26 @@ from typing import Dict, Any, Optional
 import logging
 
 from ..dependencies import get_api_key
-from ..ingest import ingestor
 from ..search_router import search_router
 from ..metrics import get_metrics, get_metrics_content_type, metrics
-from ..rag import rag_system
+
+# Importaciones lazy para evitar problemas con ChromaDB
+ingestor = None
+rag_system = None
+
+def _get_rag_system():
+    global rag_system
+    if rag_system is None:
+        from ..rag import rag_system as _rag_system
+        rag_system = _rag_system
+    return rag_system
+
+def _get_ingestor():
+    global ingestor
+    if ingestor is None:
+        from ..ingest import ingestor as _ingestor
+        ingestor = _ingestor
+    return ingestor
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -31,7 +47,7 @@ async def search_endpoint(q: str) -> Dict[str, Any]:
         
         # Actualizar métricas de colección
         try:
-            collection_info = rag_system.get_collection_info()
+            collection_info = _get_rag_system().get_collection_info()
             if 'document_count' in collection_info:
                 metrics.update_collection_size(collection_info['document_count'])
         except Exception as e:
@@ -72,7 +88,7 @@ async def ingest_document(
             )
         
         # Ingestar archivo
-        result = await ingestor.ingest_upload_file(file)
+        result = await _get_ingestor().ingest_upload_file(file)
         
         # Registrar métricas
         status = result.get('status', 'unknown')
@@ -86,7 +102,7 @@ async def ingest_document(
         
         # Actualizar tamaño de colección
         try:
-            collection_info = rag_system.get_collection_info()
+            collection_info = _get_rag_system().get_collection_info()
             if 'document_count' in collection_info:
                 metrics.update_collection_size(collection_info['document_count'])
         except Exception as e:
@@ -115,7 +131,7 @@ async def get_rag_stats() -> Dict[str, Any]:
     """
     try:
         search_stats = search_router.get_search_stats()
-        collection_stats = ingestor.get_collection_stats()
+        collection_stats = _get_ingestor().get_collection_stats()
         
         return {
             "search_system": search_stats,
@@ -151,9 +167,10 @@ async def clear_collection(api_key: str = Depends(get_api_key)) -> Dict[str, Any
     """
     try:
         # Eliminar y recrear colección
-        ingestor.chroma_client.delete_collection(ingestor.collection.name)
-        ingestor.collection = ingestor.chroma_client.create_collection(
-            name=ingestor.collection.name,
+        ingestor_instance = _get_ingestor()
+        ingestor_instance.chroma_client.delete_collection(ingestor_instance.collection.name)
+        ingestor_instance.collection = ingestor_instance.chroma_client.create_collection(
+            name=ingestor_instance.collection.name,
             metadata={"hnsw:space": "cosine"}
         )
         

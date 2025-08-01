@@ -4,7 +4,14 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.dependencies import get_settings
-from app.routers import chat, health, search
+from app.routers import chat, health
+# Importación lazy de search para evitar problemas con ChromaDB
+try:
+    from app.routers import search
+    search_available = True
+except ImportError as e:
+    print(f"Warning: RAG search not available: {e}")
+    search_available = False
 
 app = FastAPI(
     title="Jarvis Analyst API",
@@ -14,7 +21,8 @@ app = FastAPI(
 
 app.include_router(health.router)
 app.include_router(chat.router)
-app.include_router(search.router, prefix="/api/v1", tags=["search", "rag"])
+if search_available:
+    app.include_router(search.router, prefix="/api/v1", tags=["search", "rag"])
 
 # Servir archivos estáticos
 app.mount("/static", StaticFiles(directory="static"), name="static")
