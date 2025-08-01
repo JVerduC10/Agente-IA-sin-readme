@@ -1,90 +1,341 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jarvis Analyst</title>
-  
-  <!-- Preload fonts for performance -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" as="style">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Lucide icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-  
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis Analyst - Conversational Analytics, Zero Friction</title>
+    <meta name="description" content="Transform your data into insights with AI-powered conversational analytics. Zero friction, maximum impact.">
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Theme detection script -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+        })();
+    </script>
 </head>
 <body>
-  <main class="flex min-h-screen flex-col">
-    <!-- Header with trust blue -->
+    <!-- Header -->
     <header class="header">
-      <h1 class="header-title">Jarvis Analyst</h1>
-      <div class="ai-badge">AI</div>
-    </header>
-    
-    <!-- Chat section -->
-    <section id="chat" class="chat-section">
-      <div id="messages" class="messages"></div>
-    </section>
-    
-    <!-- Suggestion chips -->
-    <div id="suggestions" class="suggestions">
-      <button class="suggestion-chip" data-suggestion="¿Qué porcentaje de mujeres trabajan en tecnología?">
-        ¿Qué % de mujeres...?
-      </button>
-      <button class="suggestion-chip" data-suggestion="Analiza las tendencias del mercado actual">
-        Tendencias del mercado
-      </button>
-      <button class="suggestion-chip" data-suggestion="¿Cuáles son las mejores prácticas en IA?">
-        Mejores prácticas IA
-      </button>
-    </div>
-    
-    <!-- Footer with input form -->
-    <footer class="footer">
-      <form id="form" class="form" autocomplete="off">
-        <div class="input-container">
-          <textarea 
-            id="prompt" 
-            class="input-field" 
-            rows="1" 
-            placeholder="Escribe tu pregunta…"
-            maxlength="1000"
-          ></textarea>
-          <div class="char-counter">
-            <span id="char-count">0</span>/1000
-          </div>
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span>J</span>
+                    </div>
+                    <span class="logo-text">Jarvis Analyst</span>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                
+                <!-- Actions -->
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i data-lucide="sun" class="sun-icon"></i>
+                        <i data-lucide="moon" class="moon-icon"></i>
+                    </button>
+                    <button class="btn btn-outline">Book Demo</button>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
         </div>
-        <button type="submit" class="send-button" id="send-btn">
-          <i data-lucide="send" class="send-icon"></i>
-          <span class="send-text">Enviar</span>
-        </button>
-      </form>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-blob hero-blob-1"></div>
+            <div class="hero-blob hero-blob-2"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <!-- Badge -->
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    AI-Powered Analytics Platform
+                </div>
+                
+                <!-- Main heading -->
+                <h1 class="hero-title">
+                    <span>Conversational</span>
+                    <span class="gradient-text">Analytics,</span>
+                    <span>Zero Friction</span>
+                </h1>
+                
+                <!-- Subtitle -->
+                <p class="hero-subtitle">
+                    Transform your data into insights with AI-powered conversations. 
+                    Ask questions in natural language and get instant, actionable answers.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="hero-actions">
+                    <button class="btn btn-cta" onclick="scrollToChat()">
+                        Start Analyzing Now
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                    <button class="btn btn-outline-white">
+                        <i data-lucide="play"></i>
+                        Watch Demo
+                    </button>
+                </div>
+                
+                <!-- Stats -->
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">10x</div>
+                        <div class="stat-label">Faster Insights</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">AI Assistant</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose <span class="gradient-text">Jarvis Analyst</span></h2>
+                <p>Powerful features designed to transform how you interact with data. No technical expertise required – just ask and get answers.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="message-square"></i>
+                    </div>
+                    <h3>Natural Language Queries</h3>
+                    <p>Ask questions in plain English and get instant insights from your data without complex SQL or formulas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Monitor your KPIs and metrics in real-time with dynamic dashboards that update automatically.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Get answers in seconds, not hours. Our AI processes complex queries instantly across massive datasets.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="shield"></i>
+                    </div>
+                    <h3>Enterprise Security</h3>
+                    <p>Bank-level encryption and compliance with SOC 2, GDPR, and HIPAA standards for complete data protection.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h3>Smart Insights</h3>
+                    <p>AI automatically discovers patterns, anomalies, and trends in your data that you might have missed.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <h3>Predictive Analytics</h3>
+                    <p>Forecast future trends and outcomes with advanced machine learning models built into every analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section id="chat" class="chat-section">
+        <div class="chat-bg">
+            <div class="chat-blob chat-blob-1"></div>
+            <div class="chat-blob chat-blob-2"></div>
+        </div>
+        
+        <div class="container">
+            <div class="section-header">
+                <h2>Try <span class="gradient-text-white">Jarvis Analyst</span> Now</h2>
+                <p>Experience the power of conversational analytics. Ask any question about your data and get instant, intelligent responses.</p>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-widget">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <div class="chat-avatar">
+                            <i data-lucide="bot"></i>
+                        </div>
+                        <div class="chat-info">
+                            <h3>Jarvis Analyst</h3>
+                            <p>AI Data Assistant</p>
+                        </div>
+                        <div class="chat-status">
+                            <div class="status-dot"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages -->
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Messages will be added here -->
+                    </div>
+                    
+                    <!-- Suggestion Chips -->
+                    <div class="suggestion-chips" id="suggestionChips">
+                        <p>Try asking:</p>
+                        <div class="chips">
+                            <button class="chip" onclick="sendSuggestion('Show me sales trends for Q4')">Show me sales trends for Q4</button>
+                            <button class="chip" onclick="sendSuggestion('What\'s our top performing product?')">What's our top performing product?</button>
+                            <button class="chip" onclick="sendSuggestion('Analyze customer churn rate')">Analyze customer churn rate</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="chat-input">
+                        <form id="chatForm">
+                            <div class="input-group">
+                                <textarea 
+                                    id="userInput" 
+                                    placeholder="Ask me anything about your data..."
+                                    rows="1"
+                                    maxlength="500"
+                                ></textarea>
+                                <button type="submit" class="send-btn" id="sendBtn">
+                                    <i data-lucide="send"></i>
+                                </button>
+                            </div>
+                            <div class="input-footer">
+                                <span class="char-count" id="charCount">0/500</span>
+                                <span class="input-hint">Press Enter to send, Shift+Enter for new line</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <span>J</span>
+                        </div>
+                        <span class="logo-text">Jarvis Analyst</span>
+                    </div>
+                    <p>Transform your data into insights with AI-powered conversational analytics.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i data-lucide="github"></i></a>
+                        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="#docs">Documentation</a>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Support</h4>
+                        <a href="#help">Help Center</a>
+                        <a href="#contact">Contact</a>
+                        <a href="#status">Status</a>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Legal</h4>
+                        <a href="#privacy">Privacy</a>
+                        <a href="#terms">Terms</a>
+                        <a href="#cookies">Cookies</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Jarvis Analyst. All rights reserved.</p>
+                <div class="footer-status">
+                    <div class="status-dot"></div>
+                    <span>All systems operational</span>
+                </div>
+            </div>
+        </div>
     </footer>
-  </main>
-  
-  <!-- Theme toggle -->
-  <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
-    <i data-lucide="sun" class="theme-icon theme-icon-light"></i>
-    <i data-lucide="moon" class="theme-icon theme-icon-dark"></i>
-  </button>
-  
-  <!-- Loading spinner template -->
-  <template id="loading-template">
-    <div class="loading-spinner">
-      <div class="loading-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-      <span class="loading-text">Pensando...</span>
+
+    <!-- Loading Spinner Template -->
+    <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+        <div class="spinner">
+            <div class="dot dot-1"></div>
+            <div class="dot dot-2"></div>
+            <div class="dot dot-3"></div>
+        </div>
     </div>
-  </template>
-  
-  <script src="chat.js"></script>
-  <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
-  </script>
+
+    <script src="chat.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Smooth scrolling function
+        function scrollToChat() {
+            document.getElementById('chat').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Send suggestion function
+        function sendSuggestion(text) {
+            if (window.jarvisChat) {
+                window.jarvisChat.sendMessage(text);
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict
 
-import requests
+from groq import Groq
 
 from app.settings import Settings
 from app.usage import DailyTokenCounter
@@ -13,72 +13,51 @@ class GroqClient:
     def __init__(self, settings: Settings, token_counter: DailyTokenCounter):
         self.settings = settings
         self.token_counter = token_counter
+        self.client = Groq(api_key=settings.GROQ_API_KEY)
 
-    def _create_payload(self, prompt: str) -> Dict[str, Any]:
-        return {
-            "model": self.settings.GROQ_MODEL,
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.7,
-            "max_tokens": 1000,
-        }
-
-    def _create_headers(self) -> Dict[str, str]:
-        return {
-            "Authorization": f"Bearer {self.settings.GROQ_API_KEY}",
-            "Content-Type": "application/json",
-        }
-
-    def _handle_response(self, response: requests.Response) -> str:
-        if response.status_code == 401:
-            logger.error("Invalid Groq API key")
-            raise requests.exceptions.HTTPError(
-                "Invalid Groq API key", response=response
+    async def chat_completion(self, prompt: str, temperature: float = 1.0) -> str:
+        try:
+            completion = self.client.chat.completions.create(
+                model=self.settings.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                temperature=temperature,
+                max_completion_tokens=1024,
+                top_p=1,
+                stream=True,
+                stop=None,
             )
 
-        if response.status_code != 200:
-            logger.error(f"HTTP error from Groq API: {response.status_code}")
-            response.raise_for_status()
+            # Recopilar la respuesta del stream
+            response_content = ""
+            total_tokens = 0
+            
+            for chunk in completion:
+                if chunk.choices[0].delta.content:
+                    response_content += chunk.choices[0].delta.content
+                
+                # Intentar obtener información de uso si está disponible
+                if hasattr(chunk, 'usage') and chunk.usage:
+                    total_tokens = chunk.usage.total_tokens
 
-        try:
-            data = response.json()
-        except ValueError as e:
-            logger.error("Invalid response structure from Groq API")
-            raise ValueError("Invalid JSON response from Groq API") from e
+            # Registrar el uso de tokens
+            if total_tokens > 0:
+                self.token_counter.add_tokens(total_tokens)
+            else:
+                # Estimación aproximada si no hay datos de uso
+                estimated_tokens = len(prompt.split()) + len(response_content.split())
+                self.token_counter.add_tokens(estimated_tokens)
 
-        try:
-            content = data["choices"][0]["message"]["content"]
-            if not content:
-                logger.error("Missing content in Groq API response")
-                raise ValueError("Empty content in Groq API response")
-            return content.strip()
-        except (KeyError, IndexError, TypeError) as e:
-            logger.error(f"Error processing Groq response: {str(e)}")
-            raise ValueError("Invalid response structure from Groq API") from e
+            if not response_content.strip():
+                logger.error("Empty response from Groq API")
+                raise ValueError("Empty response from Groq API")
 
-    async def chat_completion(self, prompt: str, timeout: int = 30) -> str:
-        try:
-            response = requests.post(
-                self.settings.GROQ_BASE_URL,
-                headers=self._create_headers(),
-                json=self._create_payload(prompt),
-                timeout=timeout,
-            )
+            return response_content.strip()
 
-            answer = self._handle_response(response)
-
-            try:
-                data = response.json()
-                if "usage" in data and "total_tokens" in data["usage"]:
-                    total_tokens = data["usage"]["total_tokens"]
-                    self.token_counter.add_tokens(total_tokens)
-            except Exception as e:
-                logger.warning(f"Could not track token usage: {e}")
-
-            return answer
-
-        except requests.exceptions.Timeout:
-            logger.error("Request timeout to Groq API")
-            raise
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Request error to Groq API: {e}")
+        except Exception as e:
+            logger.error(f"Error in Groq chat completion: {str(e)}")
             raise

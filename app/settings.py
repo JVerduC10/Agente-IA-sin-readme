@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     MAX_PROMPT_LEN: int = 1000
     ALLOWED_ORIGINS: str = "*"
     GROQ_BASE_URL: str = "https://api.groq.com/openai/v1/chat/completions"
-    GROQ_MODEL: str = "llama3-8b-8192"
+    GROQ_MODEL: str = "compound-beta"  # Modelo que incluye DeepSeek
     REQUEST_TIMEOUT: int = 30
 
     @property

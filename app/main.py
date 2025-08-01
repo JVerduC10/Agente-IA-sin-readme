@@ -7,9 +7,9 @@ from app.dependencies import get_settings
 from app.routers import chat, health
 
 app = FastAPI(
-    title="Simple Chat API",
-    version="1.0.0",
-    description="Simple FastAPI chat API with Groq integration",
+    title="Jarvis Analyst API",
+    version="2.0.0",
+    description="FastAPI chat API with Groq compound-beta model (includes DeepSeek, Meta, and other models)",
 )
 
 app.include_router(health.router)

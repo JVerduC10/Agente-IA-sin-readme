@@ -1,370 +1,419 @@
-// ────────────────────────────────────────────────────────────────────────────── 
-// JARVIS ANALYST - ENHANCED CHAT INTERFACE WITH PSYCHOLOGICAL UX
-// ────────────────────────────────────────────────────────────────────────────── 
+// ====================================================================
+// JARVIS ANALYST - FLOWAUTOMATE STYLE CHAT INTERFACE
+// Conversational Analytics, Zero Friction
+// ====================================================================
 
 class JarvisChat {
-  constructor() {
-    this.api = "http://127.0.0.1:8000/chat";
-    this.form = document.getElementById("form");
-    this.promptInput = document.getElementById("prompt");
-    this.messagesDiv = document.getElementById("messages");
-    this.sendButton = document.getElementById("send-btn");
-    this.charCount = document.getElementById("char-count");
-    this.suggestions = document.getElementById("suggestions");
-    this.themeToggle = document.getElementById("theme-toggle");
-    
-    this.isLoading = false;
-    this.messageCounter = 0;
-    
-    this.init();
-  }
-  
-  init() {
-    this.setupEventListeners();
-    this.setupTheme();
-    this.setupTextareaAutoResize();
-    this.showWelcomeMessage();
-    this.setupSuggestionChips();
-  }
-  
-  setupEventListeners() {
-    // Form submission
-    this.form.addEventListener("submit", (e) => this.handleSubmit(e));
-    
-    // Character counter
-    this.promptInput.addEventListener("input", () => this.updateCharCounter());
-    
-    // Enter key handling (Ctrl+Enter for new line)
-    this.promptInput.addEventListener("keydown", (e) => this.handleKeydown(e));
-    
-    // Theme toggle
-    this.themeToggle.addEventListener("click", () => this.toggleTheme());
-    
-    // Auto-resize textarea
-    this.promptInput.addEventListener("input", () => this.autoResizeTextarea());
-  }
-  
-  setupTheme() {
-    // Check for saved theme preference or default to system preference
-    const savedTheme = localStorage.getItem("jarvis-theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    } else if (systemPrefersDark) {
-      document.documentElement.setAttribute("data-theme", "dark");
-    }
-    
-    // Listen for system theme changes
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("jarvis-theme")) {
-        document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
-      }
-    });
-  }
-  
-  toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute("data-theme");
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("jarvis-theme", newTheme);
-    
-    // Add subtle animation feedback
-    this.themeToggle.style.transform = "scale(0.9)";
-    setTimeout(() => {
-      this.themeToggle.style.transform = "scale(1)";
-    }, 150);
-  }
-  
-  setupTextareaAutoResize() {
-    this.promptInput.style.height = "auto";
-    this.promptInput.style.height = this.promptInput.scrollHeight + "px";
-  }
-  
-  autoResizeTextarea() {
-    this.promptInput.style.height = "auto";
-    this.promptInput.style.height = Math.min(this.promptInput.scrollHeight, 120) + "px";
-  }
-  
-  updateCharCounter() {
-    const length = this.promptInput.value.length;
-    this.charCount.textContent = length;
-    
-    // Visual feedback for character limit
-    if (length > 900) {
-      this.charCount.style.color = "var(--warning-red)";
-    } else if (length > 800) {
-      this.charCount.style.color = "var(--action-orange)";
-    } else {
-      this.charCount.style.color = "var(--text-secondary)";
-    }
-  }
-  
-  setupSuggestionChips() {
-    const chips = this.suggestions.querySelectorAll(".suggestion-chip");
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        const suggestion = chip.getAttribute("data-suggestion");
-        this.promptInput.value = suggestion;
-        this.updateCharCounter();
-        this.autoResizeTextarea();
-        this.promptInput.focus();
+    constructor() {
+        this.messagesContainer = document.getElementById('chatMessages');
+        this.form = document.getElementById('chatForm');
+        this.promptInput = document.getElementById('userInput');
+        this.sendButton = document.getElementById('sendBtn');
+        this.charCount = document.getElementById('charCount');
+        this.suggestionsContainer = document.getElementById('suggestionChips');
+        this.themeToggle = document.getElementById('themeToggle');
+        this.mobileMenuBtn = document.getElementById('mobileMenuBtn');
         
-        // Hide suggestions after use (reduce cognitive load)
-        this.hideSuggestions();
-      });
-    });
-  }
-  
-  hideSuggestions() {
-    this.suggestions.style.opacity = "0";
-    this.suggestions.style.transform = "translateY(-10px)";
-    setTimeout(() => {
-      this.suggestions.style.display = "none";
-    }, 250);
-  }
-  
-  showSuggestions() {
-    this.suggestions.style.display = "flex";
-    setTimeout(() => {
-      this.suggestions.style.opacity = "1";
-      this.suggestions.style.transform = "translateY(0)";
-    }, 10);
-  }
-  
-  handleKeydown(e) {
-    if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey) {
-      e.preventDefault();
-      this.handleSubmit(e);
-    }
-  }
-  
-  async handleSubmit(e) {
-    e.preventDefault();
-    
-    const text = this.promptInput.value.trim();
-    if (!text || this.isLoading) return;
-    
-    // Hide suggestions after first interaction
-    if (this.messageCounter === 0) {
-      this.hideSuggestions();
+        this.isLoading = false;
+        this.messageHistory = [];
+        
+        this.init();
     }
     
-    this.isLoading = true;
-    this.updateSendButton(true);
-    
-    // Add user message with animation
-    this.addMessage("user", text);
-    this.promptInput.value = "";
-    this.updateCharCounter();
-    this.autoResizeTextarea();
-    
-    // Add loading spinner with calm teal dots
-    const loadingId = this.addLoadingMessage();
-    
-    try {
-      const response = await fetch(this.api, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: text }),
-      });
-      
-      // Remove loading message
-      this.removeMessage(loadingId);
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        this.addMessage("error", `${errorData.detail || 'Error del servidor'}`, true);
-        return;
-      }
-      
-      const data = await response.json();
-      this.addMessage("bot", data.answer);
-      
-    } catch (error) {
-      this.removeMessage(loadingId);
-      this.addMessage("error", "Error al conectar con el servidor. Verifica tu conexión.", true);
-      console.error("Error:", error);
-    } finally {
-      this.isLoading = false;
-      this.updateSendButton(false);
-      this.promptInput.focus();
+    init() {
+        this.setupEventListeners();
+        this.setupTheme();
+        this.addWelcomeMessage();
+        this.autoResizeTextarea();
+        this.setupScrollEffects();
     }
-  }
   
-  updateSendButton(loading) {
-    this.sendButton.disabled = loading;
-    const icon = this.sendButton.querySelector(".send-icon");
-    const text = this.sendButton.querySelector(".send-text");
-    
-    if (loading) {
-      icon.setAttribute("data-lucide", "loader-2");
-      icon.style.animation = "spin 1s linear infinite";
-      text.textContent = "Enviando...";
-    } else {
-      icon.setAttribute("data-lucide", "send");
-      icon.style.animation = "none";
-      text.textContent = "Enviar";
+    setupEventListeners() {
+        // Form submission
+        if (this.form) {
+            this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        }
+        
+        // Input character counting and auto-resize
+        if (this.promptInput) {
+            this.promptInput.addEventListener('input', () => {
+                this.updateCharCount();
+                this.autoResizeTextarea();
+                this.toggleSendButton();
+            });
+            
+            // Enter key handling (submit on Enter, new line on Shift+Enter)
+            this.promptInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (!this.isLoading && this.promptInput.value.trim()) {
+                        this.handleSubmit(e);
+                    }
+                }
+            });
+        }
+        
+        // Theme toggle
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+        
+        // Mobile menu (placeholder for future implementation)
+        if (this.mobileMenuBtn) {
+            this.mobileMenuBtn.addEventListener('click', () => this.toggleMobileMenu());
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    }
+  
+    setupTheme() {
+        // Theme is already set by the script in HTML head
+        // Just handle the toggle functionality
+        const updateThemeIcon = () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const sunIcon = this.themeToggle?.querySelector('.sun-icon');
+            const moonIcon = this.themeToggle?.querySelector('.moon-icon');
+            
+            if (sunIcon && moonIcon) {
+                if (isDark) {
+                    sunIcon.style.opacity = '0';
+                    sunIcon.style.transform = 'rotate(180deg)';
+                    moonIcon.style.opacity = '1';
+                    moonIcon.style.transform = 'rotate(0deg)';
+                } else {
+                    sunIcon.style.opacity = '1';
+                    sunIcon.style.transform = 'rotate(0deg)';
+                    moonIcon.style.opacity = '0';
+                    moonIcon.style.transform = 'rotate(-180deg)';
+                }
+            }
+        };
+        
+        updateThemeIcon();
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                document.documentElement.classList.toggle('dark', e.matches);
+                updateThemeIcon();
+            }
+        });
+    }
+  
+    toggleTheme() {
+        const isDark = document.documentElement.classList.contains('dark');
+        const newTheme = isDark ? 'light' : 'dark';
+        
+        document.documentElement.classList.toggle('dark', !isDark);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update icon with animation
+        const sunIcon = this.themeToggle?.querySelector('.sun-icon');
+        const moonIcon = this.themeToggle?.querySelector('.moon-icon');
+        
+        if (sunIcon && moonIcon) {
+            if (!isDark) { // switching to dark
+                sunIcon.style.opacity = '0';
+                sunIcon.style.transform = 'rotate(180deg)';
+                moonIcon.style.opacity = '1';
+                moonIcon.style.transform = 'rotate(0deg)';
+            } else { // switching to light
+                sunIcon.style.opacity = '1';
+                sunIcon.style.transform = 'rotate(0deg)';
+                moonIcon.style.opacity = '0';
+                moonIcon.style.transform = 'rotate(-180deg)';
+            }
+        }
+        
+        // Add subtle animation feedback
+        if (this.themeToggle) {
+            this.themeToggle.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.themeToggle.style.transform = 'scale(1)';
+            }, 150);
+        }
     }
     
-    // Re-initialize lucide icons
-    lucide.createIcons();
-  }
-  
-  addMessage(role, content, isError = false) {
-    const messageElement = document.createElement("div");
-    const messageId = `msg_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-    messageElement.id = messageId;
-    messageElement.className = isError ? "error" : role;
-    
-    // Add error icon for error messages
-    if (isError) {
-      const icon = document.createElement("i");
-      icon.setAttribute("data-lucide", "alert-triangle");
-      icon.style.width = "16px";
-      icon.style.height = "16px";
-      icon.style.flexShrink = "0";
-      messageElement.appendChild(icon);
+    toggleMobileMenu() {
+        // Placeholder for mobile menu functionality
+        console.log('Mobile menu toggle - to be implemented');
     }
     
-    // Add message content
-    const contentElement = document.createElement("span");
-    contentElement.innerHTML = this.formatMessage(content);
-    messageElement.appendChild(contentElement);
-    
-    // Add to messages container
-    this.messagesDiv.appendChild(messageElement);
-    
-    // Initialize lucide icons for error messages
-    if (isError) {
-      lucide.createIcons();
+    setupScrollEffects() {
+        // Header shrink effect on scroll
+        let lastScrollY = window.scrollY;
+        
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.height = '3rem';
+                    header.style.backdropFilter = 'blur(20px)';
+                } else {
+                    header.style.height = '4rem';
+                }
+            }
+            lastScrollY = window.scrollY;
+        });
+    }
+  
+    addWelcomeMessage() {
+        if (!this.messagesContainer) return;
+        
+        const welcomeMessage = {
+            role: 'assistant',
+            content: '¡Hola! Soy Jarvis, tu asistente de análisis conversacional. Puedo ayudarte a analizar datos, responder preguntas complejas y generar insights valiosos. ¿En qué puedo ayudarte hoy?'
+        };
+        
+        this.addMessage(welcomeMessage);
+    }
+  
+    async handleSubmit(e) {
+        e.preventDefault();
+        
+        if (!this.promptInput || !this.messagesContainer) return;
+        
+        const message = this.promptInput.value.trim();
+        if (!message || this.isLoading) return;
+        
+        // Hide suggestion chips after first message
+        if (this.suggestionsContainer && this.messageHistory.length === 1) {
+            this.suggestionsContainer.style.display = 'none';
+        }
+        
+        // Add user message
+        this.addMessage({ role: 'user', content: message });
+        
+        // Clear input and reset
+        this.promptInput.value = '';
+        this.updateCharCount();
+        this.autoResizeTextarea();
+        this.toggleSendButton();
+        
+        // Show loading state
+        this.setLoading(true);
+        
+        try {
+            const response = await this.sendToAPI(message);
+            this.addMessage({ role: 'assistant', content: response });
+        } catch (error) {
+            console.error('Error:', error);
+            this.addMessage({ 
+                role: 'error', 
+                content: 'Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo.' 
+            });
+        } finally {
+            this.setLoading(false);
+        }
     }
     
-    // Smooth scroll to bottom
-    this.scrollToBottom();
-    
-    this.messageCounter++;
-    return messageId;
-  }
-  
-  addLoadingMessage() {
-    const template = document.getElementById("loading-template");
-    const loadingElement = template.content.cloneNode(true);
-    const messageElement = document.createElement("div");
-    const messageId = `loading_${Date.now()}`;
-    
-    messageElement.id = messageId;
-    messageElement.className = "bot";
-    messageElement.appendChild(loadingElement);
-    
-    this.messagesDiv.appendChild(messageElement);
-    this.scrollToBottom();
-    
-    return messageId;
-  }
-  
-  removeMessage(messageId) {
-    const element = document.getElementById(messageId);
-    if (element) {
-      // Fade out animation
-      element.style.opacity = "0";
-      element.style.transform = "translateY(-10px)";
-      setTimeout(() => {
-        element.remove();
-      }, 250);
+    async sendToAPI(message) {
+        const response = await fetch('http://localhost:8000/chat/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt: message })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data.answer || 'No se pudo obtener una respuesta.';
     }
-  }
   
-  formatMessage(text) {
-    // Convert line breaks to HTML
-    let formatted = text.replace(/\n/g, "<br>");
+    addMessage(message) {
+        if (!this.messagesContainer) return;
+        
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${message.role}`;
+        
+        const contentElement = document.createElement('div');
+        contentElement.className = 'message-content';
+        contentElement.innerHTML = this.formatMessage(message.content);
+        
+        messageElement.appendChild(contentElement);
+        this.messagesContainer.appendChild(messageElement);
+        
+        // Initialize Lucide icons for new content
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Smooth scroll to bottom
+        this.scrollToBottom();
+        
+        // Store in history
+        this.messageHistory.push(message);
+    }
+  
+    formatMessage(content) {
+        // Basic markdown-like formatting
+        return content
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`(.*?)`/g, '<code style="background: rgba(255,255,255,0.1); padding: 0.125rem 0.25rem; border-radius: 0.25rem;">$1</code>')
+            .replace(/\n/g, '<br>');
+    }
     
-    // Simple markdown-like formatting
-    formatted = formatted.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    formatted = formatted.replace(/\*(.*?)\*/g, "<em>$1</em>");
-    formatted = formatted.replace(/`(.*?)`/g, "<code style='background-color: var(--background-gray); padding: 2px 4px; border-radius: 3px; font-family: monospace;'>$1</code>");
+    setLoading(loading) {
+        this.isLoading = loading;
+        
+        if (loading) {
+            // Show loading spinner
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'block';
+            }
+        } else {
+            // Hide loading spinner
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'none';
+            }
+        }
+        
+        this.toggleSendButton();
+    }
     
-    return formatted;
-  }
-  
-  scrollToBottom() {
-    // Smooth scroll with easing
-    this.messagesDiv.scrollTo({
-      top: this.messagesDiv.scrollHeight,
-      behavior: "smooth"
-    });
-  }
-  
-  showWelcomeMessage() {
-    setTimeout(() => {
-      this.addMessage("system", "¡Hola! Soy Jarvis Analyst, tu asistente de IA. ¿En qué puedo ayudarte hoy?");
-    }, 500);
-  }
+    updateCharCount() {
+        if (!this.promptInput || !this.charCount) return;
+        
+        const count = this.promptInput.value.length;
+        this.charCount.textContent = `${count}/500`;
+        
+        // Color coding for character limit
+        if (count > 450) {
+            this.charCount.style.color = '#EF4444'; // red
+        } else if (count > 400) {
+            this.charCount.style.color = '#F59E0B'; // orange
+        } else {
+            this.charCount.style.color = 'rgba(255, 255, 255, 0.5)';
+        }
+    }
+    
+    autoResizeTextarea() {
+        if (!this.promptInput) return;
+        
+        this.promptInput.style.height = 'auto';
+        const newHeight = Math.min(this.promptInput.scrollHeight, 96); // max 6rem
+        this.promptInput.style.height = newHeight + 'px';
+    }
+    
+    toggleSendButton() {
+        if (!this.promptInput || !this.sendButton) return;
+        
+        const hasContent = this.promptInput.value.trim().length > 0;
+        this.sendButton.disabled = !hasContent || this.isLoading;
+        
+        if (this.isLoading) {
+            this.sendButton.innerHTML = `
+                <div class="spinner" style="scale: 0.7;">
+                    <div class="dot dot-1"></div>
+                    <div class="dot dot-2"></div>
+                    <div class="dot dot-3"></div>
+                </div>
+            `;
+        } else {
+            this.sendButton.innerHTML = '<i data-lucide="send"></i>';
+            
+            // Re-initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    scrollToBottom() {
+        if (!this.messagesContainer) return;
+        
+        // Use Intersection Observer for performance
+        if ('IntersectionObserver' in window) {
+            const lastMessage = this.messagesContainer.lastElementChild;
+            if (lastMessage) {
+                lastMessage.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'end' 
+                });
+            }
+        } else {
+            // Fallback for older browsers
+            this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+        }
+    }
+    
+    // Public method to send message programmatically
+    sendMessage(message) {
+        if (!this.promptInput) return;
+        
+        this.promptInput.value = message;
+        this.updateCharCount();
+        this.autoResizeTextarea();
+        this.toggleSendButton();
+        this.handleSubmit(new Event('submit'));
+    }
 }
 
-// CSS for spinner animation
-const style = document.createElement("style");
-style.textContent = `
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  
-  .suggestions {
-    transition: opacity 250ms ease, transform 250ms ease;
-  }
-`;
-document.head.appendChild(style);
-
-// Initialize the chat application when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  new JarvisChat();
-});
-
-// Handle page visibility changes (pause animations when tab is not active)
-document.addEventListener("visibilitychange", () => {
-  const dots = document.querySelectorAll(".dot");
-  dots.forEach(dot => {
-    if (document.hidden) {
-      dot.style.animationPlayState = "paused";
-    } else {
-      dot.style.animationPlayState = "running";
+// Global function for suggestion chips
+function sendSuggestion(text) {
+    if (window.jarvisChat) {
+        window.jarvisChat.sendMessage(text);
     }
-  });
+}
+
+// Global function for smooth scrolling
+function scrollToChat() {
+    const chatSection = document.getElementById('chat');
+    if (chatSection) {
+        chatSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.jarvisChat = new JarvisChat();
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+    
+    // Add loading animation to page elements
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe feature cards and other elements
+    document.querySelectorAll('.feature-card, .stat, .hero-badge').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
 });
 
-// Performance optimization: Intersection Observer for message animations
-if ("IntersectionObserver" in window) {
-  const messageObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  });
-  
-  // Observe new messages
-  const observeNewMessages = () => {
-    const messages = document.querySelectorAll(".user, .bot, .system, .error");
-    messages.forEach(message => {
-      if (!message.dataset.observed) {
-        messageObserver.observe(message);
-        message.dataset.observed = "true";
-      }
-    });
-  };
-  
-  // Run initially and on DOM changes
-  observeNewMessages();
-  
-  // Observe for new messages
-  const mutationObserver = new MutationObserver(observeNewMessages);
-  mutationObserver.observe(document.getElementById("messages"), {
-    childList: true
-  });
+// Export for potential module usage
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = JarvisChat;
 }
