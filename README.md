@@ -4,7 +4,11 @@
 
 ## Lo que hace especial a este proyecto
 
+<<<<<<< HEAD
 ### **El cerebro detrás del sistema**
+=======
+###  **El cerebro detrás del sistema**
+>>>>>>> d0d0566485b840daabd8fb158e265e43d931fa5a
 He implementado un sistema de temperatura dinámica que funciona así:
 - **Modo Scientific (0.1)**: Cuando necesitas hechos duros y precisión matemática
 - **Modo Creative (1.3)**: Para cuando quieres que la IA "piense fuera de la caja"
@@ -154,7 +158,7 @@ curl -X POST "http://localhost:8000/api/chat" \
   }'
 ```
 
-## 🔧 Configuración y personalización
+##  Configuración y personalización
 
 ### Variables de entorno que uso
 En el archivo `.env` tienes control total sobre el comportamiento:
@@ -259,7 +263,8 @@ Si quieres profundizar en los detalles de implementación:
 - [ Cómo funciona la temperatura dinámica](./TEMPERATURE_FEATURE.md)
 - [ Guía detallada de instalación](./SETUP_INSTRUCTIONS.md)
 - [ Arquitectura del frontend React](./README-REACT.md)
-##  Si quieres contribuir
+
+## Si quieres contribuir
 
 Me encantaría que otros desarrolladores mejoren esto:
 
