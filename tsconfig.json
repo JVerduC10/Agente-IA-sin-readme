@@ -25,9 +25,9 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./interfaz/*"]
     }
   },
-  "include": ["src", "src/**/*", "global.d.ts", "src/types/modules.d.ts", "src/types/react-types.d.ts", "src/vite-env.d.ts"],
+  "include": ["interfaz", "interfaz/**/*", "global.d.ts", "interfaz/types/modules.d.ts", "interfaz/types/react-types.d.ts", "interfaz/vite-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
