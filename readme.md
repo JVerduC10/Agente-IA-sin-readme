@@ -75,7 +75,10 @@ Un sistema completo y avanzado que combina evaluación de modelos de IA, búsque
 │   ├── encryption.py          # Sistema de encriptación
 │   ├── rag.py                 # Sistema RAG
 │   ├── ingest.py              # Ingestión de documentos
-│   └── metrics.py             # Métricas y monitoreo
+│   ├── metrics.py             # Métricas y monitoreo
+│   ├── search_router.py       # Router de búsqueda
+│   ├── usage.py               # Gestión de uso
+│   └── dependencies.py        # Dependencias del sistema
 ├── herramientas/               # Clientes y gestores de modelos
 │   ├── groq_client.py         # Cliente Groq API
 │   ├── bing_client.py         # Cliente para Bing Search API
@@ -93,18 +96,26 @@ Un sistema completo y avanzado que combina evaluación de modelos de IA, búsque
 │   ├── hooks/                # Custom React hooks
 │   │   └── theme/           # Hooks de tema
 │   ├── types/                # Tipos TypeScript
+│   │   ├── global.d.ts       # Tipos globales
+│   │   ├── modules.d.ts      # Tipos de módulos
+│   │   └── react-types.d.ts  # Tipos React
 │   ├── utils/                # Utilidades frontend
+│   │   ├── cn.ts             # Utilidades de clases CSS
+│   │   ├── format.ts         # Formateo de datos
+│   │   └── validation.ts     # Validaciones
 │   ├── constants/            # Constantes de la aplicación
 │   ├── App.tsx               # Componente principal
-│   └── main.tsx              # Punto de entrada React
+│   ├── main.tsx              # Punto de entrada React
+│   ├── index.css             # Estilos principales
+│   ├── index.html            # HTML base
+│   ├── vite-env.d.ts         # Tipos de Vite
+│   └── README.md             # Documentación del frontend
 ├── configuraciones/           # Archivos de configuración
 │   ├── .env.admin            # Variables de entorno (claves API)
 │   ├── .env.example          # Ejemplo de configuración
-│   ├── requirements.txt      # Dependencias Python
-│   ├── package.json          # Dependencias Node.js
-│   ├── tailwind.config.js    # Configuración Tailwind
-│   ├── vite.config.ts        # Configuración Vite
-│   └── README_COMPETENCIA_MODELOS.md
+│   ├── .gitignore            # Archivos ignorados por Git
+│   ├── pytest.ini           # Configuración de pytest
+│   └── requirements.txt      # Dependencias Python
 ├── scripts/                   # Scripts de utilidad
 │   ├── evaluacion_automatica.py  # Sistema de evaluación
 │   ├── test_competition.py   # Pruebas del sistema
@@ -114,6 +125,7 @@ Un sistema completo y avanzado que combina evaluación de modelos de IA, búsque
 ├── pruebas/                   # Tests automatizados
 │   ├── test_api.py           # Pruebas de API
 │   ├── test_auth.py          # Pruebas de autenticación
+│   ├── test_health.py        # Pruebas de health checks
 │   ├── test_rag.py           # Pruebas del sistema RAG
 │   └── test_web.py           # Pruebas de búsqueda web
 ├── archivos_estaticos/        # Frontend estático alternativo
@@ -125,13 +137,13 @@ Un sistema completo y avanzado que combina evaluación de modelos de IA, búsque
 │   ├── README-REACT.md       # Documentación React
 │   ├── SETUP_INSTRUCTIONS.md # Instrucciones de instalación
 │   ├── TEMPERATURE_FEATURE.md # Documentación de temperatura
-│   └── EVALUACION_SISTEMA.md # Documentación de evaluación
-├── docs/                      # Documentación adicional
-│   └── MODEL_COMPETITION.md  # Documentación de competencia
+│   ├── EVALUACION_SISTEMA.md # Documentación de evaluación
+│   ├── NUEVAS_FUNCIONALIDADES.txt # Nuevas funcionalidades
+│   └── COMANDOS_SISTEMA.txt  # Comandos del sistema
 ├── base_datos/                # Base de datos
 │   └── chroma.sqlite3        # Base de datos vectorial
 ├── resultados/                # Resultados de evaluaciones
-│   └── evaluacion_*.json     # Reportes de evaluación
+│   └── evaluacion_automatica_20250801_222100.json # Último reporte
 └── .github/                   # Configuración GitHub
     └── workflows/            # GitHub Actions
         └── ci.yml            # Pipeline CI/CD
