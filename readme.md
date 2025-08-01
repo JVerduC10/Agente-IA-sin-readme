@@ -108,8 +108,7 @@ Un sistema completo y avanzado que combina evaluación de modelos de IA, búsque
 │   ├── main.tsx              # Punto de entrada React
 │   ├── index.css             # Estilos principales
 │   ├── index.html            # HTML base
-│   ├── vite-env.d.ts         # Tipos de Vite
-│   └── README.md             # Documentación del frontend
+│   └── vite-env.d.ts         # Tipos de Vite
 ├── configuraciones/           # Archivos de configuración
 │   ├── .env.admin            # Variables de entorno (claves API)
 │   ├── .env.example          # Ejemplo de configuración
@@ -133,8 +132,6 @@ Un sistema completo y avanzado que combina evaluación de modelos de IA, búsque
 │   ├── chat.js               # JavaScript del chat
 │   └── styles.css            # Estilos CSS
 ├── documentacion/             # Documentación técnica
-│   ├── README.md             # Documentación principal
-│   ├── README-REACT.md       # Documentación React
 │   ├── SETUP_INSTRUCTIONS.md # Instrucciones de instalación
 │   ├── TEMPERATURE_FEATURE.md # Documentación de temperatura
 │   ├── EVALUACION_SISTEMA.md # Documentación de evaluación
