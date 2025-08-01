@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-from app.dependencies import get_settings
+from servidor.dependencies import get_settings
 from servidor.main import app
 
 client = TestClient(app)
@@ -59,7 +59,7 @@ def override_get_settings(mock_settings):
 
 
 class TestChatEndpoint:
-    @patch("scripts.groq_client.GroqClient.chat_completion")
+    @patch("herramientas.groq_client.GroqClient.chat_completion")
     def test_chat_success(self, mock_chat_completion, override_get_settings):
         mock_chat_completion.return_value = "Test response"
         response = client.post("/chat", json={"prompt": "test"})
@@ -86,3 +86,4 @@ class TestChatEndpointReal:
         response = client.post("/chat", json={"prompt": "Hola"})
         assert response.status_code == 200
         assert "answer" in response.json()
+from servidor.main import app

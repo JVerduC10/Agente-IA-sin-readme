@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from app.settings import Settings
+from servidor.settings import Settings
 
 
 def check_api_key(api_key: str, settings: Settings) -> bool:

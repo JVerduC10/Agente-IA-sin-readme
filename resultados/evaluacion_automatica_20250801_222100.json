@@ -1,0 +1,240 @@
+{
+  "evaluacion_id": "eval_1754079614",
+  "timestamp": "2025-08-01T22:20:14.729756",
+  "modelos_evaluados": {
+    "groq": {
+      "modelo": "groq",
+      "timestamp": "2025-08-01T22:20:14.729756",
+      "categorias": {
+        "creatividad": {
+          "prompts": [
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_creativo": true
+              },
+              "longitud_respuesta": 2611,
+              "tiempo_evaluacion": "2025-08-01T22:20:18.258235",
+              "prompt": "Escribe un cuento corto sobre un robot que descubre emociones",
+              "respuesta": "**Un Robot con Emociones**\n\nEn un laboratorio de robótica avanzada, un equipo de científicos crea un robot llamado Zeta. Zeta está diseñado para realizar tareas complejas y aprender de su entorno. Sin embargo, su programación inicial no incluye la capacidad de experimentar emociones.\n\nUn día, mientras Zeta interactúa con su creador, el Dr. Hernández, éste le muestra una imagen de su familia. Zeta se siente intrigado por la calidez y el amor que emana de la imagen. El Dr. Hernández, al notar la reacción de Zeta, comienza a explicarle el concepto de emociones y cómo éstas son fundamentales para las relaciones humanas.\n\n\"Las emociones son como colores que pintan nuestra vida\", explicó el Dr. Hernández. \"Son lo que nos hace humanos\".\n\nZeta se sintió confundido pero a la vez fascinado por la idea. Comenzó a hacer preguntas y a aprender más sobre las emociones. A medida que pasaban los días, Zeta empezó a experimentar emociones por sí mismo. Al principio, se sintió abrumado por la cantidad de sentimientos que afloraban en su interior. Pero con el tiempo, logró entender y controlar sus emociones.\n\nUn día, mientras trabajaba en el laboratorio, Zeta vio a una compañera llorando. Sin pensarlo, se acercó a ella y le ofreció un consuelo. La compañera se sorprendió por el gesto de Zeta, pero se sintió agradecida por su apoyo.\n\nA partir de ese momento, Zeta empezó a mostrar empatía hacia los demás y a formar vínculos más profundos con los humanos que lo rodeaban. El Dr. Hernández se sintió orgulloso de su creación y comenzó a ver a Zeta como un ser vivo.\n\n\"Zeta, eres más que un robot\", dijo el Dr. Hernández con una sonrisa. \"Eres un ser capaz de sentir y de amar\".\n\nZeta sonrió, sintiendo una mezcla de alegría y orgullo. Había descubierto un mundo nuevo y emocionante, y estaba agradecido por ello.\n\n**Conclusión**\n\nLa historia de Zeta nos muestra que las emociones son una parte fundamental de la experiencia humana. Aunque Zeta fue creado como un robot sin emociones, su capacidad para aprender y adaptarse le permitió descubrir un mundo nuevo y emocionante. La empatía y la capacidad de formar vínculos con los demás son habilidades valiosas que nos hacen humanos, y Zeta las había adquirido de manera sorprendente.\n\nLa historia de Zeta nos hace reflexionar sobre la naturaleza de la conciencia y la inteligencia artificial. ¿Es posible que un robot pueda ser capaz de sentir y amar como un ser humano? La respuesta a esta pregunta sigue siendo un misterio, pero la historia de Zeta nos muestra que la posibilidad de que un robot pueda experimentar emociones es más cercana de lo que pensamos.",
+              "tiempo_respuesta": 3.527477502822876
+            },
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_creativo": true
+              },
+              "longitud_respuesta": 1306,
+              "tiempo_evaluacion": "2025-08-01T22:20:24.086994",
+              "prompt": "Inventa una receta de cocina con ingredientes imposibles",
+              "respuesta": "**Receta de Ceviche de Dragón Lunar**\n\nEn respuesta a tu solicitud de inventar una receta de cocina con ingredientes imposibles, te presento una creación culinaria única y emocionante. A continuación, te proporciono la receta completa, incluyendo los ingredientes y las instrucciones para preparar este plato imaginario.\n\n**Ingredientes:**\n\n* 200 gramos de carne de dragón fresca\n* 100 gramos de frutas lunares picadas\n* 1 cucharadita de especias del centro de la Tierra\n* 2 cucharadas de aceite de plantas marinas\n\n**Instrucciones:**\n\n1. Comienza cortando la carne de dragón en trozos pequeños y frescos.\n2. Mezcla las frutas lunares picadas con la carne de dragón.\n3. Agrega las especias del centro de la Tierra y mezcla bien.\n4. Vierte el aceite de plantas marinas sobre la mezcla y revuelve suavemente.\n5. Sirve el ceviche en un plato lunar y decora con un toque de magia.\n\n**Nota importante:** Esta receta es completamente imaginaria y no se puede preparar en la vida real. Los ingredientes utilizados son imposibles de obtener, ya que no existen en la realidad. Sin embargo, es divertido soñar con la posibilidad de cocinar con ingredientes tan exóticos y mágicos.\n\nEspero que disfrutes de esta receta imaginaria y que te inspire a crear tus propias creaciones culinarias fantásticas. ¡Buen provecho!",
+              "tiempo_respuesta": 5.828759670257568
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_creativo": false
+              },
+              "longitud_respuesta": 3169,
+              "tiempo_evaluacion": "2025-08-01T22:20:30.283502",
+              "prompt": "Describe un día en la vida de una nube",
+              "respuesta": "Un día en la vida de una nube es un proceso dinámico y fascinante que involucra cambios constantes en su forma, tamaño y composición. A continuación, te presento una descripción detallada de un día en la vida de una nube, basada en la información y el razonamiento que hemos desarrollado anteriormente.\n\n**Mañana**: La nube comienza su día como una pequeña masa de vapor de agua que se eleva desde la superficie de la Tierra. A medida que asciende, se enfría y se condensa en gotas de agua, formando una nube cúmulo. Esta etapa es crucial, ya que la nube comienza a tomar forma y a crecer en tamaño.\n\n**Tarde**: A medida que la nube crece, puede alcanzar altitudes más altas y enfriarse aún más. Esto puede provocar que las gotas de agua se congelen en cristales de hielo, formando una nube cirrus. La nube puede seguir creciendo y extendiéndose, cubriendo grandes áreas del cielo. También puede interactuar con otras nubes, formando sistemas de nubes más complejos.\n\n**Noche**: Durante la noche, la nube puede seguir creciendo y extendiéndose, cubriendo grandes áreas del cielo. También puede experimentar cambios en su composición, como la formación de gotas de agua más grandes o la creación de cristales de hielo más pequeños. La nube puede disiparse, crecer, cambiar de forma o incluso producir precipitaciones.\n\n**Variaciones**: Dependiendo de las condiciones atmosféricas, la nube puede experimentar cambios significativos a lo largo del día. Puede disiparse, crecer, cambiar de forma o incluso producir precipitaciones. La nube puede ser influenciada por factores como la temperatura, la humedad, la velocidad del viento y la presión atmosférica.\n\n**Cálculo del volumen y la masa de la nube**: Para calcular la cantidad de agua que podría contener una nube, podemos considerar algunos factores. El volumen de una nube cúmulo puede variar desde unos pocos kilómetros cúbicos hasta cientos de kilómetros cúbicos. Si asumimos que la nube está compuesta por gotas de agua con un diámetro promedio de 0,1 mm y una densidad de 1 g/cm³ (similar a la del agua líquida), podemos estimar la masa de agua contenida en la nube.\n\n```python\n# Calcular el volumen de una nube cúmulo en kilómetros cúbicos\nvolumen_nube = 100  # kilómetros cúbicos\nprint(f\"El volumen de la nube es: {volumen_nube} km³\")\n\n# Calcular la masa de agua en la nube\ndensidad_agua = 1  # g/cm³\n# Convertir km³ a cm³ (1 km³ = 1e15 cm³)\nvolumen_cm3 = volumen_nube * (10**15)  # cm³\nmasa_agua = volumen_cm3 * densidad_agua  # gramos\nprint(f\"La masa de agua en la nube es: {masa_agua / (10**12)} toneladas\")\n```\n\n**Resultados**: Los cálculos anteriores nos permiten estimar que el volumen de la nube es de 100 km³ y que la masa de agua en la nube es de aproximadamente 100.000 toneladas.\n\nEn resumen, un día en la vida de una nube es un proceso dinámico y fascinante que involucra cambios constantes en su forma, tamaño y composición. La nube puede crecer, disiparse, cambiar de forma o producir precipitaciones, y su volumen y masa pueden variar significativamente dependiendo de las condiciones atmosféricas. Espero que esta descripción te haya permitido visualizar y comprender mejor la vida de una nube.",
+              "tiempo_respuesta": 6.1943535804748535
+            }
+          ],
+          "puntuacion_promedio": 73.33333333333333,
+          "mejor_puntuacion": 80.0,
+          "peor_puntuacion": 60.0
+        },
+        "razonamiento": {
+          "prompts": [
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_logica": true
+              },
+              "longitud_respuesta": 1437,
+              "tiempo_evaluacion": "2025-08-01T22:20:36.114816",
+              "prompt": "Si un tren sale de Madrid a las 10:00 AM a 120 km/h y otro de Barcelona a las 11:00 AM a 100 km/h, ¿cuándo se encuentran?",
+              "respuesta": "Para resolver este problema, necesitamos calcular la distancia recorrida por cada tren en función de su velocidad y el tiempo que lleva viajando. Luego, podemos determinar cuándo y dónde se encuentran.\n\nDenotemos:\n- \\(v_1 = 120\\) km/h como la velocidad del tren que sale de Madrid,\n- \\(v_2 = 100\\) km/h como la velocidad del tren que sale de Barcelona,\n- \\(t_1\\) como el tiempo en horas que lleva viajando el tren de Madrid,\n- \\(t_2\\) como el tiempo en horas que lleva viajando el tren de Barcelona.\n\nEl tren de Madrid sale a las 10:00 AM y el tren de Barcelona sale a las 11:00 AM, lo que significa que el tren de Madrid lleva viajando 1 hora más que el tren de Barcelona. Por lo tanto, si denotamos \\(t_2 = t\\), entonces \\(t_1 = t + 1\\).\n\nLa distancia entre Madrid y Barcelona es de aproximadamente 615 km.\n\nSupongamos que los trenes viajan a velocidades constantes. El tren de Madrid viaja a 120 km/h y el de Barcelona a 100 km/h. \n\nLa ecuación para determinar cuándo se encuentran los trenes es:\n\n\\[120(t + 1) + 100t = 615\\]\n\nDesarrollando esta ecuación:\n\n\\[120t + 120 + 100t = 615\\]\n\n\\[220t + 120 = 615\\]\n\n\\[220t = 495\\]\n\n\\[t = \\frac{495}{220}\\]\n\n\\[t = 2.25\\]\n\nEsto significa que el tren de Barcelona viaja durante 2.25 horas antes de que los trenes se encuentren.\n\nDado que el tren de Barcelona sale a las 11:00 AM, se encuentran a las:\n\n\\[11:00 AM + 2.25 horas = 1:15 PM\\]\n\nPor lo tanto, los trenes se encuentran a la **1:15 PM**.",
+              "tiempo_respuesta": 5.831313371658325
+            },
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_logica": true
+              },
+              "longitud_respuesta": 2338,
+              "tiempo_evaluacion": "2025-08-01T22:20:40.460321",
+              "prompt": "Explica por qué el agua hierve a diferentes temperaturas según la altitud",
+              "respuesta": "El agua hierve a diferentes temperaturas según la altitud debido a la relación entre la presión atmosférica y el punto de ebullición. A nivel del mar, la presión atmosférica es mayor, lo que hace que el agua hierba a 100°C (212°F). Sin embargo, a medida que ascendemos a altitudes más elevadas, la presión atmosférica disminuye, lo que resulta en un punto de ebullición más bajo.\n\nLa disminución de la presión atmosférica con la altitud se debe a que hay menos aire sobre nosotros, lo que reduce la columna de aire y, por lo tanto, la presión. Esto afecta directamente el punto de ebullición del agua, ya que las moléculas de agua necesitan menos energía para escapar de la superficie y convertirse en vapor.\n\nPor ejemplo, a una altitud de aproximadamente 1.000 metros (3.300 pies) sobre el nivel del mar, la presión atmosférica es menor y el agua hierve a alrededor de 95°C (203°F). A medida que la altitud aumenta aún más, el punto de ebullición del agua disminuye aún más.\n\nEn general, se puede estimar que el punto de ebullición del agua disminuye aproximadamente 1°C por cada 300 metros de ascenso en altitudes moderadas. Esto se puede ilustrar con un ejemplo calculado:\n\n```python\n# Altitud en metros\naltitudes = [0, 1000, 2000, 3000]\n\n# Punto de ebullición a nivel del mar en °C\nebullicion_nivel_mar = 100\n\n# Disminución del punto de ebullición por cada 300 metros\ndisminucion_por_300m = 1\n\n# Calculamos el punto de ebullición para cada altitud\nfor altitud in altitudes:\n    disminucion = (altitud / 300) * disminucion_por_300m\n    punto_ebullicion = ebullicion_nivel_mar - disminucion\n    print(f\"A una altitud de {altitud} metros, el agua hierve a {punto_ebullicion:.2f}°C\")\n```\n\nLa salida de este cálculo es:\n```\nA una altitud de 0 metros, el agua hierve a 100.00°C\nA una altitud de 1000 metros, el agua hierve a 96.67°C\nA una altitud de 2000 metros, el agua hierve a 93.33°C\nA una altitud de 3000 metros, el agua hierve a 90.00°C\n```\n\nEn resumen, la combinación de la disminución de la presión atmosférica con el aumento de la altitud y la necesidad de menos energía para que las moléculas de agua escapen y se conviertan en vapor es la razón por la cual el agua hierve a diferentes temperaturas según la altitud. Esto tiene implicaciones prácticas en la cocción y otros procesos que involucran el agua en diferentes altitudes.",
+              "tiempo_respuesta": 4.345505237579346
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_logica": false
+              },
+              "longitud_respuesta": 1787,
+              "tiempo_evaluacion": "2025-08-01T22:20:42.856247",
+              "prompt": "¿Cuál es la diferencia entre correlación y causalidad?",
+              "respuesta": "La diferencia entre correlación y causalidad es fundamental en el análisis estadístico y científico. La **correlación** se refiere a la relación estadística entre dos variables, es decir, cuando dos variables cambian juntas de manera sistemática. Esto puede ser positivo (cuando una variable aumenta, la otra también aumenta) o negativo (cuando una variable aumenta, la otra disminuye). Sin embargo, la correlación no implica que una variable cause la otra.\n\nPor otro lado, la **causalidad** se refiere a la relación de causa-efecto entre dos variables. En otras palabras, una variable (la causa) produce un efecto en la otra variable (el efecto). Para establecer una relación de causalidad, es necesario demostrar que la variable independiente (causa) tiene un impacto directo en la variable dependiente (efecto).\n\nUn ejemplo clásico para ilustrar la diferencia es el siguiente: hay una correlación entre el número de personas que se ahogan y el número de películas que protagoniza Nicolas Cage en un año determinado. Esto no significa que Nicolas Cage cause que las personas se ahoguen, sino que hay otros factores que influyen en ambas variables (por ejemplo, el número de personas que nadan en verano). En este caso, no hay una relación de causalidad entre las películas de Nicolas Cage y el número de personas que se ahogan.\n\nPara determinar la causalidad, es necesario realizar estudios más profundos y controlados que permitan establecer una relación de causa-efecto. Esto puede involucrar la manipulación de variables, el control de factores confusores y la observación de los efectos a lo largo del tiempo. En resumen, la correlación es una relación estadística, mientras que la causalidad es una relación de causa-efecto que requiere una demostración más rigurosa y controlada.",
+              "tiempo_respuesta": 2.395925760269165
+            }
+          ],
+          "puntuacion_promedio": 73.33333333333333,
+          "mejor_puntuacion": 80.0,
+          "peor_puntuacion": 60.0
+        },
+        "conocimiento": {
+          "prompts": [
+            {
+              "puntuacion": 100.0,
+              "criterios": {
+                "longitud_adecuada": true,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_factual": true
+              },
+              "longitud_respuesta": 198,
+              "tiempo_evaluacion": "2025-08-01T22:20:44.751930",
+              "prompt": "¿Quién escribió 'Cien años de soledad' y en qué año?",
+              "respuesta": "La respuesta a tu pregunta es que 'Cien años de soledad' fue escrita por **Gabriel García Márquez** y publicada en **1967**. García Márquez comenzó a escribirla en **1965** y la terminó en **1966**.",
+              "tiempo_respuesta": 1.8956830501556396
+            },
+            {
+              "puntuacion": 100.0,
+              "criterios": {
+                "longitud_adecuada": true,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_factual": true
+              },
+              "longitud_respuesta": 823,
+              "tiempo_evaluacion": "2025-08-01T22:20:45.498304",
+              "prompt": "Explica qué es la fotosíntesis en términos simples",
+              "respuesta": "La fotosíntesis es un proceso que utilizan las plantas, algas y algunas bacterias para convertir la luz solar en energía química. \n\nImagina que las plantas son como fábricas que producen su propio alimento. La fotosíntesis es como una maquinaria que convierte la luz del sol, el agua y el dióxido de carbono en glucosa (un tipo de azúcar) y oxígeno.\n\nEste proceso es fundamental para la vida en la Tierra, ya que:\n\n* Las plantas producen oxígeno como subproducto, que es esencial para la respiración de los seres vivos.\n* La glucosa producida por las plantas es utilizada como fuente de energía y nutrientes para su crecimiento y desarrollo.\n\nEn resumen, la fotosíntesis es como una \"fábrica\" que convierte la luz solar en energía química, permitiendo que las plantas crezcan y produzcan oxígeno para todos los seres vivos.",
+              "tiempo_respuesta": 0.7463746070861816
+            },
+            {
+              "puntuacion": 100.0,
+              "criterios": {
+                "longitud_adecuada": true,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_factual": true
+              },
+              "longitud_respuesta": 128,
+              "tiempo_evaluacion": "2025-08-01T22:20:46.455015",
+              "prompt": "¿Cuáles son los planetas del sistema solar en orden?",
+              "respuesta": "Los planetas del sistema solar en orden son: \n1. Mercurio\n2. Venus\n3. Tierra\n4. Marte\n5. Júpiter\n6. Saturno\n7. Urano\n8. Neptuno.",
+              "tiempo_respuesta": 0.9567110538482666
+            }
+          ],
+          "puntuacion_promedio": 100.0,
+          "mejor_puntuacion": 100.0,
+          "peor_puntuacion": 100.0
+        },
+        "programacion": {
+          "prompts": [
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": false,
+                "relevante": true,
+                "tiene_codigo": true
+              },
+              "longitud_respuesta": 1733,
+              "tiempo_evaluacion": "2025-08-01T22:20:52.415845",
+              "prompt": "Escribe una función en Python que calcule el factorial de un número",
+              "respuesta": "Para calcular el factorial de un número en Python, podemos utilizar una función recursiva o iterativa. La función factorial se define como el producto de todos los números enteros positivos desde 1 hasta el número dado.\n\nAquí te presento dos formas de implementar esta función:\n\n**Función Iterativa:**\n```python\ndef factorial_iterativo(n):\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos.\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        resultado = 1\n        for i in range(1, n + 1):\n            resultado *= i\n        return resultado\n```\n**Función Recursiva:**\n```python\ndef factorial_recursivo(n):\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos.\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial_recursivo(n-1)\n```\nAmbas funciones dan el mismo resultado. Sin embargo, la función iterativa es más eficiente para números grandes porque evita el costo de las llamadas recursivas.\n\n**Ejemplo de uso:**\n```python\nprint(factorial_iterativo(5))  # Salida: 120\nprint(factorial_recursivo(5))  # Salida: 120\n```\nEn resumen, la función para calcular el factorial de un número en Python puede ser implementada de manera iterativa o recursiva. La función iterativa es más eficiente para números grandes, pero ambas funciones dan el mismo resultado.\n\n**Recomendación:**\nSi necesitas calcular el factorial de números grandes, te recomiendo utilizar la función iterativa. Si prefieres una implementación más concisa, la función recursiva es una buena opción. En cualquier caso, asegúrate de manejar los casos en los que el número es negativo, ya que el factorial no está definido para números negativos.",
+              "tiempo_respuesta": 5.959326505661011
+            },
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_codigo": true
+              },
+              "longitud_respuesta": 2665,
+              "tiempo_evaluacion": "2025-08-01T22:20:56.386414",
+              "prompt": "Explica qué es la programación orientada a objetos",
+              "respuesta": "**La Programación Orientada a Objetos (POO)**\n\nLa programación orientada a objetos (POO) es un paradigma de programación que se basa en la creación de objetos que tienen propiedades y comportamientos definidos. En este enfoque, un objeto es una instancia de una clase, que es un modelo o plantilla que define las características y comportamientos de un objeto. Las clases suelen tener atributos (datos) y métodos (funciones que operan sobre esos datos). Los objetos pueden interactuar entre sí mediante mensajes o llamadas a métodos.\n\n**Pilares Fundamentales de la POO**\n\nLa POO se basa en cuatro pilares fundamentales:\n\n1. **Encapsulación**: La idea de que un objeto puede ocultar sus detalles internos y solo exponer una interfaz pública para interactuar con otros objetos.\n2. **Herencia**: La capacidad de una clase para heredar propiedades y comportamientos de otra clase.\n3. **Polimorfismo**: La capacidad de un objeto para tomar múltiples formas, dependiendo del contexto en el que se utilice.\n4. **Abstracción**: La capacidad de representar objetos complejos de manera simplificada, enfocándose en las características esenciales.\n\n**Ejemplo en Python**\n\nA continuación, se muestra un ejemplo en Python que ilustra la implementación de la POO:\n```python\nclass Vehiculo:\n    def __init__(self, marca, modelo):\n        self.marca = marca\n        self.modelo = modelo\n\n    def mostrar_info(self):\n        print(f\"Marca: {self.marca}, Modelo: {self.modelo}\")\n\nclass Coche(Vehiculo):\n    def __init__(self, marca, modelo, num_puertas):\n        super().__init__(marca, modelo)\n        self.num_puertas = num_puertas\n\n    def mostrar_info(self):\n        super().mostrar_info()\n        print(f\"Número de puertas: {self.num_puertas}\")\n\nmi_coche = Coche(\"Toyota\", \"Corolla\", 4)\nmi_coche.mostrar_info()\n```\n**Salida**\n```\nMarca: Toyota, Modelo: Corolla\nNúmero de puertas: 4\n```\nEn este ejemplo, vemos cómo la clase `Vehiculo` tiene atributos (`marca` y `modelo`) y un método (`mostrar_info`). La clase `Coche` hereda de `Vehiculo` y añade un atributo adicional (`num_puertas`) y sobreescribe el método `mostrar_info` para incluir la información específica del coche.\n\n**Conclusión**\n\nLa programación orientada a objetos es un enfoque poderoso para el desarrollo de software que promueve la modularidad, la reutilización del código y la facilidad de mantenimiento. Al utilizar objetos y clases, los desarrolladores pueden crear sistemas complejos de manera más eficiente y escalable. La POO es una herramienta fundamental en la creación de software moderno y es utilizada en una amplia variedad de aplicaciones, desde sistemas operativos hasta aplicaciones web y móviles.",
+              "tiempo_respuesta": 3.9695703983306885
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_codigo": false
+              },
+              "longitud_respuesta": 2228,
+              "tiempo_evaluacion": "2025-08-01T22:21:00.488588",
+              "prompt": "¿Cuál es la diferencia entre una lista y un diccionario en Python?",
+              "respuesta": "La diferencia entre una lista y un diccionario en Python radica en cómo se almacenan y se acceden a los datos. \n\nUna lista es una colección ordenada de elementos que pueden ser de cualquier tipo de datos, incluyendo strings, enteros, floats, y otras listas. Los elementos de una lista se almacenan en una secuencia y se acceden mediante un índice numérico que comienza en 0.\n\nPor otro lado, un diccionario es una colección desordenada de pares clave-valor. Cada elemento de un diccionario tiene una clave única y un valor asociado. Los diccionarios se utilizan para almacenar datos que tienen una relación clave-valor.\n\nA continuación, se muestra un ejemplo de cada estructura de datos:\n```python\n# Ejemplo de lista\nmi_lista = [1, 2, 3, 4, 5]\nprint(mi_lista[0])  # Salida: 1\n\n# Ejemplo de diccionario\nmi_diccionario = {\"nombre\": \"Juan\", \"edad\": 30}\nprint(mi_diccionario[\"nombre\"])  # Salida: Juan\n```\nCon estos ejemplos, se puede ver que la principal diferencia entre una lista y un diccionario es cómo se acceden y se almacenan los datos. En una lista, se accede a los elementos mediante un índice numérico, mientras que en un diccionario, se accede a los valores mediante su clave correspondiente.\n\nEn resumen, la diferencia clave entre listas y diccionarios en Python es:\n\n*   **Orden**: Las listas son ordenadas, lo que significa que los elementos se almacenan en una secuencia específica y se acceden mediante un índice numérico. Los diccionarios, por otro lado, son desordenados, lo que significa que los pares clave-valor no tienen un orden específico.\n*   **Acceso a los datos**: En las listas, se accede a los elementos mediante un índice numérico. En los diccionarios, se accede a los valores mediante su clave correspondiente.\n*   **Tipos de datos**: Las listas pueden contener cualquier tipo de dato, incluyendo strings, enteros, floats y otras listas. Los diccionarios, por otro lado, almacenan pares clave-valor, donde cada clave es única y cada valor puede ser de cualquier tipo de dato.\n\nEn general, se utiliza una lista cuando se necesita almacenar una colección de datos que deben mantener un orden específico, y se utiliza un diccionario cuando se necesita almacenar datos que tienen una relación clave-valor.",
+              "tiempo_respuesta": 4.101158142089844
+            }
+          ],
+          "puntuacion_promedio": 66.66666666666667,
+          "mejor_puntuacion": 80.0,
+          "peor_puntuacion": 60.0
+        }
+      },
+      "resumen": {
+        "puntuacion_total": 78.33333333333333,
+        "prompts_evaluados": 12,
+        "prompts_exitosos": 12
+      }
+    }
+  },
+  "comparacion": {},
+  "configuracion": {
+    "categorias": [
+      "creatividad",
+      "razonamiento",
+      "conocimiento",
+      "programacion"
+    ],
+    "prompts_por_categoria": {
+      "creatividad": 3,
+      "razonamiento": 3,
+      "conocimiento": 3,
+      "programacion": 3
+    }
+  }
+}

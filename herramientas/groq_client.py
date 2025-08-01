@@ -3,8 +3,8 @@ from typing import Any, Dict
 
 from groq import Groq
 
-from app.settings import Settings
-from app.usage import DailyTokenCounter
+from servidor.settings import Settings
+from servidor.usage import DailyTokenCounter
 
 logger = logging.getLogger(__name__)
 

@@ -151,16 +151,41 @@ class JarvisChat {
     setupScrollEffects() {
         // Header shrink effect on scroll
         let lastScrollY = window.scrollY;
+        let ticking = false;
+        
+        // Cross-browser requestAnimationFrame fallback
+        const requestAnimFrame = window.requestAnimationFrame || 
+                                window.webkitRequestAnimationFrame || 
+                                window.mozRequestAnimationFrame || 
+                                window.oRequestAnimationFrame || 
+                                window.msRequestAnimationFrame || 
+                                function(callback) { 
+                                    return window.setTimeout(callback, 1000 / 60); 
+                                };
+        
+        const updateHeader = () => {
+            const header = document.querySelector('.header');
+            const headerContent = document.querySelector('.header-content');
+            const body = document.body;
+            
+            if (header && headerContent && body) {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                    body.classList.add('header-scrolled');
+                    headerContent.style.height = '3.5rem';
+                } else {
+                    header.classList.remove('scrolled');
+                    body.classList.remove('header-scrolled');
+                    headerContent.style.height = '4rem';
+                }
+            }
+            ticking = false;
+        };
         
         window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.height = '3rem';
-                    header.style.backdropFilter = 'blur(20px)';
-                } else {
-                    header.style.height = '4rem';
-                }
+            if (!ticking) {
+                requestAnimFrame(updateHeader);
+                ticking = true;
             }
             lastScrollY = window.scrollY;
         });
@@ -217,7 +242,7 @@ class JarvisChat {
     }
     
     async sendToAPI(message) {
-        const response = await fetch('http://localhost:8000/chat/', {
+        const response = await fetch('http://localhost:8080/chat/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
