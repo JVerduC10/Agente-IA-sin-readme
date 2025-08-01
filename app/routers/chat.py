@@ -3,9 +3,9 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, field_validator
 
-from app.settings import Settings
 from app.dependencies import get_settings
 from app.security import check_api_key
+from app.settings import Settings
 from app.usage import DailyTokenCounter
 from scripts.groq_client import GroqClient
 
@@ -25,8 +25,10 @@ class Msg(BaseModel):
             raise ValueError("Prompt too long")
         return v
 
+
 class ChatResponse(BaseModel):
     answer: str
+
 
 class ErrorResponse(BaseModel):
     detail: str
@@ -40,17 +42,19 @@ class ErrorResponse(BaseModel):
         500: {"model": ErrorResponse, "description": "Internal Server Error"},
     },
 )
-async def chat_endpoint(request: Request, msg: Msg, settings: Settings = Depends(get_settings)) -> ChatResponse:
+async def chat_endpoint(
+    request: Request, msg: Msg, settings: Settings = Depends(get_settings)
+) -> ChatResponse:
     api_key = request.headers.get("X-API-Key")
     if settings.API_KEYS and not check_api_key(api_key or "", settings):
         raise HTTPException(status_code=401, detail="Invalid API key")
-    
+
     try:
         token_counter = DailyTokenCounter()
         groq_client = GroqClient(settings, token_counter)
         response = await groq_client.chat_completion(msg.prompt)
         return ChatResponse(answer=response)
-        
+
     except Exception as e:
         logger.error(f"Error in chat endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")

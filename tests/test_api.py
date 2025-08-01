@@ -1,10 +1,13 @@
 from unittest.mock import MagicMock, patch
+
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app
+
 from app.dependencies import get_settings
+from app.main import app
 
 client = TestClient(app)
+
 
 @pytest.fixture
 def mock_settings():
@@ -23,11 +26,13 @@ def mock_settings():
         BREAKER_FAIL_PCT = 50
         BREAKER_WINDOW = 12
         PAGERDUTY_WEBHOOK = ""
-        
+
         @property
         def allowed_origins_list(self):
             return ["*"]
+
     return MockSettings()
+
 
 @pytest.fixture
 def override_get_settings(mock_settings):
@@ -57,6 +62,7 @@ class TestChatEndpoint:
 class TestChatEndpointReal:
     def test_chat_real_api(self, override_get_settings):
         import os
+
         if not os.getenv("GROQ_API_KEY"):
             pytest.skip("Real API key not available")
 
