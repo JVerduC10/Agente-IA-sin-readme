@@ -4,16 +4,17 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.dependencies import get_settings
-from app.routers import chat, health
+from app.routers import chat, health, search
 
 app = FastAPI(
     title="Jarvis Analyst API",
-    version="2.0.0",
-    description="FastAPI chat API with Groq compound-beta model (includes DeepSeek, Meta, and other models)",
+    version="3.0.0",
+    description="FastAPI chat API with Groq compound-beta model and RAG search capabilities",
 )
 
 app.include_router(health.router)
 app.include_router(chat.router)
+app.include_router(search.router, prefix="/api/v1", tags=["search", "rag"])
 
 # Servir archivos estáticos
 app.mount("/static", StaticFiles(directory="static"), name="static")

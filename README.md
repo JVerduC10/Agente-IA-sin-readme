@@ -1,17 +1,17 @@
-# 🤖 Mi Agente IA con Control de Temperatura
+#  Mi Agente IA con Control de Temperatura
 
 ¿Te has preguntado alguna vez por qué a veces la IA te da respuestas demasiado "robóticas" para tareas creativas, o demasiado "imaginativas" cuando necesitas datos precisos? Yo también me frustré con eso, así que construí este agente que ajusta automáticamente su "personalidad" según lo que realmente necesitas.
 
 ## Lo que hace especial a este proyecto
 
-### 🎯 **El cerebro detrás del sistema**
+### **El cerebro detrás del sistema**
 He implementado un sistema de temperatura dinámica que funciona así:
 - **Modo Scientific (0.1)**: Cuando necesitas hechos duros y precisión matemática
 - **Modo Creative (1.3)**: Para cuando quieres que la IA "piense fuera de la caja"
 - **Modo General (0.7)**: El punto dulce para conversaciones normales
 - **Control Manual**: Porque a veces sabes exactamente qué nivel necesitas (0.0 - 2.0)
 
-### 🛠️ **Stack técnico que elegí**
+###  **Stack técnico que elegí**
 Después de probar varias opciones, me decidí por:
 - **Backend**: FastAPI con Python (por su velocidad y facilidad de desarrollo)
 - **IA Engine**: Groq API (acceso a modelos como DeepSeek-R1, Llama, etc.)
@@ -20,14 +20,14 @@ Después de probar varias opciones, me decidí por:
 - **Build Tool**: Vite (compilación ultrarrápida)
 - **Validación**: Pydantic (schemas robustos en el backend)
 
-### 🎨 **La experiencia de usuario**
+###  **La experiencia de usuario**
 No quería otra interfaz aburrida de chat, así que diseñé:
 - Interfaz responsive que se ve bien en cualquier dispositivo
 - Tema oscuro/claro (porque todos tenemos preferencias)
 - Selector intuitivo de tipos de consulta
 - Panel "avanzado" para los que quieren control granular
 
-## 📁 Estructura del Proyecto
+##  Estructura del Proyecto
 
 ```
 ├── app/                    # Backend FastAPI
@@ -57,7 +57,7 @@ No quería otra interfaz aburrida de chat, así que diseñé:
     └── README-REACT.md
 ```
 
-## 🚀 Cómo poner esto en marcha
+##  Cómo poner esto en marcha
 
 ### Lo que necesitas tener instalado
 Antes de empezar, asegúrate de tener:
@@ -98,7 +98,7 @@ npm run dev
 npm run build
 ```
 
-## 💡 Cómo usar el sistema
+##  Cómo usar el sistema
 
 ### La API que construí
 Todo gira alrededor de un endpoint principal que diseñé para ser simple pero poderoso:
@@ -132,7 +132,7 @@ Cada modo está calibrado basado en mi experiencia usando diferentes modelos:
 | `general` | 0.7 | Conversaciones normales, explicaciones balanceadas |
 | `custom` | 0.0-2.0 | Cuando sé exactamente qué nivel de "creatividad" necesito |
 
-## 🎯 Ejemplos reales de uso
+##  Ejemplos reales de uso
 
 ### Cuando necesito precisión científica
 ```bash
@@ -178,14 +178,88 @@ temperature_map = {
 }
 ```
 
+## 🔍 Búsqueda RAG con detección automática de dominio
+
+He implementado un sistema inteligente que decide automáticamente si responder con mi corpus de documentos propio o usar búsqueda web, sin necesidad de listas manuales de palabras clave.
+
+### Cómo funciona la magia
+
+El sistema usa embeddings semánticos para determinar si tu consulta está relacionada con los documentos que he ingestado:
+
+1. **Análisis automático**: Cada consulta se convierte en un vector semántico
+2. **Búsqueda por similitud**: Compara con mi base de conocimiento usando similitud coseno
+3. **Decisión inteligente**: Si encuentra suficientes documentos relevantes (score ≥ 0.35), responde con RAG
+4. **Fallback elegante**: Si no, automáticamente usa búsqueda web
+
+### Subir tus documentos
+
+```bash
+# Subir un PDF (requiere API key)
+curl -X POST "http://localhost:8000/api/v1/ingest" \
+  -H "Authorization: Bearer tu_api_key" \
+  -F "file=@documento.pdf" \
+  -F "source_name=Mi Documento"
+
+# Formatos soportados: PDF, CSV, Markdown
+```
+
+### Usar la búsqueda inteligente
+
+```bash
+# El sistema decide automáticamente RAG vs web
+curl "http://localhost:8000/api/v1/search?q=¿Qué dice mi documento sobre X?"
+
+# Respuesta RAG (si encuentra documentos relevantes):
+{
+  "answer": "Según tus documentos...",
+  "source_type": "rag",
+  "references": [
+    {
+      "source": "documento.pdf",
+      "similarity": 0.87,
+      "snippet": "Fragmento relevante..."
+    }
+  ]
+}
+
+# Respuesta web (si no hay documentos relevantes):
+{
+  "answer": "Según la búsqueda web...",
+  "source_type": "web",
+  "references": [{"url": "..."}]
+}
+```
+
+### Configuración que puedes ajustar
+
+```env
+# En tu archivo .env
+RAG_SCORE_THRESHOLD=0.35    # Similitud mínima (0-1)
+RAG_MIN_HITS=2              # Mínimo de fragmentos relevantes
+RAG_CHUNK_SIZE=300          # Tokens por fragmento
+```
+
+### Métricas y monitoreo
+
+Tengo métricas Prometheus integradas para que veas cómo se comporta:
+
+```bash
+# Ver métricas
+curl http://localhost:8000/api/v1/metrics
+
+# Estadísticas del sistema
+curl http://localhost:8000/api/v1/rag/stats
+```
+
+**Lo genial**: No necesitas configurar listas de palabras clave ni reglas manuales. El sistema aprende automáticamente qué consultas puede responder con tus documentos y cuáles necesitan búsqueda web.
+
 ## 📚 Más documentación técnica
 
 Si quieres profundizar en los detalles de implementación:
-- [🔥 Cómo funciona la temperatura dinámica](./TEMPERATURE_FEATURE.md)
-- [⚙️ Guía detallada de instalación](./SETUP_INSTRUCTIONS.md)
-- [⚛️ Arquitectura del frontend React](./README-REACT.md)
-
-## 🤝 Si quieres contribuir
+- [ Cómo funciona la temperatura dinámica](./TEMPERATURE_FEATURE.md)
+- [ Guía detallada de instalación](./SETUP_INSTRUCTIONS.md)
+- [ Arquitectura del frontend React](./README-REACT.md)
+##  Si quieres contribuir
 
 Me encantaría que otros desarrolladores mejoren esto:
 
@@ -195,11 +269,11 @@ Me encantaría que otros desarrolladores mejoren esto:
 4. Push a tu rama (`git push origin feature/TuIdea`)
 5. Abre un Pull Request
 
-## 📄 Licencia
+##  Licencia
 
 MIT License - básicamente puedes hacer lo que quieras con este código.
 
-## 🙏 Créditos donde corresponde
+##  Créditos donde corresponde
 
 Este proyecto no existiría sin:
 - [Groq](https://groq.com/) - por democratizar el acceso a modelos de IA de calidad
