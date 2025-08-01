@@ -1,17 +1,17 @@
-# 🤖 Mi Agente IA con Control de Temperatura
+#  Mi Agente IA con Control de Temperatura
 
 ¿Te has preguntado alguna vez por qué a veces la IA te da respuestas demasiado "robóticas" para tareas creativas, o demasiado "imaginativas" cuando necesitas datos precisos? Yo también me frustré con eso, así que construí este agente que ajusta automáticamente su "personalidad" según lo que realmente necesitas.
 
 ## Lo que hace especial a este proyecto
 
-### 🎯 **El cerebro detrás del sistema**
+###  **El cerebro detrás del sistema**
 He implementado un sistema de temperatura dinámica que funciona así:
 - **Modo Scientific (0.1)**: Cuando necesitas hechos duros y precisión matemática
 - **Modo Creative (1.3)**: Para cuando quieres que la IA "piense fuera de la caja"
 - **Modo General (0.7)**: El punto dulce para conversaciones normales
 - **Control Manual**: Porque a veces sabes exactamente qué nivel necesitas (0.0 - 2.0)
 
-### 🛠️ **Stack técnico que elegí**
+###  **Stack técnico que elegí**
 Después de probar varias opciones, me decidí por:
 - **Backend**: FastAPI con Python (por su velocidad y facilidad de desarrollo)
 - **IA Engine**: Groq API (acceso a modelos como DeepSeek-R1, Llama, etc.)
@@ -20,14 +20,14 @@ Después de probar varias opciones, me decidí por:
 - **Build Tool**: Vite (compilación ultrarrápida)
 - **Validación**: Pydantic (schemas robustos en el backend)
 
-### 🎨 **La experiencia de usuario**
+###  **La experiencia de usuario**
 No quería otra interfaz aburrida de chat, así que diseñé:
 - Interfaz responsive que se ve bien en cualquier dispositivo
 - Tema oscuro/claro (porque todos tenemos preferencias)
 - Selector intuitivo de tipos de consulta
 - Panel "avanzado" para los que quieren control granular
 
-## 📁 Estructura del Proyecto
+##  Estructura del Proyecto
 
 ```
 ├── app/                    # Backend FastAPI
@@ -57,7 +57,7 @@ No quería otra interfaz aburrida de chat, así que diseñé:
     └── README-REACT.md
 ```
 
-## 🚀 Cómo poner esto en marcha
+##  Cómo poner esto en marcha
 
 ### Lo que necesitas tener instalado
 Antes de empezar, asegúrate de tener:
@@ -98,7 +98,7 @@ npm run dev
 npm run build
 ```
 
-## 💡 Cómo usar el sistema
+##  Cómo usar el sistema
 
 ### La API que construí
 Todo gira alrededor de un endpoint principal que diseñé para ser simple pero poderoso:
@@ -132,7 +132,7 @@ Cada modo está calibrado basado en mi experiencia usando diferentes modelos:
 | `general` | 0.7 | Conversaciones normales, explicaciones balanceadas |
 | `custom` | 0.0-2.0 | Cuando sé exactamente qué nivel de "creatividad" necesito |
 
-## 🎯 Ejemplos reales de uso
+##  Ejemplos reales de uso
 
 ### Cuando necesito precisión científica
 ```bash
@@ -154,7 +154,7 @@ curl -X POST "http://localhost:8000/api/chat" \
   }'
 ```
 
-## 🔧 Configuración y personalización
+##  Configuración y personalización
 
 ### Variables de entorno que uso
 En el archivo `.env` tienes control total sobre el comportamiento:
@@ -178,14 +178,14 @@ temperature_map = {
 }
 ```
 
-## 📚 Más documentación técnica
+##  Más documentación técnica
 
 Si quieres profundizar en los detalles de implementación:
-- [🔥 Cómo funciona la temperatura dinámica](./TEMPERATURE_FEATURE.md)
-- [⚙️ Guía detallada de instalación](./SETUP_INSTRUCTIONS.md)
-- [⚛️ Arquitectura del frontend React](./README-REACT.md)
+- [ Cómo funciona la temperatura dinámica](./TEMPERATURE_FEATURE.md)
+- [ Guía detallada de instalación](./SETUP_INSTRUCTIONS.md)
+- [ Arquitectura del frontend React](./README-REACT.md)
 
-## 🤝 Si quieres contribuir
+## Si quieres contribuir
 
 Me encantaría que otros desarrolladores mejoren esto:
 
@@ -195,11 +195,11 @@ Me encantaría que otros desarrolladores mejoren esto:
 4. Push a tu rama (`git push origin feature/TuIdea`)
 5. Abre un Pull Request
 
-## 📄 Licencia
+##  Licencia
 
 MIT License - básicamente puedes hacer lo que quieras con este código.
 
-## 🙏 Créditos donde corresponde
+##  Créditos donde corresponde
 
 Este proyecto no existiría sin:
 - [Groq](https://groq.com/) - por democratizar el acceso a modelos de IA de calidad
