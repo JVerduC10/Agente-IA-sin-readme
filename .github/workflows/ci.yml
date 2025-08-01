@@ -28,9 +28,9 @@ jobs:
     
     - name: Run tests
       run: |
-        pytest -q
+        pytest -v --tb=short
       env:
-        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY || 'test-key-for-ci' }}
         MAX_PROMPT_LEN: 1000
         ALLOWED_ORIGINS: http://localhost
 
