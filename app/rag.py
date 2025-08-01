@@ -1,9 +1,6 @@
 import logging
 from typing import List, Dict, Any, Optional
 import json
-from sentence_transformers import SentenceTransformer
-import chromadb
-from chromadb.config import Settings as ChromaSettings
 from groq import Groq
 
 from .settings import Settings
@@ -13,31 +10,52 @@ settings = Settings()
 
 class RAGSystem:
     def __init__(self):
-        # Inicializar ChromaDB
-        self.chroma_client = chromadb.PersistentClient(
-            path=settings.CHROMA_PERSIST_DIR,
-            settings=ChromaSettings(anonymized_telemetry=False)
-        )
-        
-        # Obtener colección
-        try:
-            self.collection = self.chroma_client.get_collection(settings.RAG_COLLECTION)
-        except:
-            # Si no existe, crear colección vacía
-            self.collection = self.chroma_client.create_collection(
-                name=settings.RAG_COLLECTION,
-                metadata={"hnsw:space": "cosine"}
-            )
-        
-        # Inicializar modelo de embeddings
-        self.embedder = SentenceTransformer(settings.RAG_EMBEDDING_MODEL)
-        
-        # Inicializar cliente Groq
+        self.chroma_client = None
+        self.collection = None
+        self.embedder = None
         self.groq_client = Groq(api_key=settings.GROQ_API_KEY)
+        self._initialized = False
+    
+    def _lazy_init(self):
+        """Inicialización lazy para evitar problemas de importación"""
+        if self._initialized:
+            return
+            
+        try:
+            import chromadb
+            from chromadb.config import Settings as ChromaSettings
+            from sentence_transformers import SentenceTransformer
+            
+            # Inicializar ChromaDB
+            self.chroma_client = chromadb.PersistentClient(
+                path=settings.CHROMA_PERSIST_DIR,
+                settings=ChromaSettings(anonymized_telemetry=False)
+            )
+            
+            # Obtener colección
+            try:
+                self.collection = self.chroma_client.get_collection(settings.RAG_COLLECTION)
+            except:
+                # Si no existe, crear colección vacía sin embedding function por defecto
+                self.collection = self.chroma_client.create_collection(
+                    name=settings.RAG_COLLECTION,
+                    metadata={"hnsw:space": "cosine"},
+                    embedding_function=None  # Usaremos nuestros propios embeddings
+                )
+            
+            # Inicializar modelo de embeddings
+            self.embedder = SentenceTransformer(settings.RAG_EMBEDDING_MODEL)
+            self._initialized = True
+            
+        except Exception as e:
+            logger.error(f"Error initializing RAG system: {e}")
+            raise
     
     def rag_router(self, query: str) -> Optional[Dict[str, Any]]:
         """Decide si usar RAG o búsqueda web basado en similitud"""
         try:
+            self._lazy_init()
+            
             # Verificar si hay documentos en la colección
             if self.collection.count() == 0:
                 logger.info("No hay documentos en la colección RAG")
@@ -160,9 +178,36 @@ Respuesta:"""
                 "source_type": "rag_error"
             }
     
+    def search_documents(self, query: str, top_k: int = 5) -> Dict[str, Any]:
+        """Busca documentos relevantes usando embeddings"""
+        try:
+            self._lazy_init()
+            
+            # Generar embedding de la consulta
+            query_embedding = self.embedder.encode([query]).tolist()[0]
+            
+            # Buscar documentos similares
+            results = self.collection.query(
+                query_embeddings=[query_embedding],
+                n_results=top_k,
+                include=["documents", "metadatas", "distances"]
+            )
+            
+            return {
+                "documents": results['documents'][0] if results['documents'] else [],
+                "metadatas": results['metadatas'][0] if results['metadatas'] else [],
+                "similarities": [1 - dist for dist in results['distances'][0]] if results['distances'] else [],
+                "query": query
+            }
+            
+        except Exception as e:
+            logger.error(f"Error en search_documents: {e}")
+            return {"error": str(e)}
+    
     def get_collection_info(self) -> Dict[str, Any]:
         """Obtiene información de la colección"""
         try:
+            self._lazy_init()
             count = self.collection.count()
             return {
                 "collection_name": settings.RAG_COLLECTION,

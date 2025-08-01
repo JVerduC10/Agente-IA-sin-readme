@@ -29,7 +29,8 @@ class DocumentIngestor:
         except:
             self.collection = self.chroma_client.create_collection(
                 name=settings.RAG_COLLECTION,
-                metadata={"hnsw:space": "cosine"}
+                metadata={"hnsw:space": "cosine"},
+                embedding_function=None  # Usaremos nuestros propios embeddings
             )
         
         # Inicializar modelo de embeddings
