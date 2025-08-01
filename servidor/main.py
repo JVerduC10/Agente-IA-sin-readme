@@ -25,7 +25,7 @@ if search_available:
     app.include_router(search.router, prefix="/api/v1", tags=["search", "rag"])
 
 # Servir archivos estáticos
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="archivos_estaticos"), name="static")
 
 settings = get_settings()
 app.add_middleware(
@@ -39,7 +39,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return FileResponse("static/index.html")
+    return FileResponse("archivos_estaticos/index.html")
 
 
 if __name__ == "__main__":
