@@ -2,18 +2,89 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Chat IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarvis Analyst</title>
+  
+  <!-- Preload fonts for performance -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <header>🤖 Chat IA</header>
-    <div id="messages" class="messages"></div>
-    <form id="form" autocomplete="off">
-      <input id="prompt" type="text" placeholder="Escribe tu pregunta…" />
-      <button>Enviar</button>
-    </form>
-  </div>
+  <main class="flex min-h-screen flex-col">
+    <!-- Header with trust blue -->
+    <header class="header">
+      <h1 class="header-title">Jarvis Analyst</h1>
+      <div class="ai-badge">AI</div>
+    </header>
+    
+    <!-- Chat section -->
+    <section id="chat" class="chat-section">
+      <div id="messages" class="messages"></div>
+    </section>
+    
+    <!-- Suggestion chips -->
+    <div id="suggestions" class="suggestions">
+      <button class="suggestion-chip" data-suggestion="¿Qué porcentaje de mujeres trabajan en tecnología?">
+        ¿Qué % de mujeres...?
+      </button>
+      <button class="suggestion-chip" data-suggestion="Analiza las tendencias del mercado actual">
+        Tendencias del mercado
+      </button>
+      <button class="suggestion-chip" data-suggestion="¿Cuáles son las mejores prácticas en IA?">
+        Mejores prácticas IA
+      </button>
+    </div>
+    
+    <!-- Footer with input form -->
+    <footer class="footer">
+      <form id="form" class="form" autocomplete="off">
+        <div class="input-container">
+          <textarea 
+            id="prompt" 
+            class="input-field" 
+            rows="1" 
+            placeholder="Escribe tu pregunta…"
+            maxlength="1000"
+          ></textarea>
+          <div class="char-counter">
+            <span id="char-count">0</span>/1000
+          </div>
+        </div>
+        <button type="submit" class="send-button" id="send-btn">
+          <i data-lucide="send" class="send-icon"></i>
+          <span class="send-text">Enviar</span>
+        </button>
+      </form>
+    </footer>
+  </main>
+  
+  <!-- Theme toggle -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+    <i data-lucide="sun" class="theme-icon theme-icon-light"></i>
+    <i data-lucide="moon" class="theme-icon theme-icon-dark"></i>
+  </button>
+  
+  <!-- Loading spinner template -->
+  <template id="loading-template">
+    <div class="loading-spinner">
+      <div class="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <span class="loading-text">Pensando...</span>
+    </div>
+  </template>
+  
   <script src="chat.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
 </body>
 </html>
