@@ -1,18 +1,20 @@
 import logging
 import asyncio
-from typing import List, Dict
+from typing import List, Dict, Any
+import time
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, field_validator
 from typing import Optional, Literal
 
-from app.dependencies import get_settings
-from app.security import check_api_key
-from app.settings import Settings
-from app.usage import DailyTokenCounter
-from app.utils.search import buscar_web, refinar_query, WebSearchError
-from app.utils.scrape import extraer_contenido_multiple, WebScrapingError
-from scripts.groq_client import GroqClient
+from servidor.dependencies import get_settings
+from servidor.security import check_api_key
+from servidor.settings import Settings
+from servidor.usage import DailyTokenCounter
+from servidor.utils.search import buscar_web, refinar_query, WebSearchError
+from servidor.utils.scrape import extraer_contenido_multiple, WebScrapingError
+from herramientas.groq_client import GroqClient
+from herramientas.model_manager import ModelManager, ModelProvider
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["chat"])
@@ -22,6 +24,7 @@ class Msg(BaseModel):
     prompt: str
     query_type: Optional[Literal["scientific", "creative", "general", "web"]] = "general"
     temperature: Optional[float] = None
+    model_provider: Optional[Literal["groq", "compete"]] = None
 
     @field_validator("prompt")
     @classmethod
@@ -42,6 +45,11 @@ class Msg(BaseModel):
 
 class ChatResponse(BaseModel):
     answer: str
+    model_used: Optional[str] = None
+    response_time: Optional[float] = None
+
+
+# CompetitionResponse eliminado - solo se usa Groq ahora
 
 
 class ErrorResponse(BaseModel):
@@ -56,6 +64,8 @@ class ErrorResponse(BaseModel):
         500: {"model": ErrorResponse, "description": "Internal Server Error"},
     },
 )
+
+
 async def chat_endpoint(
     request: Request, msg: Msg, settings: Settings = Depends(get_settings)
 ) -> ChatResponse:
@@ -63,24 +73,90 @@ async def chat_endpoint(
     if settings.API_KEYS and not check_api_key(api_key or "", settings):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
+    start_time = time.time()
+    
     try:
-        # Determinar temperatura basada en el tipo de consulta
+        # Inicializar el administrador de modelos
+        token_counter = DailyTokenCounter()
+        model_manager = ModelManager(settings, token_counter)
+        
+        # Obtener temperatura basada en el tipo de consulta
         if msg.temperature is not None:
             temperature = msg.temperature
         else:
             temperature = settings.temperature_map.get(msg.query_type, 0.7)
         
-        # Verificar si es una consulta web
+        # Determinar el flujo y proveedor basado en los parámetros
         if msg.query_type == "web":
-            answer = await deepsearch_flow(msg.prompt, settings)
-            return ChatResponse(answer=answer)
+            # Para búsquedas web, usar Bing si está disponible, sino el flujo de búsqueda web
+            if "bing" in [p.value for p in model_manager.get_available_providers()]:
+                answer = await model_manager.chat_completion(msg.prompt, temperature, "bing")
+                model_used = "bing"
+            else:
+                answer = await deepsearch_flow(msg.prompt, settings)
+                model_used = "web_search_fallback"
+        elif msg.model_provider == "compete":
+            # Modo competencia: usar solo Groq ya que OpenAI no está disponible
+            compete_result = await model_manager.compete_models(msg.prompt, temperature)
+            return ChatResponse(
+                answer=compete_result["winning_response"],
+                model_used="groq",
+                response_time=time.time() - start_time
+            )
+        else:
+            # Usar el proveedor especificado o el primario (solo Groq disponible)
+            answer = await model_manager.chat_completion(
+                msg.prompt, 
+                temperature, 
+                msg.model_provider
+            )
+            model_used = msg.model_provider or "groq"
         
-        # Flujo tradicional para otros tipos de consulta
-        answer = await legacy_chat_flow(msg.prompt, temperature, settings)
-        return ChatResponse(answer=answer)
+        response_time = time.time() - start_time
+        
+        return ChatResponse(
+            answer=answer,
+            model_used=model_used,
+            response_time=response_time
+        )
 
     except Exception as e:
         logger.error(f"Error in chat endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
+# Endpoint /compete eliminado - funcionalidad integrada en endpoint principal
+
+
+@router.get(
+    "/performance",
+    responses={
+        500: {"model": ErrorResponse, "description": "Internal Server Error"},
+    },
+)
+async def get_performance_stats(
+    request: Request, settings: Settings = Depends(get_settings)
+) -> Dict[str, Any]:
+    """Endpoint para obtener estadísticas de rendimiento de los modelos."""
+    api_key = request.headers.get("X-API-Key")
+    if settings.API_KEYS and not check_api_key(api_key or "", settings):
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
+    try:
+        token_counter = DailyTokenCounter()
+        model_manager = ModelManager(settings, token_counter)
+        
+        stats = model_manager.get_performance_stats()
+        available_providers = [provider.value for provider in model_manager.get_available_providers()]
+        
+        return {
+            "performance_stats": stats,
+            "available_providers": available_providers,
+            "default_provider": settings.DEFAULT_MODEL_PROVIDER
+        }
+
+    except Exception as e:
+        logger.error(f"Error getting performance stats: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
 

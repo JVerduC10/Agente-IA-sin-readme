@@ -1,15 +1,28 @@
 from typing import List
-
+import os
 from pydantic_settings import BaseSettings
+from servidor.crypto import get_encryption_instance, APIKeyEncryption
 
 
 class Settings(BaseSettings):
+    # Claves API (pueden estar encriptadas)
     GROQ_API_KEY: str
+    # OpenAI removido - solo Groq disponible
+    SEARCH_API_KEY: str = ""  # Clave de Bing ya existente
+    
+    # Configuración de encriptación
+    MASTER_PASSWORD: str = "default_admin_key_2024"
+    USE_ENCRYPTED_KEYS: bool = True
+    
+    # Configuración de modelos competitivos
+    PRIMARY_MODEL: str = "groq"  # solo groq disponible
+    GROQ_MODEL: str = "deepseek-r1-distill-llama-70b"  # Modelo DeepSeek como especificado
+    
+    # Configuración general
     API_KEYS: list[str] = []
     MAX_PROMPT_LEN: int = 1000
     ALLOWED_ORIGINS: str = "*"
     GROQ_BASE_URL: str = "https://api.groq.com/openai/v1/chat/completions"
-    GROQ_MODEL: str = "deepseek-r1-distill-llama-70b"  # Modelo DeepSeek como especificado
     REQUEST_TIMEOUT: int = 30
     
     # Configuraciones para búsqueda web
@@ -37,6 +50,25 @@ class Settings(BaseSettings):
             "general": 0.7,     # Moderada para uso general
             "web": 0.3,         # Baja para búsquedas web precisas
         }
+    
+    def get_decrypted_keys(self) -> dict[str, str]:
+        """Obtiene las claves API desencriptadas si está habilitada la encriptación."""
+        if not self.USE_ENCRYPTED_KEYS:
+            return {
+            "GROQ_API_KEY": self.GROQ_API_KEY,
+            "SEARCH_API_KEY": self.SEARCH_API_KEY,
+        }
+        
+        # Importar aquí para evitar dependencias circulares
+        from servidor.crypto import get_encryption_instance
+        
+        encryption = get_encryption_instance()
+        encrypted_keys = {
+            "GROQ_API_KEY": self.GROQ_API_KEY,
+            "SEARCH_API_KEY": self.SEARCH_API_KEY
+        }
+        
+        return encryption.decrypt_multiple_keys(encrypted_keys)
 
     @property
     def allowed_origins_list(self) -> List[str]:

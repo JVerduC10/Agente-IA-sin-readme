@@ -10,7 +10,7 @@ sys.modules['chromadb.config'] = MagicMock()
 sys.modules['sentence_transformers'] = MagicMock()
 sys.modules['onnxruntime'] = MagicMock()
 
-from app.main import app
+from servidor.main import app
 
 client = TestClient(app)
 
@@ -157,7 +157,7 @@ class TestIngestion:
 class TestAPIEndpoints:
     """Test API endpoints"""
     
-    @patch('app.routers.search._get_rag_system')
+    @patch('servidor.routers.search._get_rag_system')
     def test_search_endpoint_rag_response(self, mock_get_rag):
         """Test search endpoint with RAG response"""
         mock_rag = Mock()
@@ -172,7 +172,7 @@ class TestAPIEndpoints:
         
         assert response.status_code == 200
     
-    @patch('app.routers.search._get_rag_system')
+    @patch('servidor.routers.search._get_rag_system')
     def test_search_endpoint_web_fallback(self, mock_get_rag):
         """Test search endpoint with web fallback"""
         mock_rag = Mock()

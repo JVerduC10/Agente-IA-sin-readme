@@ -2,7 +2,7 @@ from functools import lru_cache
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from app.settings import Settings
+from servidor.settings import Settings
 
 security = HTTPBearer()
 
