@@ -1,0 +1,180 @@
+# NUEVAS FUNCIONALIDADES A IMPLEMENTAR
+**Contexto del proyecto:**
+Estoy desarrollando un agente conversacional en Python (FastAPI) con integración a modelos de lenguaje vía la API de Groq. Actualmente, el endpoint principal `/api/chat` recibe un JSON con `{"prompt": "...", "query_type": "...", "temperature": ...}` y responde con una respuesta generada por el modelo (`"answer": "..."`). Ya tengo implementado un sistema de **temperaturas dinámicas** según el `query_type` (p.ej. "scientific" = 0.1, "creative" = 1.3, etc.) y estoy usando el modelo `deepseek-r1-distill-llama-70b` de Groq por defecto.
+
+Quiero **ampliar las capacidades de este agente** para que funcione como un motor de búsqueda inteligente. Basado en investigación reciente, necesito integrar las siguientes funcionalidades nuevas:
+1. **Buscar en la web**: El agente debe poder realizar consultas a un motor de búsqueda (por ejemplo Bing o Google) para obtener información actualizada. Esto implica hacer peticiones HTTP a una API de búsqueda con la pregunta del usuario (o una versión refinada de la misma) y obtener resultados (títulos, snippets, URLs).
+2. **Leer contenido de URLs**: Tras obtener resultados, el agente debe poder extraer texto relevante de las páginas web (por ejemplo usando `requests` + `BeautifulSoup` para obtener el HTML y texto plano de las páginas).
+3. **Bucle iterativo de búsqueda**: Implementar una lógica para iterar si es necesario. Es decir, puede que tras la primera búsqueda y lectura aún no tengamos suficiente respuesta; el agente podría entonces formular una nueva consulta más específica y buscar de nuevo. Debemos permitir varios ciclos de `buscar -> leer -> razonar` antes de dar la respuesta final al usuario.
+4. **Integración con el modelo (RAG)**: Toda la información recopilada de la web debe incorporarse en el prompt pasado al modelo de lenguaje. Probablemente usando el campo de `system` o `assistant` en la llamada de la API de Groq, proporcionar un contexto que incluya los datos de las páginas encontradas, para que el modelo los use al generar la respuesta. Necesito asegurarme de no exceder el límite de tokens; posiblemente resumir el contenido antes de pasarlo.
+5. **Decision logic**: Añadir cierta lógica para decidir cuándo activar la búsqueda web. Por ahora podemos activar siempre para cualquier pregunta factual, o podemos introducir un nuevo `query_type` llamado `"web"` que el frontend enviará cuando el usuario quiera una búsqueda activa.
+6. **Mantener temperaturas y formato**: En respuestas con búsqueda, quiero respuestas precisas y objetivas (podríamos usar temperatura baja). Además, si es posible, que la respuesta mencione datos concretos encontrados (incluso citando la fuente o al menos haciendo referencia a lo descubierto, aunque esto último no es estrictamente necesario en el código, más en el estilo de respuesta).
+7. **No romper la API existente**: Debe seguir funcionando el endpoint `/api/chat` igual que antes para usos que no involucren la web, y solo extenderlo para los nuevos casos.
+
+**Tareas específicas para el asistente:**
+- Modificar `app/routers/chat.py` para integrar un flujo de búsqueda web. Probablemente usar una estructura condicional: si `query_type == "web"` (o si detectamos tal necesidad), ejecutar el nuevo flujo.
+- Escribir una función `buscar_web(query: str) -> List[dict]` que use la API de Bing o Google. Debe tomar un string de búsqueda y devolver una lista de resultados con campos como título, snippet y url. (Puedes simular la estructura de la respuesta JSON de Bing en el código de ejemplo).
+- Escribir una función `leer_pagina(url: str) -> str` que haga web scraping básico: obtén el HTML de la URL y retorna el texto sin etiquetas, posiblemente recortado a N caracteres o resumido.
+- Implementar el ciclo: buscar -> leer -> integrar resultados en el prompt -> llamar al modelo (Groq API). Puedes ilustrarlo con pseudo-código dentro de `chat.py`. No olvides que el modelo se invoca vía Groq (por ejemplo, quizás uso `groq_client.complete(prompt, ...)` o similar; ajusta según como esté implementado en `scripts/groq_client.py`).
+- Asegurarse de que las nuevas dependencias (requests, BeautifulSoup, etc.) estén en requirements si son necesarias.
+- Opcional: mostrar cómo podríamos limitar a, digamos, 3 iteraciones de búsqueda máximo y cómo loggear o depurar las acciones del agente.
+
+Por favor, proporciona el código modificado y explica brevemente cada parte añadida o cambiada. Quiero entender cómo se conectan estas funciones entre sí. **No borres** el manejo de temperatura existente; más bien intégralo (por ejemplo, en modo "web" fija `temperature_map["web"]=0.3` o algo que consideres). 
+
+
+Con este prompt añade ejemplos de codigos bien estructurados para evitar que trae ia piense en lo principal 
+
+te doy un ejemplo de codigos que yo he ehcho para que te inspires y te bases en ellos pero no lo tomoes como si fuera una biblia 
+
+````markdown
+# PROMPT PARA TRAE IA — Fase “Búsqueda web DeepSearch”  
+
+> Añade el modo **web** al endpoint `/api/chat` (FastAPI) para que ejecute un flujo buscar → leer → razonar (máx 2 iteraciones) y construya un prompt RAG con temperatura 0 .3 para el modelo Groq (`deepseek-r1-distill-llama-70b`).  
+> **No toques** el funcionamiento de los modos existentes (`scientific`, `creative`, `general`).  
+
+---
+
+## 1. Archivos nuevos
+
+### `app/utils/search.py`
+```python
+import httpx
+from typing import List, Dict
+from app.settings import settings
+
+async def buscar_web(query: str, top: int = 3) -> List[Dict[str, str]]:
+    """Devuelve los `top` resultados de la API de Bing."""
+    url = f"{settings.SEARCH_ENDPOINT}?q={query}&count={top}"
+    headers = {"Ocp-Apim-Subscription-Key": settings.SEARCH_API_KEY}
+    async with httpx.AsyncClient(timeout=10) as c:
+        r = await c.get(url, headers=headers)
+        r.raise_for_status()
+    data = r.json()
+    return [
+        {"titulo": i["name"], "snippet": i["snippet"], "url": i["url"]}
+        for i in data.get("webPages", {}).get("value", [])[:top]
+    ]
+````
+
+### `app/utils/scrape.py`
+
+```python
+import httpx, re
+from bs4 import BeautifulSoup
+
+async def leer_pagina(url: str, max_len: int = 1000) -> str:
+    """Extrae texto limpio de la URL (máx `max_len` caracteres)."""
+    async with httpx.AsyncClient(timeout=10, follow_redirects=True) as c:
+        r = await c.get(url)
+        r.raise_for_status()
+    soup = BeautifulSoup(r.text, "lxml")
+    for tag in soup(["script", "style"]):
+        tag.decompose()
+    text = re.sub(r"\s+", " ", soup.get_text(" ", strip=True))
+    return text[:max_len]
+```
+
+---
+
+## 2. Cambios en `app/routers/chat.py`
+
+```python
+from app.utils.search import buscar_web
+from app.utils.scrape import leer_pagina
+
+@router.post("/api/chat")
+async def chat_endpoint(payload: ChatPayload):
+    if payload.query_type == "web":
+        ans = await deepsearch_flow(payload.prompt)
+        return {"answer": ans}
+    # ↓ modos scientific / creative / general sin cambios
+    return await legacy_chat_flow(payload)
+
+async def deepsearch_flow(question: str, max_iters: int = 2) -> str:
+    query = await refine_query(question)         # usa LLM o heurística
+    for _ in range(max_iters):
+        results = await buscar_web(query)
+        texts   = await asyncio.gather(*[leer_pagina(r["url"]) for r in results])
+        context = "\n\n".join(texts)
+
+        prompt = (
+            "You are a research assistant. Using ONLY the following web "
+            "information, answer the user question with citations.\n"
+            f"{context}\n\n[USER] {question}"
+        )
+        answer = await groq_client.complete(prompt, temperature=0.3)
+
+        if "NECESITA MÁS BÚSQUEDA" not in answer.upper():
+            return answer
+        query = await refine_query(question + " " + answer)   # segunda vuelta
+    return answer
+```
+
+---
+
+## 3. Ajustes de configuración (`settings.py`)
+
+```python
+class Settings(BaseSettings):
+    SEARCH_API_KEY: str
+    SEARCH_ENDPOINT: str = "https://api.bing.microsoft.com/v7.0/search"
+    temperature_map: dict[str, float] = {
+        "scientific": 0.1,
+        "creative":   1.3,
+        "general":    0.7,
+        "web":        0.3,
+    }
+```
+
+`.env.example`
+
+```
+SEARCH_API_KEY=
+SEARCH_ENDPOINT=https://api.bing.microsoft.com/v7.0/search
+```
+
+---
+
+## 4. Dependencias (añadir a `requirements.txt`)
+
+```
+httpx>=0.27
+beautifulsoup4>=4.12
+lxml>=5.2
+```
+
+---
+
+## 5. Tests mínimos (`tests/test_web.py`)
+
+```python
+async def test_web_search_flow(client):
+    payload = {
+        "prompt": "Premio Nobel 2024",
+        "query_type": "web",
+        "temperature": 0.3
+    }
+    r = await client.post("/api/chat", json=payload)
+    assert r.status_code == 200
+    assert "2024" in r.json()["answer"]
+```
+
+---
+
+## 6. README (añadir sección)
+
+```
+### Modo “web”
+- Actívalo enviando `"query_type": "web"` al endpoint `/api/chat`.
+- El agente consulta Bing, lee hasta 3 páginas y responde con citas fundamentadas.
+- Requiere `SEARCH_API_KEY` en .env.
+```
+
+---
+
+*Entrega:* Código modificado, archivos nuevos, requisitos actualizados, test y README.
+Después de aplicar, ejecuta `pytest`, verifica que `/api/chat` siga funcionando en modos previos y que el modo `"web"` devuelve respuestas fundamentadas.
+
+```
+::contentReference[oaicite:0]{index=0}
+```

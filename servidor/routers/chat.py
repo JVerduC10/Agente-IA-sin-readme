@@ -7,15 +7,14 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, field_validator
 from typing import Optional, Literal
 
-from ..settings import Settings
-from ...seguridad.dependencies import get_settings
-from ...seguridad.security import check_api_key
-from ..usage import DailyTokenCounter
-from ..utils.search import buscar_web, refinar_query, WebSearchError
-from ..utils.scrape import extraer_contenido_multiple, WebScrapingError
+from servidor.dependencies import get_settings
+from servidor.security import check_api_key
+from servidor.settings import Settings
+from servidor.usage import DailyTokenCounter
+from servidor.utils.search import buscar_web, refinar_query, WebSearchError
+from servidor.utils.scrape import extraer_contenido_multiple, WebScrapingError
 from herramientas.groq_client import GroqClient
 from herramientas.model_manager import ModelManager, ModelProvider
-from scripts.deepsearch import run_deepsearch, DeepSearchError
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["chat"])
@@ -71,7 +70,7 @@ async def chat_endpoint(
     request: Request, msg: Msg, settings: Settings = Depends(get_settings)
 ) -> ChatResponse:
     api_key = request.headers.get("X-API-Key")
-    if settings.api_keys_list and not check_api_key(api_key or "", settings):
+    if settings.API_KEYS and not check_api_key(api_key or "", settings):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
     start_time = time.time()
@@ -89,24 +88,11 @@ async def chat_endpoint(
         
         # Determinar el flujo y proveedor basado en los parámetros
         if msg.query_type == "web":
-            # Usar el nuevo sistema DeepSearch modular
-            try:
-                # Función que llama al modelo Groq
-                async def model_fn(prompt: str, temp: float) -> str:
-                    groq_client = GroqClient(settings, token_counter)
-                    return await groq_client.chat_completion(prompt, temp)
-                
-                answer = run_deepsearch(
-                    msg.prompt, 
-                    msg.query_type, 
-                    model_fn, 
-                    settings, 
-                    temperature
-                )
-                model_used = "deepsearch_bing"
-            except DeepSearchError as e:
-                logger.error(f"Error en DeepSearch: {e}")
-                # Fallback al sistema anterior si falla
+            # Para búsquedas web, usar Bing si está disponible, sino el flujo de búsqueda web
+            if "bing" in [p.value for p in model_manager.get_available_providers()]:
+                answer = await model_manager.chat_completion(msg.prompt, temperature, "bing")
+                model_used = "bing"
+            else:
                 answer = await deepsearch_flow(msg.prompt, settings)
                 model_used = "web_search_fallback"
         elif msg.model_provider == "compete":
@@ -153,7 +139,7 @@ async def get_performance_stats(
 ) -> Dict[str, Any]:
     """Endpoint para obtener estadísticas de rendimiento de los modelos."""
     api_key = request.headers.get("X-API-Key")
-    if settings.api_keys_list and not check_api_key(api_key or "", settings):
+    if settings.API_KEYS and not check_api_key(api_key or "", settings):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
     try:

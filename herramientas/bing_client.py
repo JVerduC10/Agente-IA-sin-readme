@@ -38,7 +38,8 @@ class BingClient:
             try:
                 contenidos = await extraer_contenido_multiple(
                     urls, 
-                    self.settings
+                    self.settings.MAX_PAGE_LENGTH,
+                    self.settings.WEB_SCRAPE_TIMEOUT
                 )
             except WebScrapingError as e:
                 logger.warning(f"Error en scraping: {e}")

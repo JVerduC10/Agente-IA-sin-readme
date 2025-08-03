@@ -200,43 +200,13 @@ class ModelManager:
             raise
     
     def get_available_providers(self) -> list[ModelProvider]:
-        """Retorna lista de proveedores disponibles con verificación mejorada."""
-        providers = []
-        
-        # Verificar Groq
+        """Retorna lista de proveedores disponibles."""
+        available = []
         if self.groq_client:
-            try:
-                # Verificar que el cliente tiene configuración válida
-                if hasattr(self.groq_client, 'settings') and self.groq_client.settings.GROQ_API_KEY:
-                    providers.append(ModelProvider.GROQ)
-                    logger.info("✅ Groq client disponible")
-                else:
-                    logger.warning("⚠️ Groq client sin API key válida")
-            except Exception as e:
-                logger.error(f"❌ Error verificando Groq client: {e}")
-        else:
-            logger.warning("⚠️ Groq client no inicializado")
-            
-        # Verificar Bing
+            available.append(ModelProvider.GROQ)
         if self.bing_client:
-            try:
-                # Verificar que el cliente tiene configuración válida
-                if hasattr(self.bing_client, 'settings') and hasattr(self.bing_client.settings, 'get_decrypted_keys'):
-                    decrypted_keys = self.bing_client.settings.get_decrypted_keys()
-                    if decrypted_keys.get("SEARCH_API_KEY"):
-                        providers.append(ModelProvider.BING)
-                        logger.info("✅ Bing client disponible")
-                    else:
-                        logger.warning("⚠️ Bing client sin API key válida")
-                else:
-                    logger.warning("⚠️ Bing client sin configuración válida")
-            except Exception as e:
-                logger.error(f"❌ Error verificando Bing client: {e}")
-        else:
-            logger.warning("⚠️ Bing client no inicializado")
-            
-        logger.info(f"Proveedores disponibles: {[p.value for p in providers]}")
-        return providers
+            available.append(ModelProvider.BING)
+        return available
     
     def get_performance_stats(self) -> Dict[str, Any]:
         """Retorna estadísticas de rendimiento."""
