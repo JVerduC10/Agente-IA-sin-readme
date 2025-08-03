@@ -1,0 +1,115 @@
+### Variables
+@baseUrl = http://localhost:8002
+@apiKey = your-api-key-here
+
+### Health Check
+GET {{baseUrl}}/health
+
+### Chat Endpoint - Simple
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "Hola, ¿cómo estás?"
+}
+
+### Chat Endpoint - Scientific Query
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "Explica la teoría de la relatividad de Einstein",
+  "query_type": "scientific",
+  "temperature": 0.1
+}
+
+### Chat Endpoint - Creative Query
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "Escribe un poema sobre la inteligencia artificial",
+  "query_type": "creative",
+  "temperature": 1.3
+}
+
+### Chat Endpoint - Web Search
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "¿Cuáles son las últimas noticias sobre inteligencia artificial?",
+  "query_type": "web"
+}
+
+### Chat Endpoint - Competition Mode
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "¿Cuál es la capital de Francia?",
+  "model_provider": "compete"
+}
+
+### Chat Endpoint - With API Key
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+X-API-Key: {{apiKey}}
+
+{
+  "prompt": "Test con API key"
+}
+
+### Performance Stats
+GET {{baseUrl}}/chat/performance
+
+### RAG Search (if available)
+POST {{baseUrl}}/api/v1/search
+Content-Type: application/json
+
+{
+  "query": "FastAPI documentation",
+  "top_k": 5
+}
+
+### Upload Document for RAG (if available)
+POST {{baseUrl}}/api/v1/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="document.txt"
+Content-Type: text/plain
+
+Este es un documento de ejemplo para el sistema RAG.
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Test Results
+GET {{baseUrl}}/results/list
+
+### Metrics (Prometheus format)
+GET {{baseUrl}}/metrics
+
+### Error Test - Empty Prompt
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": ""
+}
+
+### Error Test - Long Prompt
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "{{$randomLoremText}}".repeat(100)
+}
+
+### Error Test - Invalid Temperature
+POST {{baseUrl}}/chat/
+Content-Type: application/json
+
+{
+  "prompt": "Test",
+  "temperature": 5.0
+}

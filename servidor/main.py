@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from servidor.dependencies import get_settings
-from servidor.routers import chat, health
+from servidor.routers import chat, health, results
 # Importación lazy de search para evitar problemas con ChromaDB
 try:
     from servidor.routers import search
@@ -21,6 +21,7 @@ app = FastAPI(
 
 app.include_router(health.router)
 app.include_router(chat.router)
+app.include_router(results.router)
 if search_available:
     app.include_router(search.router, prefix="/api/v1", tags=["search", "rag"])
 
@@ -42,7 +43,12 @@ async def root():
     return FileResponse("archivos_estaticos/index.html")
 
 
+@app.get("/results")
+async def results():
+    return FileResponse("archivos_estaticos/results.html")
+
+
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8002)

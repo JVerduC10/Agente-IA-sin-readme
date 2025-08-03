@@ -21,6 +21,8 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 
 
 class Msg(BaseModel):
+    model_config = {"protected_namespaces": ()}
+    
     prompt: str
     query_type: Optional[Literal["scientific", "creative", "general", "web"]] = "general"
     temperature: Optional[float] = None

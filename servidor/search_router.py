@@ -1,15 +1,13 @@
 import logging
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 import requests
 from urllib.parse import quote_plus
 import time
 
 from .rag import rag_system
 from .metrics import metrics, measure_rag_latency
-from .settings import Settings
 
 logger = logging.getLogger(__name__)
-settings = Settings()
 
 class SearchRouter:
     """Router que decide entre RAG y búsqueda web"""
@@ -26,8 +24,7 @@ class SearchRouter:
             # Intentar búsqueda RAG primero
             logger.info(f"Procesando consulta: '{query}'")
             
-            with measure_rag_latency('rag_router'):
-                rag_result = self.rag_system.rag_router(query)
+            rag_result = self.rag_system.rag_router(query)
             
             if rag_result is not None:
                 # RAG encontró resultados relevantes
@@ -47,8 +44,7 @@ class SearchRouter:
                 metrics.record_rag_query('web')
                 metrics.record_rag_fallback()
                 
-                with measure_rag_latency('web_search'):
-                    web_result = self.search_web(query)
+                web_result = self.search_web(query)
                 
                 logger.info(f"Búsqueda web respondió en {time.time() - start_time:.3f}s")
                 return web_result

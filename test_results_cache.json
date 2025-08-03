@@ -1,0 +1,416 @@
+{
+  "timestamp": "2025-08-03T19:31:01.531361",
+  "passed_tests": 36,
+  "failed_tests": 1,
+  "skipped_tests": 1,
+  "total_tests": 38,
+  "test_details": [
+    {
+      "name": "TestChatEndpoint",
+      "status": "failed",
+      "file": "pruebas/test_api.py"
+    },
+    {
+      "name": "TestChatEndpoint",
+      "status": "passed",
+      "file": "pruebas/test_api.py"
+    },
+    {
+      "name": "TestChatEndpoint",
+      "status": "passed",
+      "file": "pruebas/test_api.py"
+    },
+    {
+      "name": "TestChatEndpointReal",
+      "status": "skipped",
+      "file": "pruebas/test_api.py"
+    },
+    {
+      "name": "test_missing_api_key",
+      "status": "passed",
+      "file": "pruebas/test_auth.py"
+    },
+    {
+      "name": "test_valid_api_key",
+      "status": "passed",
+      "file": "pruebas/test_auth.py"
+    },
+    {
+      "name": "test_no_api_keys_configured",
+      "status": "passed",
+      "file": "pruebas/test_auth.py"
+    },
+    {
+      "name": "TestHealthEndpoint",
+      "status": "passed",
+      "file": "pruebas/test_health.py"
+    },
+    {
+      "name": "TestHealthEndpoint",
+      "status": "passed",
+      "file": "pruebas/test_health.py"
+    },
+    {
+      "name": "TestHealthEndpoint",
+      "status": "passed",
+      "file": "pruebas/test_health.py"
+    },
+    {
+      "name": "TestHealthEndpoint",
+      "status": "passed",
+      "file": "pruebas/test_health.py"
+    },
+    {
+      "name": "TestRAGHit",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestRAGHit",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestRAGNoHit",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestRAGNoHit",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestRAGNoHit",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestThresholdConfiguration",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestThresholdConfiguration",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestIngestion",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestIngestion",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestAPIEndpoints",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestAPIEndpoints",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestAPIEndpoints",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestAPIEndpoints",
+      "status": "passed",
+      "file": "pruebas/test_rag.py"
+    },
+    {
+      "name": "TestWebSearch",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebSearch",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebSearch",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebSearch",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebSearch",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebScraping",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebScraping",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebScraping",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebScraping",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestWebScraping",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestChatWebIntegration",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestChatWebIntegration",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestChatWebIntegration",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestChatWebIntegration",
+      "status": "passed",
+      "file": "pruebas/test_web.py"
+    },
+    {
+      "name": "TestChatEndpoint",
+      "status": "failed",
+      "file": "FAILED pruebas/test_api.py"
+    }
+  ],
+  "categories": {
+    "unit_tests": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "test_missing_api_key",
+          "status": "passed",
+          "file": "pruebas/test_auth.py"
+        },
+        {
+          "name": "test_valid_api_key",
+          "status": "passed",
+          "file": "pruebas/test_auth.py"
+        },
+        {
+          "name": "test_no_api_keys_configured",
+          "status": "passed",
+          "file": "pruebas/test_auth.py"
+        }
+      ]
+    },
+    "integration_tests": {
+      "passed": 33,
+      "failed": 2,
+      "skipped": 1,
+      "tests": [
+        {
+          "name": "TestChatEndpoint",
+          "status": "failed",
+          "file": "pruebas/test_api.py"
+        },
+        {
+          "name": "TestChatEndpoint",
+          "status": "passed",
+          "file": "pruebas/test_api.py"
+        },
+        {
+          "name": "TestChatEndpoint",
+          "status": "passed",
+          "file": "pruebas/test_api.py"
+        },
+        {
+          "name": "TestChatEndpointReal",
+          "status": "skipped",
+          "file": "pruebas/test_api.py"
+        },
+        {
+          "name": "TestHealthEndpoint",
+          "status": "passed",
+          "file": "pruebas/test_health.py"
+        },
+        {
+          "name": "TestHealthEndpoint",
+          "status": "passed",
+          "file": "pruebas/test_health.py"
+        },
+        {
+          "name": "TestHealthEndpoint",
+          "status": "passed",
+          "file": "pruebas/test_health.py"
+        },
+        {
+          "name": "TestHealthEndpoint",
+          "status": "passed",
+          "file": "pruebas/test_health.py"
+        },
+        {
+          "name": "TestRAGHit",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestRAGHit",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestRAGNoHit",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestRAGNoHit",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestRAGNoHit",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestThresholdConfiguration",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestThresholdConfiguration",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestIngestion",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestIngestion",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestAPIEndpoints",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestAPIEndpoints",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestAPIEndpoints",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestAPIEndpoints",
+          "status": "passed",
+          "file": "pruebas/test_rag.py"
+        },
+        {
+          "name": "TestWebSearch",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebSearch",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebSearch",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebSearch",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebSearch",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebScraping",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebScraping",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebScraping",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebScraping",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestWebScraping",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestChatWebIntegration",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestChatWebIntegration",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestChatWebIntegration",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestChatWebIntegration",
+          "status": "passed",
+          "file": "pruebas/test_web.py"
+        },
+        {
+          "name": "TestChatEndpoint",
+          "status": "failed",
+          "file": "FAILED pruebas/test_api.py"
+        }
+      ]
+    }
+  },
+  "success": false
+}

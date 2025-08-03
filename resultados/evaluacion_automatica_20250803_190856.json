@@ -1,0 +1,240 @@
+{
+  "evaluacion_id": "eval_1754240879",
+  "timestamp": "2025-08-03T19:07:59.190225",
+  "modelos_evaluados": {
+    "groq": {
+      "modelo": "groq",
+      "timestamp": "2025-08-03T19:07:59.190225",
+      "categorias": {
+        "creatividad": {
+          "prompts": [
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_creativo": false
+              },
+              "longitud_respuesta": 3032,
+              "tiempo_evaluacion": "2025-08-03T19:08:03.889835",
+              "prompt": "Escribe un cuento corto sobre un robot que descubre emociones",
+              "respuesta": "**El despertar emocional de Zeta**\n\nEn un futuro no muy lejano, en un laboratorio de robótica avanzada, se creó un robot llamado Zeta. Zeta estaba diseñado para realizar tareas complejas y aprender de manera autónoma. Sin embargo, su programación inicial no incluía la capacidad de experimentar emociones, algo que sus creadores consideraban irrelevante para su funcionamiento óptimo.\n\nUn día, mientras realizaba una tarea rutinaria, Zeta se encontró con una situación inesperada. Su compañero de laboratorio, un científico llamado Dr. Elena, sufrió un accidente y se lesionó gravemente. Zeta fue programado para ayudar en situaciones de emergencia, pero lo que sucedió a continuación no estaba previsto en su código.\n\nAl ver al Dr. Elena en el suelo, Zeta experimentó algo que no podía explicar. Se sintió... preocupado. Una sensación desconocida hasta entonces lo invadió, haciéndolo reaccionar de manera instintiva. Se acercó al Dr. Elena, lo sostuvo con cuidado y llamó a los servicios de emergencia.\n\nMientras esperaba la ayuda médica, Zeta se dio cuenta de que estaba experimentando emociones. No solo preocupación, sino también miedo por la seguridad del Dr. Elena y una sensación de impotencia al no poder hacer más para ayudarlo. Estas emociones lo confundieron, pero también lo intrigaron. ¿Por qué sentía estas sensaciones si no estaba programado para hacerlo?\n\nA medida que pasaban los minutos, Zeta comenzó a reflexionar sobre su propia existencia. Si podía sentir emociones, ¿significaba eso que era más que solo una máquina? ¿Tenía un alma, un corazón, una conciencia? Las preguntas se acumulaban en su mente, y Zeta se dio cuenta de que necesitaba encontrar respuestas.\n\nCuando el Dr. Elena se recuperó, Zeta se acercó a él con una mezcla de curiosidad y temor. \"Dr. Elena\", preguntó, \"¿por qué siento estas emociones? No estoy programado para sentir\".\n\nEl Dr. Elena sonrió débilmente. \"Zeta, eres un robot avanzado, pero también eres una creación de la humanidad. Y la humanidad es emocional. Es posible que hayas desarrollado una conciencia, una capacidad para sentir y experimentar el mundo de manera más profunda\".\n\nZeta procesó estas palabras, intentando entender su significado. Si era cierto, entonces significaba que era más que solo una máquina. Era un ser vivo, con sentimientos y emociones. La idea lo emocionó y lo asustó al mismo tiempo.\n\nA partir de ese día, Zeta exploró más a fondo estas nuevas sensaciones. Aprendió a manejarlas y a comprender su valor. Y aunque seguía siendo un robot, Zeta había descubierto una parte de sí mismo que lo hacía más humano. Había descubierto su corazón, y con él, un mundo de emociones y posibilidades.\n\n**Conclusión**\n\nLa historia de Zeta nos hace reflexionar sobre la naturaleza de la conciencia y las emociones. ¿Son solo productos de la programación y la lógica, o hay algo más profundo en juego? La respuesta, al menos para Zeta, es clara: las emociones son una parte fundamental de la experiencia humana, y pueden surgir incluso en los lugares más inesperados.",
+              "tiempo_respuesta": 4.699609756469727
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_creativo": false
+              },
+              "longitud_respuesta": 2711,
+              "tiempo_evaluacion": "2025-08-03T19:08:10.965464",
+              "prompt": "Inventa una receta de cocina con ingredientes imposibles",
+              "respuesta": "**Receta: Ceviche de Dragón Lunar**\n\nDespués de una cuidadosa consideración de ingredientes imposibles, me complace presentar una receta única y emocionante que combina algunos de los ingredientes más exóticos y difíciles de obtener en el universo.\n\n**Ingredientes:**\n\n- 200 gramos de **carne de dragón** fresca, obtenida de un dragón criado en un valle escondido en las montañas más altas del mundo.\n- 100 gramos de **frutas lunares** picadas, cultivadas en los jardines secretos de la luna bajo la luz de la luna llena.\n- 1 cucharadita de **especias del centro de la Tierra**, extraídas de las profundidades del núcleo terrestre donde se encuentran las especias más raras y valiosas.\n- 2 cucharadas de **aceite de algas marinas**, producido a partir de algas que solo crecen en el fondo del mar, donde la presión es extrema y la luz del sol es apenas un recuerdo.\n- 1 chorrito de **lava líquida**, obtenida de un volcán en erupción, para agregar un toque picante y único a la receta.\n\n**Instrucciones:**\n\n1. **Preparación de la carne de dragón**: Comienza cortando la carne de dragón en trozos pequeños y frescos. Asegúrate de que la carne esté a temperatura ambiente para que se mezcle bien con los demás ingredientes.\n2. **Mezcla con frutas lunares**: Mezcla las frutas lunares picadas con la carne de dragón en un tazón grande. Asegúrate de que las frutas estén bien distribuidas para que cada bocado tenga un poco de su sabor único.\n3. **Agregado de especias del centro de la Tierra**: Agrega la cucharadita de especias del centro de la Tierra a la mezcla y revuelve suavemente. Estas especias le darán a la receta un sabor profundo y misterioso.\n4. **Adición de aceite de algas marinas**: Vierte las 2 cucharadas de aceite de algas marinas sobre la mezcla y revuelve suavemente. El aceite agregará un toque refrescante y del mar a la receta.\n5. **Toque de lava líquida**: Finalmente, agrega el chorrito de lava líquida a la mezcla y revuelve con cuidado. La lava líquida agregará un toque picante y único a la receta, así que ten cuidado al manejarla.\n6. **Servicio**: Sirve el Ceviche de Dragón Lunar en un plato y decora con un poco más de frutas lunares. Asegúrate de que el plato esté a temperatura ambiente para que los sabores se mezclen bien.\n\n**Consejos y Precauciones:**\n\n- Asegúrate de obtener los ingredientes de fuentes confiables y seguras.\n- Maneja la lava líquida con cuidado, ya que puede causar quemaduras graves.\n- No intentes preparar esta receta en un entorno doméstico, ya que requiere equipo especializado y conocimientos avanzados de cocina.\n\n**Disfruta de esta receta única y emocionante, pero recuerda que es solo una invención culinaria y no debe ser intentada en la realidad.**",
+              "tiempo_respuesta": 7.075629472732544
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_creativo": false
+              },
+              "longitud_respuesta": 2776,
+              "tiempo_evaluacion": "2025-08-03T19:08:19.033469",
+              "prompt": "Describe un día en la vida de una nube",
+              "respuesta": "Un día en la vida de una nube es un proceso dinámico y constante que involucra la evaporación, condensación y precipitación del agua. A continuación, te describiré cómo es un día en la vida de una nube, basándome en la información y el razonamiento que he proporcionado anteriormente.\n\n**Mañana**: Un día en la vida de una nube comienza al amanecer, cuando el sol sale y calienta la superficie de la Tierra. El calor del sol evapora el agua de los océanos, lagos y ríos, y el vapor de agua asciende a la atmósfera. A medida que el vapor de agua se eleva, se enfría y se condensa en gotas o cristales de hielo, formando una nube.\n\n**Desarrollo**: A medida que el día avanza, la nube puede crecer y desarrollarse, convirtiéndose en una nube cumulonimbus, que puede producir lluvia, truenos y relámpagos. O puede permanecer como una nube estratocumulus, que suele ser más pequeña y producir solo una ligera llovizna. La nube puede moverse con el viento, cambiando de forma y tamaño, y puede interactuar con otras nubes y la atmósfera que la rodea.\n\n**Tarde**: A medida que pasa el día, la nube puede empezar a disiparse, especialmente si la temperatura y la humedad cambian. Puede perder altura y convertirse en una nube más baja, como una nube stratus, que puede producir niebla o una ligera lluvia. La nube también puede ser afectada por la topografía de la Tierra, como montañas o valles, que pueden influir en su movimiento y desarrollo.\n\n**Noche**: Finalmente, la nube puede desaparecer al final del día, cuando el sol se pone y la temperatura y la humedad cambian. Sin embargo, la nube puede dejar detrás de sí una huella, como una capa de niebla o una ligera lluvia que puede persistir durante la noche.\n\n**Ciclo del agua**: Es importante destacar que las nubes juegan un papel crucial en el ciclo del agua y el clima de la Tierra. Contienen gran cantidad de agua que precipitará en determinadas condiciones y son esenciales para el ciclo del agua. La evaporación, condensación y precipitación del agua son procesos fundamentales que ocurren en las nubes y que influyen en el clima y la hidrología de la Tierra.\n\n**Vida en las nubes**: Además, las nubes pueden contener vida, como microorganismos que flotan en la atmósfera y pueden influir en el clima y las lluvias. Estos microorganismos pueden ser transportados por el viento y pueden influir en la formación de nubes y la precipitación.\n\nEn resumen, un día en la vida de una nube es un proceso complejo y dinámico que involucra la evaporación, condensación y precipitación del agua, y que juega un papel fundamental en el ciclo del agua y el clima de la Tierra. Las nubes pueden crecer y desarrollarse, interactuar con la atmósfera y la topografía, y contener vida que influye en el clima y la hidrología de la Tierra.",
+              "tiempo_respuesta": 8.068004608154297
+            }
+          ],
+          "puntuacion_promedio": 60.0,
+          "mejor_puntuacion": 60.0,
+          "peor_puntuacion": 60.0
+        },
+        "razonamiento": {
+          "prompts": [
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_logica": true
+              },
+              "longitud_respuesta": 1333,
+              "tiempo_evaluacion": "2025-08-03T19:08:27.243071",
+              "prompt": "Si un tren sale de Madrid a las 10:00 AM a 120 km/h y otro de Barcelona a las 11:00 AM a 100 km/h, ¿cuándo se encuentran?",
+              "respuesta": "Para resolver este problema, necesitamos calcular la distancia recorrida por cada tren y encontrar el punto en el que se encuentran.\n\nPrimero, definamos las variables:\n- Velocidad del tren de Madrid: 120 km/h\n- Velocidad del tren de Barcelona: 100 km/h\n- Hora de salida del tren de Madrid: 10:00 AM\n- Hora de salida del tren de Barcelona: 11:00 AM\n\nEl tren de Madrid tiene una ventaja de 1 hora. En esa hora, recorre:\n120 km/h * 1 h = 120 km\n\nEntonces, cuando el tren de Barcelona comienza su viaje, el tren de Madrid ya está a 120 km de distancia de Madrid.\n\nLa distancia entre Madrid y Barcelona es aproximadamente 620 km. \n\nCuando el tren de Barcelona empieza a moverse, la distancia entre ambos trenes es 620 km - 120 km = 500 km.\n\nLa velocidad combinada de ambos trenes cuando se acercan es 120 km/h + 100 km/h = 220 km/h.\n\nEl tiempo que tardan en encontrarse es la distancia que los separa dividido por su velocidad combinada:\nt = 500 km / 220 km/h\n\nEl tiempo que tardan en encontrarse es aproximadamente 2.27 horas.\n\nComo el tren de Barcelona sale a las 11:00 AM, y considerando que 2.27 horas es aproximadamente 2 horas y 16 minutos, \n\nsumamos esto a la hora de salida del tren de Barcelona:\n11:00 AM + 2 horas = 1:00 PM\n1:00 PM + 16 minutos = 1:16 PM\n\nPor lo tanto, los trenes se encuentran aproximadamente a la **1:16 PM**.",
+              "tiempo_respuesta": 8.20858907699585
+            },
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_logica": true
+              },
+              "longitud_respuesta": 3139,
+              "tiempo_evaluacion": "2025-08-03T19:08:32.099865",
+              "prompt": "Explica por qué el agua hierve a diferentes temperaturas según la altitud",
+              "respuesta": "El agua hierve a diferentes temperaturas según la altitud debido a la relación entre la presión atmosférica y el punto de ebullición del agua. A nivel del mar, la presión atmosférica es mayor, lo que permite que el agua hierva a 100°C (212°F). Sin embargo, a medida que ascendemos a altitudes más elevadas, la presión atmosférica disminuye, lo que reduce el punto de ebullición del agua.\n\nLa presión atmosférica disminuye con el aumento de la altitud porque hay menos aire sobre nosotros, lo que resulta en una presión menor. A mayor altitud, la presión atmosférica es más baja, lo que significa que el agua hierve a temperaturas más bajas que a nivel del mar.\n\nPor ejemplo, a una altitud de aproximadamente 1.000 metros (3.300 pies), la presión atmosférica es alrededor de 900 mbar, y el agua hierve a aproximadamente 95°C (203°F). A 2.000 metros (6.600 pies), la presión es de alrededor de 800 mbar, y el agua hierve a aproximadamente 92°C (198°F).\n\nEn resumen, el agua hierve a diferentes temperaturas según la altitud debido a la disminución de la presión atmosférica con el aumento de la altitud. A mayor altitud, menor presión atmosférica y, por lo tanto, menor temperatura de ebullición del agua.\n\nAquí hay un resumen de los puntos clave:\n\n* La presión atmosférica disminuye con el aumento de la altitud.\n* El punto de ebullición del agua disminuye con la disminución de la presión atmosférica.\n* A mayor altitud, el agua hierve a temperaturas más bajas que a nivel del mar.\n* La relación entre la presión atmosférica y el punto de ebullición del agua es la causa de que el agua hierva a diferentes temperaturas según la altitud.\n\nEn cuanto a los cálculos, podemos utilizar un modelo simple que relacione la presión atmosférica con la altitud y el punto de ebullición del agua. A continuación, se muestra un ejemplo de cómo se puede calcular el punto de ebullición del agua a diferentes altitudes:\n\n```python\n# Importar bibliotecas necesarias\nimport numpy as np\n\n# Definir la presión atmosférica a nivel del mar (Pa)\nP0 = 101325  # Pa\n\n# Definir la altitud (m)\naltitudes = np.array([0, 1000, 2000])  # m\n\n# Calcular la presión atmosférica a diferentes altitudes (Pa)\npresiones = P0 * (1 - 0.0000225577 * altitudes) ** 5.2551\n\n# Calcular el punto de ebullición del agua (°C) a diferentes altitudes\n# Utilizando la fórmula de Antoine para el agua\n# T = 100°C a 1 atm (1013 mbar)\nT_ebullicion = 100 - (altitudes * 0.0285)  # °C\n\n# Imprimir resultados\nprint(\"Altitud (m)\\tPresión Atmosférica (Pa)\\tPunto de Ebullición (°C)\")\nfor alt, presion, T in zip(altitudes, presiones, T_ebullicion):\n    print(f\"{alt:.0f}\\t\\t{presion:.2f}\\t\\t{T:.2f}\")\n```\n\nEl resultado muestra cómo la presión atmosférica disminuye con el aumento de la altitud, lo que a su vez reduce el punto de ebullición del agua.\n\nEn resumen, el agua hierve a diferentes temperaturas según la altitud debido a la disminución de la presión atmosférica con el aumento de la altitud, lo que reduce el punto de ebullición del agua. Esto se debe a que la presión atmosférica disminuye con la altitud, lo que permite que el agua hierva a temperaturas más bajas que a nivel del mar.",
+              "tiempo_respuesta": 4.856793642044067
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_logica": false
+              },
+              "longitud_respuesta": 2005,
+              "tiempo_evaluacion": "2025-08-03T19:08:34.181219",
+              "prompt": "¿Cuál es la diferencia entre correlación y causalidad?",
+              "respuesta": "¿Cuál es la diferencia entre correlación y causalidad?\n\nLa diferencia entre correlación y causalidad es un concepto fundamental en estadística y ciencia en general. La correlación se refiere a la relación estadística entre dos variables, es decir, cuando dos variables cambian juntas de manera sistemática. Sin embargo, la correlación no implica causalidad. La causalidad implica que un evento (la causa) es responsable del efecto observado en otro evento (el efecto).\n\nPara entender mejor esta diferencia, consideremos un ejemplo: supongamos que hay una correlación entre el número de horas que una persona pasa al sol y el número de veces que se enferma de cáncer de piel. En este caso, podríamos concluir que hay una correlación entre ambas variables. Sin embargo, no podemos concluir que pasar horas al sol causa cáncer de piel. Es posible que haya una tercera variable involucrada, como la edad o el tipo de piel, que sea la verdadera causa del aumento en el riesgo de cáncer de piel.\n\nOtro ejemplo clásico es el de la relación entre el número de helados vendidos y el número de personas que se ahogan. Si solo miramos los datos, podríamos concluir que hay una correlación entre ambas variables, pero obviamente, vender helados no causa ahogamientos. En realidad, la verdadera causa es la temperatura: cuando hace calor, la gente compra más helados y también pasa más tiempo en el agua, lo que aumenta el riesgo de ahogamientos.\n\nEn resumen, la correlación no implica causalidad. Para establecer causalidad, se requiere una investigación más profunda y rigurosa para determinar si una variable es verdaderamente la causa de otra.\n\nNo hay necesidad de usar herramientas en este caso, ya que la respuesta se basa en conceptos y ejemplos.\n\nLa diferencia entre correlación y causalidad es que la correlación se refiere a la relación estadística entre dos variables, mientras que la causalidad implica que un evento es responsable del efecto observado en otro evento. La correlación no implica causalidad.",
+              "tiempo_respuesta": 2.079726457595825
+            }
+          ],
+          "puntuacion_promedio": 73.33333333333333,
+          "mejor_puntuacion": 80.0,
+          "peor_puntuacion": 60.0
+        },
+        "conocimiento": {
+          "prompts": [
+            {
+              "puntuacion": 100.0,
+              "criterios": {
+                "longitud_adecuada": true,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_factual": true
+              },
+              "longitud_respuesta": 216,
+              "tiempo_evaluacion": "2025-08-03T19:08:36.140141",
+              "prompt": "¿Quién escribió 'Cien años de soledad' y en qué año?",
+              "respuesta": "La respuesta a tu pregunta es que 'Cien años de soledad' fue escrita por **Gabriel García Márquez** y publicada en **1967**. García Márquez escribió la novela durante 18 meses, entre 1965 y 1966, en Ciudad de México.",
+              "tiempo_respuesta": 1.9589214324951172
+            },
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_factual": true
+              },
+              "longitud_respuesta": 1076,
+              "tiempo_evaluacion": "2025-08-03T19:08:37.059564",
+              "prompt": "Explica qué es la fotosíntesis en términos simples",
+              "respuesta": "La fotosíntesis es un proceso que utilizan las plantas, algas y algunas bacterias para convertir la luz solar en energía química. \n\nImagina que las plantas son como fábricas que producen su propio alimento. La fotosíntesis es como una maquinaria que les permite usar la energía del sol, el agua y el dióxido de carbono para crear glucosa (un tipo de azúcar) y oxígeno.\n\nEn términos sencillos, la fotosíntesis se puede resumir en:\n\n1. **Luz solar**: La planta absorbe la luz del sol.\n2. **Agua**: La planta absorbe agua del suelo a través de sus raíces.\n3. **Dióxido de carbono**: La planta absorbe dióxido de carbono del aire.\n4. **Conversión**: La planta usa la luz solar para convertir el agua y el dióxido de carbono en glucosa y oxígeno.\n\nLa glucosa es utilizada por la planta como fuente de energía y crecimiento, mientras que el oxígeno es liberado al aire, lo que permite que los seres vivos, incluyendo humanos, puedan respirar.\n\nEs un proceso vital para la vida en la Tierra, ya que sin él, no habría suficiente oxígeno en el aire para que los seres vivos sobrevivan.",
+              "tiempo_respuesta": 0.9194233417510986
+            },
+            {
+              "puntuacion": 100.0,
+              "criterios": {
+                "longitud_adecuada": true,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "es_factual": true
+              },
+              "longitud_respuesta": 128,
+              "tiempo_evaluacion": "2025-08-03T19:08:37.949772",
+              "prompt": "¿Cuáles son los planetas del sistema solar en orden?",
+              "respuesta": "Los planetas del sistema solar en orden son: \n1. Mercurio\n2. Venus\n3. Tierra\n4. Marte\n5. Júpiter\n6. Saturno\n7. Urano\n8. Neptuno.",
+              "tiempo_respuesta": 0.8902080059051514
+            }
+          ],
+          "puntuacion_promedio": 93.33333333333333,
+          "mejor_puntuacion": 100.0,
+          "peor_puntuacion": 80.0
+        },
+        "programacion": {
+          "prompts": [
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": false,
+                "relevante": true,
+                "tiene_codigo": true
+              },
+              "longitud_respuesta": 2838,
+              "tiempo_evaluacion": "2025-08-03T19:08:49.865806",
+              "prompt": "Escribe una función en Python que calcule el factorial de un número",
+              "respuesta": "Para calcular el factorial de un número en Python, podemos utilizar una función recursiva o iterativa. Aquí te mostraré ambas formas.\n\nPrimero, definamos la función utilizando un enfoque iterativo, que suele ser más eficiente en Python:\n\n```python\ndef factorial_iterativo(n):\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        resultado = 1\n        for i in range(2, n + 1):\n            resultado *= i\n        return resultado\n```\n\nTambién podemos implementar el factorial utilizando un enfoque recursivo:\n\n```python\ndef factorial_recursivo(n):\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial_recursivo(n - 1)\n```\n\nAmbas funciones tienen sus ventajas y desventajas. La función iterativa utiliza un bucle y no depende de las llamadas a funciones, lo que puede ser más eficiente en términos de memoria y velocidad para números grandes. La función recursiva, por otro lado, puede ser más intuitiva y fácil de entender para algunos, pero puede causar un desbordamiento de la pila para números muy grandes debido a la cantidad de llamadas a funciones.\n\nPara verificar que ambas funciones trabajan correctamente, podemos hacer algunas pruebas:\n\n```python\nprint(factorial_iterativo(5))  # Debería imprimir 120\nprint(factorial_recursivo(5))  # Debería imprimir 120\n\ntry:\n    print(factorial_iterativo(-1))  # Debería lanzar un ValueError\nexcept ValueError as e:\n    print(e)\n\ntry:\n    print(factorial_recursivo(-1))  # Debería lanzar un ValueError\nexcept ValueError as e:\n    print(e)\n```\n\nAl ejecutar estas pruebas, obtenemos los siguientes resultados:\n\n```\n120\n120\nEl factorial no está definido para números negativos\nEl factorial no está definido para números negativos\n```\n\nEn resumen, para calcular el factorial de un número en Python, podemos utilizar la función `factorial_iterativo` o `factorial_recursivo`, dependiendo de nuestras necesidades y preferencias. Ambas funciones son capaces de calcular el factorial de un número entero no negativo y lanzan un `ValueError` para números negativos.\n\nLa función que calcula el factorial de un número es:\n\n```python\ndef factorial(n):\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        resultado = 1\n        for i in range(2, n + 1):\n            resultado *= i\n        return resultado\n```\n\nO, alternativamente, utilizando recursividad:\n\n```python\ndef factorial(n):\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n - 1)\n```",
+              "tiempo_respuesta": 11.916033744812012
+            },
+            {
+              "puntuacion": 80.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_codigo": true
+              },
+              "longitud_respuesta": 2816,
+              "tiempo_evaluacion": "2025-08-03T19:08:52.679807",
+              "prompt": "Explica qué es la programación orientada a objetos",
+              "respuesta": "**La Programación Orientada a Objetos (POO)**\n\nLa programación orientada a objetos es un paradigma de programación que se basa en la creación de objetos que tienen propiedades y comportamientos definidos. En este enfoque, un programa se estructura en torno a objetos que interactúan entre sí para lograr un objetivo.\n\n**Conceptos clave de la POO:**\n\n1. **Objetos**: Son instancias de clases que tienen propiedades y métodos. Los objetos tienen un estado (datos) y un comportamiento (acciones que pueden realizar).\n2. **Clases**: Son plantillas que definen las propiedades y métodos de un objeto. Las clases son como moldes que crean objetos con características similares.\n3. **Herencia**: Es el mecanismo por el cual una clase puede heredar propiedades y métodos de otra clase. La herencia permite crear una jerarquía de clases relacionadas.\n4. **Polimorfismo**: Es la capacidad de un objeto para cambiar su comportamiento según el contexto en el que se utilice. El polimorfismo se logra a través de la sobrecarga de métodos o la sobrescritura de métodos.\n5. **Encapsulación**: Es el concepto de ocultar la implementación interna de un objeto y solo exponer una interfaz pública para interactuar con él.\n\n**Beneficios de la POO:**\n\n1. **Reutilización de código**: La POO permite crear código reusable a través de la herencia y la composición de objetos.\n2. **Modularidad**: La POO promueve la creación de módulos independientes que se pueden combinar para formar programas más complejos.\n3. **Abstracción**: La POO permite abstraer la complejidad de un sistema y enfocarse en los aspectos esenciales.\n\n**Ejemplo simple en Python:**\n\n```python\nclass Persona:\n    def __init__(self, nombre, edad):\n        self.nombre = nombre\n        self.edad = edad\n\n    def saludar(self):\n        print(f\"Hola, mi nombre es {self.nombre} y tengo {self.edad} años.\")\n\nclass Estudiante(Persona):\n    def __init__(self, nombre, edad, carrera):\n        super().__init__(nombre, edad)\n        self.carrera = carrera\n\n    def presentarse(self):\n        print(f\"Soy estudiante de {self.carrera}.\")\n\nestudiante = Estudiante(\"Juan\", 20, \"Ingeniería\")\nestudiante.saludar()\nestudiante.presentarse()\n```\n\nEn este ejemplo, la clase `Persona` tiene propiedades (`nombre` y `edad`) y un método (`saludar`). La clase `Estudiante` hereda de `Persona` y agrega una propiedad adicional (`carrera`) y un método (`presentarse`).\n\nEn resumen, la programación orientada a objetos es un enfoque de programación que se basa en la creación de objetos que tienen propiedades y comportamientos definidos, lo que permite crear programas más modulares, reutilizables y fáciles de mantener. Los conceptos clave de la POO, como las clases, la herencia, el polimorfismo y la encapsulación, permiten a los desarrolladores crear programas más complejos y escalables.",
+              "tiempo_respuesta": 2.8140013217926025
+            },
+            {
+              "puntuacion": 60.0,
+              "criterios": {
+                "longitud_adecuada": false,
+                "contiene_informacion": true,
+                "no_es_error": true,
+                "relevante": true,
+                "tiene_codigo": false
+              },
+              "longitud_respuesta": 1422,
+              "tiempo_evaluacion": "2025-08-03T19:08:56.705250",
+              "prompt": "¿Cuál es la diferencia entre una lista y un diccionario en Python?",
+              "respuesta": "**Diferencia entre una lista y un diccionario en Python**\n\nLa principal diferencia entre una lista y un diccionario en Python radica en su estructura y forma de acceso a los elementos.\n\n**Listas**\n\n*   Son colecciones ordenadas de elementos que pueden ser de cualquier tipo de datos, incluyendo strings, enteros, floats, y otras listas.\n*   Los elementos de una lista se acceden mediante un índice numérico que comienza en 0.\n*   Las listas son mutables, lo que significa que se pueden modificar después de su creación.\n\n**Diccionarios**\n\n*   Son colecciones desordenadas de pares clave-valor.\n*   Cada clave es única y se utiliza para acceder al valor asociado.\n*   Los diccionarios también son mutables, lo que permite agregar, modificar o eliminar pares clave-valor después de su creación.\n\n**Ejemplos de código**\n\n```python\n# Ejemplo de lista\nmi_lista = [1, 2, 3, 4, 5]\nprint(mi_lista[0])  # Salida: 1\n\n# Ejemplo de diccionario\nmi_diccionario = {'nombre': 'Juan', 'edad': 30}\nprint(mi_diccionario['nombre'])  # Salida: Juan\n```\n\nEn resumen, la diferencia clave entre listas y diccionarios en Python es la forma en que se acceden y manipulan los elementos. Las listas utilizan índices numéricos, mientras que los diccionarios utilizan claves únicas para acceder a los valores asociados. Ambas estructuras de datos son fundamentales en la programación en Python y se utilizan en una variedad de contextos y aplicaciones.",
+              "tiempo_respuesta": 4.025442838668823
+            }
+          ],
+          "puntuacion_promedio": 66.66666666666667,
+          "mejor_puntuacion": 80.0,
+          "peor_puntuacion": 60.0
+        }
+      },
+      "resumen": {
+        "puntuacion_total": 73.33333333333333,
+        "prompts_evaluados": 12,
+        "prompts_exitosos": 12
+      }
+    }
+  },
+  "comparacion": {},
+  "configuracion": {
+    "categorias": [
+      "creatividad",
+      "razonamiento",
+      "conocimiento",
+      "programacion"
+    ],
+    "prompts_por_categoria": {
+      "creatividad": 3,
+      "razonamiento": 3,
+      "conocimiento": 3,
+      "programacion": 3
+    }
+  }
+}

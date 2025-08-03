@@ -1,0 +1,30 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "sidthesloth.vscode-fastapi-snippets",
+    "humao.rest-client",
+    "ms-python.black-formatter",
+    "ms-python.isort",
+    "ritwickdey.liveserver",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "ms-toolsai.jupyter",
+    "ms-toolsai.notebook-renderer",
+    "dongli.python-pandas-snippets",
+    "randomfractalsinc.vscode-data-preview",
+    "anweber.httpyac",
+    "foxundermoon.shell-format",
+    "mikestead.dotenv",
+    "yzhang.markdown-all-in-one",
+    "LittleFoxTeam.vscode-python-test-adapter",
+    "ms-azuretools.vscode-docker",
+    "eamodio.gitlens",
+    "github.copilot",
+    "redhat.vscode-yaml",
+    "gruntfuggly.todo-tree",
+    "alefragnani.Bookmarks",
+    "usernamehw.errorlens"
+  ]
+}
