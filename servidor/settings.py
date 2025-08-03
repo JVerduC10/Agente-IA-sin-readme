@@ -1,7 +1,7 @@
 from typing import List
 import os
 from pydantic_settings import BaseSettings
-from servidor.crypto import get_encryption_instance, APIKeyEncryption
+from seguridad.crypto import get_encryption_instance, APIKeyEncryption
 
 
 class Settings(BaseSettings):
@@ -12,22 +12,26 @@ class Settings(BaseSettings):
     
     # Configuración de encriptación
     MASTER_PASSWORD: str = "default_admin_key_2024"
-    USE_ENCRYPTED_KEYS: bool = True
+    USE_ENCRYPTED_KEYS: bool = False
     
     # Configuración de modelos competitivos
     PRIMARY_MODEL: str = "groq"  # solo groq disponible
     GROQ_MODEL: str = "deepseek-r1-distill-llama-70b"  # Modelo DeepSeek como especificado
     
     # Configuración general
-    API_KEYS: list[str] = []
+    API_KEYS: str = ""
     MAX_PROMPT_LEN: int = 1000
     ALLOWED_ORIGINS: str = "*"
     GROQ_BASE_URL: str = "https://api.groq.com/openai/v1/chat/completions"
     REQUEST_TIMEOUT: int = 30
     
     # Configuraciones para búsqueda web
-    SEARCH_API_KEY: str = ""
-    SEARCH_ENDPOINT: str = "https://api.bing.microsoft.com/v7.0/search"
+    SEARCH_API_KEY: str = ""  # Mantenido para compatibilidad
+    SEARCH_ENDPOINT: str = "https://api.bing.microsoft.com/v7.0/search"  # Mantenido para compatibilidad
+    
+    # Configuraciones específicas de Bing (nuevas)
+    BING_API_KEY: str = ""
+    BING_SEARCH_ENDPOINT: str = "https://api.bing.microsoft.com/v7.0/search"
     WEB_SCRAPE_TIMEOUT: int = 10
     MAX_SEARCH_RESULTS: int = 3
     MAX_PAGE_LENGTH: int = 1000
@@ -57,25 +61,51 @@ class Settings(BaseSettings):
             return {
             "GROQ_API_KEY": self.GROQ_API_KEY,
             "SEARCH_API_KEY": self.SEARCH_API_KEY,
+            "BING_API_KEY": self.BING_API_KEY,
         }
         
         # Importar aquí para evitar dependencias circulares
-        from servidor.crypto import get_encryption_instance
+        from seguridad.crypto import get_encryption_instance
         
         encryption = get_encryption_instance()
         encrypted_keys = {
             "GROQ_API_KEY": self.GROQ_API_KEY,
-            "SEARCH_API_KEY": self.SEARCH_API_KEY
+            "SEARCH_API_KEY": self.SEARCH_API_KEY,
+            "BING_API_KEY": self.BING_API_KEY
         }
         
         return encryption.decrypt_multiple_keys(encrypted_keys)
 
     @property
+    def api_keys_list(self) -> List[str]:
+        if not self.API_KEYS:
+            return []
+        return [key.strip() for key in self.API_KEYS.split(",")]
+    
+    @property
     def allowed_origins_list(self) -> List[str]:
         return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",")]
 
     class Config:
-        env_file = "configuraciones/.env"
+        env_file = "configuraciones/.env.admin"
         env_file_encoding = "utf-8"
         case_sensitive = False
         extra = "ignore"
+
+
+    # Configuraciones de optimizaci�n
+    REDIS_URL: str = Field(default="redis://localhost:6379/0", env="REDIS_URL")
+    CACHE_TTL_SEARCH: int = Field(default=3600, env="CACHE_TTL_SEARCH")
+    CACHE_TTL_EMBEDDINGS: int = Field(default=86400, env="CACHE_TTL_EMBEDDINGS")
+    CACHE_TTL_RAG_SEARCH: int = Field(default=1800, env="CACHE_TTL_RAG_SEARCH")
+    
+    # Performance settings
+    MAX_CONCURRENT_REQUESTS: int = Field(default=10, env="MAX_CONCURRENT_REQUESTS")
+    BATCH_SIZE: int = Field(default=100, env="BATCH_SIZE")
+    
+    # Azure AI Agents (para migraci�n futura)
+    AZURE_AI_ENDPOINT: Optional[str] = Field(default=None, env="AZURE_AI_ENDPOINT")
+    AZURE_SUBSCRIPTION_ID: Optional[str] = Field(default=None, env="AZURE_SUBSCRIPTION_ID")
+    AZURE_RESOURCE_GROUP: Optional[str] = Field(default=None, env="AZURE_RESOURCE_GROUP")
+    AZURE_PROJECT_NAME: Optional[str] = Field(default=None, env="AZURE_PROJECT_NAME")
+    BING_GROUNDING_CONNECTION_ID: Optional[str] = Field(default=None, env="BING_GROUNDING_CONNECTION_ID")

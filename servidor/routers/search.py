@@ -3,7 +3,7 @@ from fastapi.responses import Response
 from typing import Dict, Any, Optional
 import logging
 
-from ..dependencies import get_api_key
+from ...seguridad.dependencies import get_api_key
 from ..search_router import search_router
 from ..metrics import get_metrics, get_metrics_content_type, metrics
 

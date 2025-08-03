@@ -3,10 +3,14 @@ from typing import Dict, Any, Optional
 import requests
 from urllib.parse import quote_plus
 import time
+import asyncio
 
 from .rag import rag_system
 from .metrics import metrics, measure_rag_latency
 from .settings import Settings
+from .utils.search import buscar_web, WebSearchError
+from .usage import DailyTokenCounter
+from herramientas.groq_client import GroqClient
 
 logger = logging.getLogger(__name__)
 settings = Settings()
@@ -16,6 +20,8 @@ class SearchRouter:
     
     def __init__(self):
         self.rag_system = rag_system
+        self.token_counter = DailyTokenCounter()
+        self.groq_client = GroqClient(settings, self.token_counter)
     
     @measure_rag_latency('total')
     def search(self, query: str) -> Dict[str, Any]:
@@ -62,85 +68,189 @@ class SearchRouter:
             }
     
     def search_web(self, query: str) -> Dict[str, Any]:
-        """Búsqueda web usando DuckDuckGo"""
+        """Búsqueda web usando Bing y respuesta generada con Groq"""
         try:
-            # Usar DuckDuckGo Instant Answer API
-            encoded_query = quote_plus(query)
-            url = f"https://api.duckduckgo.com/?q={encoded_query}&format=json&no_html=1&skip_disambig=1"
+            # Realizar búsqueda web con Bing
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                search_results = loop.run_until_complete(
+                    buscar_web(query, settings, top=5)
+                )
+            finally:
+                loop.close()
             
-            response = requests.get(url, timeout=10)
-            response.raise_for_status()
-            
-            data = response.json()
-            
-            # Extraer información relevante
-            abstract = data.get('Abstract', '')
-            abstract_text = data.get('AbstractText', '')
-            abstract_url = data.get('AbstractURL', '')
-            
-            # Si no hay abstract, usar related topics o answer
-            if not abstract_text:
-                answer = data.get('Answer', '')
-                if answer:
-                    abstract_text = answer
-                elif data.get('RelatedTopics'):
-                    # Tomar el primer related topic
-                    first_topic = data['RelatedTopics'][0]
-                    if isinstance(first_topic, dict) and 'Text' in first_topic:
-                        abstract_text = first_topic['Text']
-            
-            # Preparar respuesta
-            if abstract_text:
-                result = {
-                    "answer": abstract_text,
-                    "source_type": "web",
+            if not search_results:
+                return {
+                    "answer": f"No se encontraron resultados web para '{query}'. Intenta reformular tu pregunta.",
+                    "source_type": "web_no_results",
                     "query": query,
                     "references": []
                 }
-                
-                if abstract_url:
-                    result["references"].append({
-                        "url": abstract_url,
-                        "title": abstract or "DuckDuckGo Result",
-                        "snippet": abstract_text[:200] + "..." if len(abstract_text) > 200 else abstract_text
-                    })
-                
-                return result
-            else:
-                # Si no hay resultados útiles, hacer búsqueda básica
-                return self.basic_web_search(query)
-                
-        except Exception as e:
+            
+            # Preparar contexto para Groq
+            context = "\n\n".join([
+                f"Fuente {i+1}: {result['titulo']}\n{result['snippet']}\nURL: {result['url']}"
+                for i, result in enumerate(search_results)
+            ])
+            
+            # Generar respuesta con Groq
+            prompt = f"""Responde a la consulta del usuario basándote únicamente en la información proporcionada de las fuentes web.
+
+Consulta: {query}
+
+Información de fuentes web:
+{context}
+
+Instrucciones:
+- Proporciona una respuesta clara y concisa
+- Cita las fuentes relevantes
+- Si la información no es suficiente, indícalo
+- Mantén un tono informativo y profesional
+
+Respuesta:"""
+            
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                answer = loop.run_until_complete(
+                    self.groq_client.chat_completion(prompt, temperature=0.3)
+                )
+            finally:
+                loop.close()
+            
+            # Preparar referencias
+            references = [
+                {
+                    "title": result["titulo"],
+                    "snippet": result["snippet"],
+                    "url": result["url"],
+                    "similarity": 0.8  # Valor fijo para compatibilidad
+                }
+                for result in search_results
+            ]
+            
+            return {
+                "answer": answer,
+                "source_type": "web_search",
+                "query": query,
+                "references": references
+            }
+            
+        except WebSearchError as e:
             logger.error(f"Error en búsqueda web: {e}")
             return {
-                "error": f"Error en búsqueda web: {str(e)}",
+                "answer": f"Error en la búsqueda web: {str(e)}. Verifica la configuración de la API de Bing.",
                 "source_type": "web_error",
-                "query": query
+                "query": query,
+                "references": []
+            }
+        except Exception as e:
+            logger.error(f"Error inesperado en búsqueda web: {e}")
+            return {
+                "answer": f"Error inesperado en la búsqueda web. Intenta nuevamente más tarde.",
+                "source_type": "web_error",
+                "query": query,
+                "references": []
             }
     
     def basic_web_search(self, query: str) -> Dict[str, Any]:
-        """Búsqueda web básica cuando DuckDuckGo no devuelve resultados"""
-        return {
-            "answer": f"No se encontraron resultados específicos para '{query}' en la búsqueda web. Intenta reformular tu pregunta o proporciona más contexto.",
-            "source_type": "web_fallback",
-            "query": query,
-            "references": [{
-                "url": f"https://duckduckgo.com/?q={quote_plus(query)}",
-                "title": "Buscar en DuckDuckGo",
-                "snippet": "Realizar búsqueda manual en DuckDuckGo"
-            }]
-        }
+        """Búsqueda web básica usando Bing con respuesta simple"""
+        try:
+            # Realizar búsqueda web con Bing (menos resultados para búsqueda básica)
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                search_results = loop.run_until_complete(
+                    buscar_web(query, settings, top=3)
+                )
+            finally:
+                loop.close()
+            
+            if not search_results:
+                return {
+                    "answer": f"No se encontraron resultados específicos para '{query}'. Intenta reformular tu pregunta o proporciona más contexto.",
+                    "source_type": "web_fallback",
+                    "query": query,
+                    "references": []
+                }
+            
+            # Para búsqueda básica, generar una respuesta más simple
+            context = "\n".join([
+                f"• {result['titulo']}: {result['snippet']}"
+                for result in search_results[:2]  # Solo los primeros 2 resultados
+            ])
+            
+            prompt = f"""Proporciona una respuesta breve y directa basada en esta información web:
+
+Consulta: {query}
+
+Información encontrada:
+{context}
+
+Respuesta breve (máximo 2-3 oraciones):"""
+            
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                answer = loop.run_until_complete(
+                    self.groq_client.chat_completion(prompt, temperature=0.2)
+                )
+            finally:
+                loop.close()
+            
+            # Preparar referencias simplificadas
+            references = [
+                {
+                    "title": result["titulo"],
+                    "url": result["url"],
+                    "similarity": 0.7
+                }
+                for result in search_results[:2]
+            ]
+            
+            return {
+                "answer": answer,
+                "source_type": "web_basic",
+                "query": query,
+                "references": references
+            }
+            
+        except WebSearchError as e:
+            logger.error(f"Error en búsqueda web básica: {e}")
+            return {
+                "answer": f"Búsqueda web no disponible: {str(e)}",
+                "source_type": "web_error",
+                "query": query,
+                "references": []
+            }
+        except Exception as e:
+            logger.error(f"Error en búsqueda web básica: {e}")
+            return {
+                "answer": f"Error en la búsqueda. Intenta nuevamente.",
+                "source_type": "web_error",
+                "query": query,
+                "references": []
+            }
     
     def get_search_stats(self) -> Dict[str, Any]:
         """Obtiene estadísticas del sistema de búsqueda"""
         try:
             rag_info = self.rag_system.get_collection_info()
+            
+            # Verificar si Bing está configurado
+            bing_configured = (
+                settings.SEARCH_API_KEY and 
+                settings.SEARCH_API_KEY != "your_bing_api_key_here"
+            )
+            
             return {
                 "rag_system": rag_info,
                 "search_router": {
                     "status": "active",
-                    "fallback_enabled": True,
-                    "web_search_provider": "DuckDuckGo"
+                    "fallback_enabled": bing_configured,
+                    "web_search_provider": "bing" if bing_configured else "not_configured",
+                    "llm_provider": "groq"
                 }
             }
         except Exception as e:

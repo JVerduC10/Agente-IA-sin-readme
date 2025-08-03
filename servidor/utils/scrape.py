@@ -3,7 +3,7 @@ import re
 import httpx
 from bs4 import BeautifulSoup
 from typing import Optional
-from servidor.settings import Settings
+from ..settings import Settings
 
 logger = logging.getLogger(__name__)
 

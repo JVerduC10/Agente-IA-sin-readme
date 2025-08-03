@@ -246,6 +246,7 @@ class JarvisChat {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-API-Key': 'admin_key_2024'
             },
             body: JSON.stringify({ prompt: message })
         });
