@@ -1,314 +1,216 @@
-import logging
+#!/usr/bin/env python3
+"""
+Router de chat - Integración completa con Groq
+
+Este módulo maneja las conversaciones de chat usando GroqClient y ModelManager.
+"""
+
 import asyncio
-from typing import List, Dict, Any
+import logging
 import time
+from typing import Any, Dict, List, Literal, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from pydantic import BaseModel, field_validator
-from typing import Optional, Literal
+from pydantic import BaseModel, ConfigDict, field_validator
 
-from servidor.dependencies import get_settings
-from servidor.security import check_api_key
-from servidor.settings import Settings
-from servidor.usage import DailyTokenCounter
-from servidor.utils.search import buscar_web, refinar_query, WebSearchError
-from servidor.utils.scrape import extraer_contenido_multiple, WebScrapingError
-from herramientas.groq_client import GroqClient
-from herramientas.model_manager import ModelManager, ModelProvider
+from servidor.config.settings import get_settings, Settings
+from servidor.auth.handlers import check_api_key_header
+from servidor.services.scraping import WebScrapingError, extraer_contenido_multiple
+from servidor.clients.groq.manager import ModelManager
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["chat"])
 
+# Inicializar ModelManager
+model_manager = ModelManager()
 
-class Msg(BaseModel):
-    model_config = {"protected_namespaces": ()}
+class ChatMessage(BaseModel):
+    """Modelo para mensajes de chat"""
+    model_config = ConfigDict(extra="forbid")
     
-    prompt: str
-    query_type: Optional[Literal["scientific", "creative", "general", "web"]] = "general"
-    temperature: Optional[float] = None
-    model_provider: Optional[Literal["groq", "compete"]] = None
-
-    @field_validator("prompt")
-    @classmethod
-    def validate_prompt_length(cls, v: str) -> str:
-        if not v.strip():
-            raise ValueError("Prompt cannot be empty")
-        if len(v) > 1000:
-            raise ValueError("Prompt too long")
-        return v
+    role: Literal["user", "assistant", "system"]
+    content: str
     
-    @field_validator("temperature")
+    @field_validator("content")
     @classmethod
-    def validate_temperature(cls, v: Optional[float]) -> Optional[float]:
-        if v is not None and (v < 0 or v > 2):
-            raise ValueError("Temperature must be between 0 and 2")
-        return v
+    def validate_content(cls, v: str) -> str:
+        if not v or not v.strip():
+            raise ValueError("El contenido del mensaje no puede estar vacío")
+        if len(v) > 10000:
+            raise ValueError("El contenido del mensaje no puede exceder 10000 caracteres")
+        return v.strip()
 
+class ChatRequest(BaseModel):
+    """Modelo para solicitudes de chat"""
+    model_config = ConfigDict(extra="forbid")
+    
+    messages: List[ChatMessage]
+    temperature: Optional[float] = 0.7
+    max_tokens: Optional[int] = 1000
+    stream: Optional[bool] = False
+    web_search: Optional[bool] = False
+    # Eliminado engine_type - Sistema monocliente Groq
+    
+    @field_validator("messages")
+    @classmethod
+    def validate_messages(cls, v: List[ChatMessage]) -> List[ChatMessage]:
+        if not v:
+            raise ValueError("Debe proporcionar al menos un mensaje")
+        return v
 
 class ChatResponse(BaseModel):
-    answer: str
-    model_used: Optional[str] = None
+    """Modelo para respuestas de chat"""
+    model_config = ConfigDict(extra="forbid", protected_namespaces=())
+    
+    response: str
+    answer: str  # Alias para compatibilidad con tests
+    model_used: str
+    tokens_used: Optional[int] = None
     response_time: Optional[float] = None
+    web_search_results: Optional[List[Dict[str, Any]]] = None
+    
+    def __init__(self, **data):
+        if 'response' in data and 'answer' not in data:
+            data['answer'] = data['response']
+        super().__init__(**data)
 
-
-# CompetitionResponse eliminado - solo se usa Groq ahora
-
-
-class ErrorResponse(BaseModel):
-    detail: str
-
-
-@router.post(
-    "/",
-    response_model=ChatResponse,
-    responses={
-        422: {"model": ErrorResponse, "description": "Validation Error"},
-        500: {"model": ErrorResponse, "description": "Internal Server Error"},
-    },
-)
-
-
-async def chat_endpoint(
-    request: Request, msg: Msg, settings: Settings = Depends(get_settings)
+@router.post("/completion", response_model=ChatResponse)
+async def chat_completion(
+    request: ChatRequest,
+    settings: Settings = Depends(get_settings),
+    api_key: str = Depends(check_api_key_header)
 ) -> ChatResponse:
-    api_key = request.headers.get("X-API-Key")
-    if settings.API_KEYS and not check_api_key(api_key or "", settings):
-        raise HTTPException(status_code=401, detail="Invalid API key")
-
+    """
+    Endpoint principal de chat completion usando Groq
+    """
     start_time = time.time()
     
     try:
-        # Inicializar el administrador de modelos
-        token_counter = DailyTokenCounter()
-        model_manager = ModelManager(settings, token_counter)
-        
-        # Obtener temperatura basada en el tipo de consulta
-        if msg.temperature is not None:
-            temperature = msg.temperature
-        else:
-            temperature = settings.temperature_map.get(msg.query_type, 0.7)
-        
-        # Determinar el flujo y proveedor basado en los parámetros
-        if msg.query_type == "web":
-            # Para búsquedas web, usar Bing si está disponible, sino el flujo de búsqueda web
-            if "bing" in [p.value for p in model_manager.get_available_providers()]:
-                answer = await model_manager.chat_completion(msg.prompt, temperature, "bing")
-                model_used = "bing"
-            else:
-                answer = await deepsearch_flow(msg.prompt, settings)
-                model_used = "web_search_fallback"
-        elif msg.model_provider == "compete":
-            # Modo competencia: usar solo Groq ya que OpenAI no está disponible
-            compete_result = await model_manager.compete_models(msg.prompt, temperature)
-            return ChatResponse(
-                answer=compete_result["winning_response"],
-                model_used="groq",
-                response_time=time.time() - start_time
+        # Validar configuraciones
+        config_status = settings.validate_settings()
+        if not config_status["groq_api_key"]:
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "Configuración incompleta",
+                    "message": "GROQ_API_KEY no configurada",
+                    "config_status": config_status
+                }
             )
+        
+        # Convertir mensajes al formato requerido
+        messages = [
+            {"role": msg.role, "content": msg.content}
+            for msg in request.messages
+        ]
+        
+        # Realizar búsqueda web si se solicita
+        web_results = None
+        if request.web_search:
+            try:
+                # Obtener el último mensaje del usuario para la búsqueda
+                user_query = next(
+                    (msg.content for msg in reversed(request.messages) if msg.role == "user"),
+                    ""
+                )
+                if user_query:
+                    web_results = await extraer_contenido_multiple([user_query])
+                    # Agregar contexto web al sistema
+                    web_context = "\n".join([
+                        f"Fuente: {result.get('url', 'N/A')}\nContenido: {result.get('content', '')}"
+                        for result in web_results[:3]  # Limitar a 3 resultados
+                    ])
+                    if web_context:
+                        messages.insert(0, {
+                            "role": "system",
+                            "content": f"Contexto web relevante:\n{web_context}\n\nUsa esta información para enriquecer tu respuesta."
+                        })
+            except WebScrapingError as e:
+                logger.warning(f"Error en búsqueda web: {e}")
+                # Continuar sin búsqueda web
+        
+        # Realizar chat completion con Groq
+        response = await model_manager.chat_completion(
+            messages=messages,
+            provider="groq",
+            temperature=request.temperature,
+            max_tokens=request.max_tokens,
+            stream=request.stream
+        )
+        
+        # Extraer respuesta
+        if request.stream:
+            # Para streaming, necesitaríamos manejar esto diferente
+            # Por ahora, convertimos a respuesta normal
+            response_text = ""
+            async for chunk in response:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    response_text += chunk.choices[0].delta.content
         else:
-            # Usar el proveedor especificado o el primario (solo Groq disponible)
-            answer = await model_manager.chat_completion(
-                msg.prompt, 
-                temperature, 
-                msg.model_provider
-            )
-            model_used = msg.model_provider or "groq"
+            response_text = response["choices"][0]["message"]["content"]
         
         response_time = time.time() - start_time
         
         return ChatResponse(
-            answer=answer,
-            model_used=model_used,
-            response_time=response_time
+            response=response_text,
+            answer=response_text,
+            model_used=response.get("model", "groq-model"),
+            tokens_used=response.get("usage", {}).get("total_tokens"),
+            response_time=response_time,
+            web_search_results=web_results
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error en chat completion: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error interno del servidor: {str(e)}"
         )
 
-    except Exception as e:
-        logger.error(f"Error in chat endpoint: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-
-# Endpoint /compete eliminado - funcionalidad integrada en endpoint principal
-
-
-@router.get(
-    "/performance",
-    responses={
-        500: {"model": ErrorResponse, "description": "Internal Server Error"},
-    },
-)
-async def get_performance_stats(
-    request: Request, settings: Settings = Depends(get_settings)
+@router.get("/status")
+async def get_chat_status(
+    settings: Settings = Depends(get_settings)
 ) -> Dict[str, Any]:
-    """Endpoint para obtener estadísticas de rendimiento de los modelos."""
-    api_key = request.headers.get("X-API-Key")
-    if settings.API_KEYS and not check_api_key(api_key or "", settings):
-        raise HTTPException(status_code=401, detail="Invalid API key")
-
+    """
+    Obtiene el estado del sistema de chat
+    """
     try:
-        token_counter = DailyTokenCounter()
-        model_manager = ModelManager(settings, token_counter)
+        # Validar configuraciones
+        config_status = validate_settings()
         
-        stats = model_manager.get_performance_stats()
-        available_providers = [provider.value for provider in model_manager.get_available_providers()]
+        # Obtener información de proveedores
+        provider_info = model_manager.get_provider_info()
+        
+        # Validar conexiones
+        provider_status = model_manager.validate_providers()
+        
+        status = "operational" if config_status["all_valid"] and any(provider_status.values()) else "degraded"
         
         return {
-            "performance_stats": stats,
-            "available_providers": available_providers,
-            "default_provider": settings.DEFAULT_MODEL_PROVIDER
+            "status": status,
+            "message": "Sistema de chat con integración Groq",
+            "configuration": config_status,
+            "providers": {
+                "available": provider_info["available_providers"],
+                "default": provider_info["default_provider"],
+                "status": provider_status,
+                "models": provider_info["available_models"]
+            },
+            "features": {
+                "chat_completion": True,
+                "web_search": True,
+                "streaming": True,
+                "temperature_control": True
+            }
         }
-
-    except Exception as e:
-        logger.error(f"Error getting performance stats: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-
-async def legacy_chat_flow(prompt: str, temperature: float, settings: Settings) -> str:
-    """
-    Flujo de chat tradicional sin búsqueda web.
-    """
-    token_counter = DailyTokenCounter()
-    groq_client = GroqClient(settings, token_counter)
-    response = await groq_client.chat_completion(prompt, temperature=temperature)
-    return response
-
-
-async def deepsearch_flow(question: str, settings: Settings, max_iters: int = None) -> str:
-    """
-    Flujo de búsqueda web profunda: buscar -> leer -> razonar.
-    
-    Args:
-        question: Pregunta del usuario
-        settings: Configuración de la aplicación
-        max_iters: Máximo número de iteraciones (por defecto usa MAX_SEARCH_ITERATIONS)
-    
-    Returns:
-        Respuesta fundamentada con información web
-    """
-    if max_iters is None:
-        max_iters = settings.MAX_SEARCH_ITERATIONS
-    
-    logger.info(f"Iniciando búsqueda web para: {question}")
-    
-    try:
-        query = await refinar_query(question)
-        previous_answer = None
-        
-        for iteration in range(max_iters):
-            logger.info(f"Iteración {iteration + 1}/{max_iters} - Query: {query}")
-            
-            # Paso 1: Buscar en la web
-            try:
-                resultados = await buscar_web(query, settings)
-                if not resultados:
-                    logger.warning(f"No se encontraron resultados para: {query}")
-                    break
-            except WebSearchError as e:
-                logger.error(f"Error en búsqueda web: {e}")
-                if iteration == 0:
-                    return f"Error en la búsqueda web: {e}. No se pudo obtener información actualizada."
-                break
-            
-            # Paso 2: Leer contenido de las páginas
-            urls = [r["url"] for r in resultados if r["url"]]
-            if not urls:
-                logger.warning("No se encontraron URLs válidas")
-                break
-                
-            try:
-                textos = await extraer_contenido_multiple(urls, settings)
-            except Exception as e:
-                logger.error(f"Error al extraer contenido: {e}")
-                textos = [f"Error al leer contenido: {e}"]
-            
-            # Paso 3: Construir contexto para el modelo
-            contexto = construir_contexto_web(resultados, textos)
-            
-            # Paso 4: Generar respuesta con el modelo
-            prompt = construir_prompt_rag(question, contexto)
-            
-            token_counter = DailyTokenCounter()
-            groq_client = GroqClient(settings, token_counter)
-            
-            try:
-                answer = await groq_client.chat_completion(
-                    prompt, 
-                    temperature=settings.temperature_map["web"]
-                )
-            except Exception as e:
-                logger.error(f"Error al generar respuesta: {e}")
-                return f"Error al generar respuesta: {e}"
-            
-            # Paso 5: Verificar si necesita más búsqueda
-            if not necesita_mas_busqueda(answer) or iteration == max_iters - 1:
-                logger.info(f"Búsqueda completada en {iteration + 1} iteraciones")
-                return answer
-            
-            # Preparar siguiente iteración
-            query = await refinar_query(question, answer)
-            previous_answer = answer
-        
-        # Si llegamos aquí, se agotaron las iteraciones
-        return previous_answer or "No se pudo obtener información suficiente de la web."
         
     except Exception as e:
-        logger.error(f"Error inesperado en deepsearch_flow: {e}")
-        return f"Error en la búsqueda web: {e}"
-
-
-def construir_contexto_web(resultados: List[Dict[str, str]], textos: List[str]) -> str:
-    """
-    Construye el contexto web a partir de los resultados y textos extraídos.
-    """
-    contexto_partes = []
-    
-    for i, (resultado, texto) in enumerate(zip(resultados, textos)):
-        parte = f"""FUENTE {i+1}:
-Título: {resultado['titulo']}
-URL: {resultado['url']}
-Descripción: {resultado['snippet']}
-Contenido: {texto[:500]}...
-"""
-        contexto_partes.append(parte)
-    
-    return "\n\n".join(contexto_partes)
-
-
-def construir_prompt_rag(question: str, contexto: str) -> str:
-    """
-    Construye el prompt RAG con la información web.
-    """
-    return f"""Eres un asistente de investigación especializado. Tu tarea es responder preguntas usando ÚNICAMENTE la información web proporcionada a continuación.
-
-INSTRUCCIONES:
-1. Usa solo la información de las fuentes web proporcionadas
-2. Proporciona respuestas precisas y objetivas
-3. Menciona datos concretos cuando sea relevante
-4. Si la información es insuficiente, indícalo claramente
-5. Mantén un tono profesional y factual
-
-INFORMACIÓN WEB:
-{contexto}
-
-PREGUNTA DEL USUARIO: {question}
-
-RESPUESTA:"""
-
-
-def necesita_mas_busqueda(answer: str) -> bool:
-    """
-    Determina si la respuesta indica que se necesita más información.
-    """
-    indicadores = [
-        "información insuficiente",
-        "información es insuficiente",
-        "no se encontró información",
-        "no se encontró información relevante",
-        "requiere más detalles",
-        "requiere más detalles específicos",
-        "información limitada",
-        "necesita más búsqueda",
-        "más información necesaria"
-    ]
-    
-    answer_lower = answer.lower()
-    return any(indicador in answer_lower for indicador in indicadores)
+        logger.error(f"Error obteniendo estado del chat: {e}")
+        return {
+            "status": "error",
+            "message": f"Error obteniendo estado: {str(e)}",
+            "providers": {},
+            "features": {}
+        }

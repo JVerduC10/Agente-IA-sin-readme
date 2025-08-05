@@ -10,10 +10,12 @@ from sentence_transformers import SentenceTransformer
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from fastapi import UploadFile
 
-from .settings import Settings
+# ===== IMPORT ACTUALIZADO - REFACTORIZACIÓN =====
+# CAMBIO: servidor.settings eliminado, usar servidor.config
+from servidor.config.settings import get_settings
 
 logger = logging.getLogger(__name__)
-settings = Settings()
+settings = get_settings()
 
 class DocumentIngestor:
     def __init__(self):

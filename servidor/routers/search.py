@@ -2,9 +2,10 @@ from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
 from fastapi.responses import Response
 from typing import Dict, Any, Optional
 import logging
+import time
 
-from ..dependencies import get_api_key
-from ..search_router import search_router
+from ..auth.handlers import check_api_key_header as check_api_key
+from ..services.search import search_router
 from ..metrics import get_metrics, get_metrics_content_type, metrics
 
 # Importaciones lazy para evitar problemas con ChromaDB
@@ -63,7 +64,7 @@ async def search_endpoint(q: str) -> Dict[str, Any]:
 async def ingest_document(
     file: UploadFile = File(...),
     source_name: Optional[str] = Form(None),
-    api_key: str = Depends(get_api_key)
+    api_key: str = Depends(check_api_key)
 ) -> Dict[str, Any]:
     """
     Endpoint para ingestar documentos (requiere autenticación)
@@ -159,7 +160,7 @@ async def get_prometheus_metrics():
         raise HTTPException(status_code=500, detail=f"Metrics error: {str(e)}")
 
 @router.delete("/rag/collection")
-async def clear_collection(api_key: str = Depends(get_api_key)) -> Dict[str, Any]:
+async def clear_collection(api_key: str = Depends(check_api_key)) -> Dict[str, Any]:
     """
     Limpia toda la colección RAG (requiere autenticación)
     

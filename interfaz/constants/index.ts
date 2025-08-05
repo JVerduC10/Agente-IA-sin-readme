@@ -8,7 +8,7 @@ export const APP_CONFIG = {
 }
 
 export const API_ENDPOINTS = {
-  chat: '/chat',
+  chat: '/chat/completion',
   health: '/health'
 }
 

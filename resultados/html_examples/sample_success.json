@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-01-15T14:30:45.123456",
+  "passed_tests": 15,
+  "failed_tests": 1,
+  "skipped_tests": 2,
+  "total_tests": 18,
+  "test_details": [
+    "test_auth.py::test_valid_api_key",
+    "test_auth.py::test_missing_api_key",
+    "test_rag.py::test_search_functionality"
+  ],
+  "categories": {
+    "unit_tests": {
+      "passed": 10,
+      "failed": 1,
+      "skipped": 1,
+      "tests": [
+        "test_auth.py::test_valid_api_key",
+        "test_auth.py::test_missing_api_key",
+        "test_auth.py::test_no_api_keys_configured",
+        "test_models.py::test_chat_request_validation",
+        "test_models.py::test_temperature_validation",
+        "test_utils.py::test_format_response",
+        "test_utils.py::test_error_handling",
+        "test_config.py::test_settings_loading",
+        "test_config.py::test_environment_variables",
+        "test_security.py::test_api_key_validation",
+        "test_security.py::test_unauthorized_access",
+        "test_handlers.py::test_check_api_key_header"
+      ]
+    },
+    "integration_tests": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 1,
+      "tests": [
+        "test_rag.py::test_search_functionality",
+        "test_rag.py::test_document_retrieval",
+        "test_rag.py::test_embedding_generation",
+        "test_api.py::test_chat_endpoint_integration",
+        "test_api.py::test_search_endpoint_integration",
+        "test_web.py::test_web_scraping_integration"
+      ]
+    }
+  },
+  "success": true
+}

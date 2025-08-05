@@ -1,0 +1,455 @@
+{
+  "timestamp": "2025-08-05T22:17:13.119129",
+  "passed_tests": 39,
+  "failed_tests": 0,
+  "skipped_tests": 4,
+  "total_tests": 43,
+  "test_details": [
+    {
+      "name": "tests/test_api.py::TestChatEndpoint::test_chat_success",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_api.py::TestChatEndpoint::test_chat_long_prompt",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_api.py::TestChatEndpoint::test_chat_empty_prompt",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_api.py::TestChatEndpointReal::test_chat_real_api",
+      "status": "skipped",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_auth.py::test_missing_api_key",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_auth.py::test_valid_api_key",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_auth.py::test_no_api_keys_configured",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_env_loading.py::test_env_loading <- pruebas\\test_env_loading.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_200 <- pruebas\\test_health.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_json <- pruebas\\test_health.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_status_ok <- pruebas\\test_health.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_timestamp <- pruebas\\test_health.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestRAGHit::test_rag_hit_with_sufficient_similarity",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestRAGHit::test_rag_metrics_on_hit",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestRAGNoHit::test_rag_nohit_insufficient_similarity",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestRAGNoHit::test_rag_nohit_insufficient_hits",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestRAGNoHit::test_web_fallback_metrics",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestThresholdConfiguration::test_high_threshold_forces_fallback",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestThresholdConfiguration::test_low_threshold_allows_hits",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestIngestion::test_pdf_ingestion",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestIngestion::test_csv_ingestion",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestAPIEndpoints::test_search_endpoint_rag_response",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestAPIEndpoints::test_search_endpoint_web_fallback",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestAPIEndpoints::test_ingest_endpoint_requires_auth",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag.py::TestAPIEndpoints::test_metrics_endpoint",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag_demo.py::test_health <- pruebas\\test_rag_demo.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag_demo.py::test_basic_chat <- pruebas\\test_rag_demo.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag_demo.py::test_rag_stats <- pruebas\\test_rag_demo.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_rag_demo.py::test_rag_search <- pruebas\\test_rag_demo.py",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebSearch::test_buscar_web_exitoso",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebSearch::test_buscar_web_sin_api_key",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebSearch::test_buscar_web_error_http",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebSearch::test_refinar_query_basico",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebSearch::test_refinar_query_con_respuesta_previa",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebScraping::test_leer_pagina_exitoso",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebScraping::test_leer_pagina_contenido_no_html",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebScraping::test_leer_pagina_error_http",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebScraping::test_extraer_contenido_multiple",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestWebScraping::test_extraer_contenido_multiple_con_errores",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestChatWebIntegration::test_chat_web_endpoint",
+      "status": "passed",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestChatWebIntegration::test_construir_contexto_web",
+      "status": "skipped",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestChatWebIntegration::test_construir_prompt_rag",
+      "status": "skipped",
+      "category": "unit"
+    },
+    {
+      "name": "tests/test_web.py::TestChatWebIntegration::test_necesita_mas_busqueda",
+      "status": "skipped",
+      "category": "unit"
+    }
+  ],
+  "categories": {
+    "unit_tests": {
+      "passed": 39,
+      "failed": 0,
+      "skipped": 4,
+      "tests": [
+        {
+          "name": "tests/test_api.py::TestChatEndpoint::test_chat_success",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_api.py::TestChatEndpoint::test_chat_long_prompt",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_api.py::TestChatEndpoint::test_chat_empty_prompt",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_api.py::TestChatEndpointReal::test_chat_real_api",
+          "status": "skipped",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_auth.py::test_missing_api_key",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_auth.py::test_valid_api_key",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_auth.py::test_no_api_keys_configured",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_env_loading.py::test_env_loading <- pruebas\\test_env_loading.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_200 <- pruebas\\test_health.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_json <- pruebas\\test_health.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_status_ok <- pruebas\\test_health.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_health.py::TestHealthEndpoint::test_health_endpoint_returns_timestamp <- pruebas\\test_health.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestRAGHit::test_rag_hit_with_sufficient_similarity",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestRAGHit::test_rag_metrics_on_hit",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestRAGNoHit::test_rag_nohit_insufficient_similarity",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestRAGNoHit::test_rag_nohit_insufficient_hits",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestRAGNoHit::test_web_fallback_metrics",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestThresholdConfiguration::test_high_threshold_forces_fallback",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestThresholdConfiguration::test_low_threshold_allows_hits",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestIngestion::test_pdf_ingestion",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestIngestion::test_csv_ingestion",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestAPIEndpoints::test_search_endpoint_rag_response",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestAPIEndpoints::test_search_endpoint_web_fallback",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestAPIEndpoints::test_ingest_endpoint_requires_auth",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag.py::TestAPIEndpoints::test_metrics_endpoint",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag_demo.py::test_health <- pruebas\\test_rag_demo.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag_demo.py::test_basic_chat <- pruebas\\test_rag_demo.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag_demo.py::test_rag_stats <- pruebas\\test_rag_demo.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_rag_demo.py::test_rag_search <- pruebas\\test_rag_demo.py",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebSearch::test_buscar_web_exitoso",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebSearch::test_buscar_web_sin_api_key",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebSearch::test_buscar_web_error_http",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebSearch::test_refinar_query_basico",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebSearch::test_refinar_query_con_respuesta_previa",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebScraping::test_leer_pagina_exitoso",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebScraping::test_leer_pagina_contenido_no_html",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebScraping::test_leer_pagina_error_http",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebScraping::test_extraer_contenido_multiple",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestWebScraping::test_extraer_contenido_multiple_con_errores",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestChatWebIntegration::test_chat_web_endpoint",
+          "status": "passed",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestChatWebIntegration::test_construir_contexto_web",
+          "status": "skipped",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestChatWebIntegration::test_construir_prompt_rag",
+          "status": "skipped",
+          "category": "unit"
+        },
+        {
+          "name": "tests/test_web.py::TestChatWebIntegration::test_necesita_mas_busqueda",
+          "status": "skipped",
+          "category": "unit"
+        }
+      ]
+    },
+    "integration_tests": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "tests": []
+    }
+  },
+  "success": true
+}

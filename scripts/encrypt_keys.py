@@ -37,9 +37,7 @@ def main():
     if groq_key:
         keys_to_encrypt["GROQ_API_KEY"] = groq_key
     
-    openai_key = input("OPENAI_API_KEY: ").strip()
-    if openai_key:
-        keys_to_encrypt["OPENAI_API_KEY"] = openai_key
+    # Eliminado OPENAI - Sistema monocliente Groq
     
     search_key = input("SEARCH_API_KEY: ").strip()
     if search_key:
@@ -114,9 +112,7 @@ def decrypt_keys():
     if groq_encrypted:
         encrypted_keys["GROQ_API_KEY"] = groq_encrypted
     
-    openai_encrypted = input("OPENAI_API_KEY_ENCRYPTED: ").strip()
-    if openai_encrypted:
-        encrypted_keys["OPENAI_API_KEY"] = openai_encrypted
+    # Eliminado OPENAI - Sistema monocliente Groq
     
     search_encrypted = input("SEARCH_API_KEY_ENCRYPTED: ").strip()
     if search_encrypted:

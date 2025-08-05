@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Pruebas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #10b981;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .no-tests {
+            background: #fef3cd;
+            border: 1px solid #fecba1;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .metric-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .passed {
+            color: #10b981;
+        }
+        
+        .failed {
+            color: #ef4444;
+        }
+        
+        .skipped {
+            color: #f59e0b;
+        }
+        
+        .test-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        .test-list ul {
+            list-style-type: none;
+        }
+        
+        .test-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .test-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resumen de Pruebas</h1>
+            <div class="status">Estado: Exitoso</div>
+            <div class="status">Fecha: 2025-01-15T14:30:45.123456</div>
+        </div>
+        
+        <div class="content">
+            
+            
+            <div class="section">
+                <h2>Resumen General</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total de Pruebas</td>
+                            <td class="metric-value">18</td>
+                        </tr>
+                        <tr>
+                            <td>Pruebas Exitosas</td>
+                            <td class="metric-value passed">15</td>
+                        </tr>
+                        <tr>
+                            <td>Pruebas Fallidas</td>
+                            <td class="metric-value failed">1</td>
+                        </tr>
+                        <tr>
+                            <td>Pruebas Omitidas</td>
+                            <td class="metric-value skipped">2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="grid">
+                <div class="section">
+                    <h2>Pruebas Unitarias</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exitosas</td>
+                                <td class="metric-value passed">10</td>
+                            </tr>
+                            <tr>
+                                <td>Fallidas</td>
+                                <td class="metric-value failed">1</td>
+                            </tr>
+                            <tr>
+                                <td>Omitidas</td>
+                                <td class="metric-value skipped">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="test-list">
+                        <h3>Lista de Tests:</h3>
+                        <ul>
+                            <li>test_auth.py::test_valid_api_key</li>
+<li>test_auth.py::test_missing_api_key</li>
+<li>test_auth.py::test_no_api_keys_configured</li>
+<li>test_models.py::test_chat_request_validation</li>
+<li>test_models.py::test_temperature_validation</li>
+<li>test_utils.py::test_format_response</li>
+<li>test_utils.py::test_error_handling</li>
+<li>test_config.py::test_settings_loading</li>
+<li>test_config.py::test_environment_variables</li>
+<li>test_security.py::test_api_key_validation</li>
+<li>test_security.py::test_unauthorized_access</li>
+<li>test_handlers.py::test_check_api_key_header</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Pruebas de Integración</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exitosas</td>
+                                <td class="metric-value passed">5</td>
+                            </tr>
+                            <tr>
+                                <td>Fallidas</td>
+                                <td class="metric-value failed">0</td>
+                            </tr>
+                            <tr>
+                                <td>Omitidas</td>
+                                <td class="metric-value skipped">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="test-list">
+                        <h3>Lista de Tests:</h3>
+                        <ul>
+                            <li>test_rag.py::test_search_functionality</li>
+<li>test_rag.py::test_document_retrieval</li>
+<li>test_rag.py::test_embedding_generation</li>
+<li>test_api.py::test_chat_endpoint_integration</li>
+<li>test_api.py::test_search_endpoint_integration</li>
+<li>test_web.py::test_web_scraping_integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

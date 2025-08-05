@@ -31,6 +31,16 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
 
+    // Map query types to temperatures if not explicitly provided
+    const temperatureMap: Record<QueryType, number> = {
+      scientific: 0.1,
+      creative: 1.3,
+      general: 0.7,
+      web: 0.3
+    }
+
+    const finalTemperature = temperature !== undefined ? temperature : temperatureMap[queryType]
+
     try {
       const response = await fetch(`/api${API_ENDPOINTS.chat}`, {
         method: 'POST',
@@ -38,9 +48,10 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-          prompt: content,
-          query_type: queryType,
-          ...(temperature !== undefined && { temperature })
+          messages: [{ role: 'user', content }],
+          temperature: finalTemperature,
+          max_tokens: 1000,
+          stream: false
         })
       })
 

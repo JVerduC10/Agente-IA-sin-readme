@@ -237,12 +237,17 @@ class JarvisChat {
     }
 
     async sendToAPI(message) {
-        const response = await fetch('/chat/', {
+        const response = await fetch('/api/chat/completion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ prompt: message })
+            body: JSON.stringify({
+                messages: [{ role: 'user', content: message }],
+                temperature: 0.7,
+                max_tokens: 1000,
+                stream: false
+            })
         });
 
         if (!response.ok) {

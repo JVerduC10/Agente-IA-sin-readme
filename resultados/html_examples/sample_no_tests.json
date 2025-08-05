@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-01-15T14:35:12.789012",
+  "passed_tests": 0,
+  "failed_tests": 0,
+  "skipped_tests": 0,
+  "total_tests": 0,
+  "test_details": [],
+  "categories": {
+    "unit_tests": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "tests": []
+    },
+    "integration_tests": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "tests": []
+    }
+  },
+  "success": false
+}

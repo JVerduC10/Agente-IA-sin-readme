@@ -89,15 +89,41 @@ def get_encryption_instance() -> APIKeyEncryption:
     return APIKeyEncryption(master_password)
 
 
+def get_decrypted_keys() -> Dict[str, str]:
+    """Función centralizada para obtener claves desencriptadas.
+    
+    REFACTORIZACIÓN: Esta función reemplaza las implementaciones duplicadas en:
+    - servidor/settings.py (ELIMINADO)
+    - servidor/config/base.py (debe usar esta función)
+    
+    Returns:
+        Dict[str, str]: Diccionario con las claves API desencriptadas
+    """
+    encryption = get_encryption_instance()
+    
+    # Claves encriptadas desde variables de entorno
+    encrypted_keys = {
+        # "AZURE_CLIENT_SECRET": os.getenv("AZURE_CLIENT_SECRET", ""),  # ELIMINADO - Azure integration removed
+        "GROQ_API_KEY": os.getenv("GROQ_API_KEY", ""),
+        "BING_SEARCH_API_KEY": os.getenv("BING_SEARCH_API_KEY", ""),
+    }
+    
+    try:
+        return encryption.decrypt_multiple_keys(encrypted_keys)
+    except Exception as e:
+        logger.error(f"Error desencriptando claves: {e}")
+        # Fallback: retornar claves sin desencriptar (asumiendo texto plano)
+        return encrypted_keys
+
+
 def encrypt_env_keys():
     """Utilidad para encriptar claves en el archivo .env"""
     encryption = get_encryption_instance()
     
     # Claves que necesitan ser encriptadas
     keys_to_encrypt = {
+        # "AZURE_CLIENT_SECRET": os.getenv("AZURE_CLIENT_SECRET", ""),  # ELIMINADO - Azure integration removed
         "GROQ_API_KEY": os.getenv("GROQ_API_KEY", ""),
-        "SEARCH_API_KEY": os.getenv("SEARCH_API_KEY", ""),
-        "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY", ""),  # Para el nuevo modelo competidor
     }
     
     encrypted_keys = encryption.encrypt_multiple_keys(keys_to_encrypt)

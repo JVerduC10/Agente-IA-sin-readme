@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-01-15T14:40:33.456789",
+  "passed_tests": 8,
+  "failed_tests": 5,
+  "skipped_tests": 3,
+  "total_tests": 16,
+  "test_details": [
+    "test_auth.py::test_invalid_credentials - FAILED",
+    "test_api.py::test_malformed_request - FAILED",
+    "test_rag.py::test_empty_query - SKIPPED"
+  ],
+  "categories": {
+    "unit_tests": {
+      "passed": 5,
+      "failed": 3,
+      "skipped": 2,
+      "tests": [
+        "test_auth.py::test_valid_credentials - PASSED",
+        "test_auth.py::test_invalid_credentials - FAILED",
+        "test_auth.py::test_missing_credentials - FAILED",
+        "test_models.py::test_valid_request - PASSED",
+        "test_models.py::test_invalid_request - FAILED",
+        "test_utils.py::test_format_success - PASSED",
+        "test_utils.py::test_format_error - PASSED",
+        "test_config.py::test_valid_config - PASSED",
+        "test_config.py::test_missing_config - SKIPPED",
+        "test_security.py::test_rate_limiting - SKIPPED"
+      ]
+    },
+    "integration_tests": {
+      "passed": 3,
+      "failed": 2,
+      "skipped": 1,
+      "tests": [
+        "test_rag.py::test_full_search_flow - PASSED",
+        "test_rag.py::test_document_indexing - PASSED",
+        "test_rag.py::test_empty_query - SKIPPED",
+        "test_api.py::test_chat_flow - PASSED",
+        "test_api.py::test_malformed_request - FAILED",
+        "test_web.py::test_scraping_timeout - FAILED"
+      ]
+    }
+  },
+  "success": false
+}

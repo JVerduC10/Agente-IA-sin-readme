@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados - Jarvis Analyst</title>
-    <meta name="description" content="Resultados y análisis del sistema Jarvis Analyst - Conversational Analytics, Zero Friction.">
+    <meta name="description" content="Resultados y análisis del sistema Jarvis Analyst">
     
-    <!-- Preload fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
     <link rel="stylesheet" href="/static/styles.css?v=1.0">
     
-    <!-- Theme detection script -->
+    <!-- Theme -->
     <script>
         (function() {
             const theme = localStorage.getItem('theme') || 
@@ -24,8 +24,10 @@
             document.documentElement.classList.toggle('dark', theme === 'dark');
         })();
     </script>
+    
     <style>
-        .results-container {
+        /* Layout Principal */
+        .main-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
@@ -33,33 +35,178 @@
             min-height: 100vh;
         }
         
-        .results-header {
+        /* Header Simple */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color, #E2E8F0);
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--brand-blue, #1565C0);
+            margin: 0;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        /* Botones Simples */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--brand-blue, #1565C0);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1976D2;
+        }
+        
+        .btn-secondary {
+            background: var(--text-muted, #94A3B8);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--text-secondary, #64748B);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--brand-blue, #1565C0);
+            border: 1px solid var(--brand-blue, #1565C0);
+        }
+        
+        .btn-outline:hover {
+            background: var(--brand-blue, #1565C0);
+            color: white;
+        }
+        
+        /* Sección de Controles */
+        .controls-section {
+            background: var(--bg-primary, white);
+            border: 1px solid var(--border-color, #E2E8F0);
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 2rem;
         }
         
-        .results-header h1 {
-            background: linear-gradient(135deg, var(--brand-blue, #1565C0) 0%, var(--brand-teal, #1DBFAC) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 2.5rem;
+        .controls-title {
+            font-size: 1.2rem;
             font-weight: 600;
+            color: var(--text-primary, #1E293B);
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        /* Búsqueda Simple */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            position: relative;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            border: 1px solid var(--border-color, #E2E8F0);
+            border-radius: 8px;
+            background: var(--bg-primary, white);
+            color: var(--text-primary, #1E293B);
+            font-size: 1rem;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted, #94A3B8);
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* Métricas Simples */
+        .metrics-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: var(--bg-primary, white);
+            border: 1px solid var(--border-color, #E2E8F0);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--brand-blue, #1565C0);
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted, #94A3B8);
+        }
+        
+        /* Resultados */
+        .results-section {
+            margin-top: 2rem;
+        }
+        
+        .results-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary, #1E293B);
             margin-bottom: 1rem;
         }
         
         .result-card {
             background: var(--bg-primary, white);
             border: 1px solid var(--border-color, #E2E8F0);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px var(--shadow-color, rgba(15, 23, 42, 0.1));
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
         }
         
         .result-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--shadow-color, rgba(15, 23, 42, 0.15));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }
         
         .result-header {
@@ -70,22 +217,389 @@
         }
         
         .result-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-primary, #1E293B);
+            margin: 0;
         }
         
         .result-timestamp {
             color: var(--text-muted, #94A3B8);
-            font-size: 0.875rem;
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
         }
         
         .result-content {
+            color: var(--text-secondary, #64748B);
             line-height: 1.6;
+        }
+        
+        /* JSON Formatting */
+        /* Estilos JSON removidos - ya no se necesitan */
+        
+        /* Interactive Controls Styles */
+        .interactive-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        /* Lazy Loading Styles */
+        .content-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-muted);
+        }
+        
+        .content-placeholder:hover {
+            background: var(--bg-primary);
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+        }
+        
+        .loading-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            color: var(--text-muted);
+        }
+        
+        .test-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .counter-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .counter-value {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            min-width: 24px;
+            text-align: center;
+        }
+        
+        /* Interactive List Styles */
+        .interactive-list {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .list-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item.expandable {
+            cursor: pointer;
+        }
+        
+        .list-item.expandable:hover {
+            background: var(--bg-primary);
+        }
+        
+        .item-toggle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            width: 12px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .item-key {
+            font-weight: 500;
+            color: var(--accent-color);
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        
+        .item-value {
+            color: var(--text-primary);
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            flex: 1;
+        }
+        
+        .item-type {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        .item-children {
+            margin-left: 20px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 10px;
+        }
+        
+        .item-children .list-item {
+            padding: 4px 8px;
+        }
+        
+        /* Test Results Styles */
+        .test-counter-old {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .counter-item {
+            background: var(--bg-secondary, #F8FAFC);
+            border: 1px solid var(--border-color, #E2E8F0);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            min-width: 80px;
+            flex: 1;
+        }
+        
+        .counter-item.success {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+        
+        .counter-item.error {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+        
+        .counter-item.warning {
+            background: #fffbeb;
+            border-color: #f59e0b;
+        }
+        
+        .counter-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary, #1E293B);
+            margin-bottom: 0.25rem;
+        }
+        
+        .counter-label {
+            font-size: 0.875rem;
+            color: var(--text-muted, #64748B);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .test-list {
+            margin-top: 1.5rem;
+        }
+        
+        .test-list h4 {
+            margin: 0 0 1rem 0;
+            color: var(--text-primary, #1E293B);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .keyword-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--bg-secondary, #F8FAFC);
+            border: 1px solid var(--border-color, #E2E8F0);
+            border-radius: 6px;
+            padding: 0.5rem;
+        }
+        
+        .keyword-list li {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color, #E2E8F0);
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
             color: var(--text-secondary, #64748B);
         }
         
+        .keyword-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .keyword-list li:hover {
+            background: var(--bg-primary, #FFFFFF);
+        }
+        
+        .json-bracket {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .json-comma {
+            color: #d4d4d4;
+        }
+        
+        .json-colon {
+            color: #d4d4d4;
+            margin: 0 0.25rem;
+        }
+        
+        /* Métricas Detalladas */
+        .detailed-metrics-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .detailed-metrics-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .metric-breakdown {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .metric-breakdown h4 {
+            margin: 0 0 1rem 0;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .category-item, .time-item, .score-item, .performance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .category-item:last-child, .time-item:last-child, 
+        .score-item:last-child, .performance-item:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-name {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .metric-value-detail {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            transition: width 0.3s ease;
+        }
+        
+        .toggle-detailed-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .toggle-detailed-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        /* JSON Controls */
+        .json-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .json-btn {
+            padding: 0.25rem 0.75rem;
+            background: var(--brand-blue, #1565C0);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        
+        .json-btn:hover {
+            background: #1976D2;
+        }
+        
+        .json-btn.secondary {
+            background: var(--text-muted, #94A3B8);
+        }
+        
+        .json-btn.secondary:hover {
+            background: var(--text-secondary, #64748B);
+        }
+        
+        /* Estados */
         .loading {
             text-align: center;
             padding: 3rem;
@@ -98,629 +612,1201 @@
             border: 1px solid #fecaca;
             padding: 1rem;
             border-radius: 8px;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
         }
         
-        .btn {
-            background: var(--brand-blue, #1565C0);
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted, #94A3B8);
+            font-size: 1.1rem;
+        }
+        
+        /* Evaluation Summary Interface */
+        .evaluation-summary {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 15px 0;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-header h4 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+
+        .models-count {
+            background: var(--brand-blue);
             color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 0.25rem;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: 500;
-            transition: all 0.2s ease;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-item.success .stat-value {
+            color: #22c55e;
+        }
+
+        .stat-item.error .stat-value {
+            color: #ef4444;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .models-summary {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .model-summary {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .model-summary:last-child {
+            border-bottom: none;
+        }
+
+        .json-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
         
-        .btn:hover {
-            background: #1976D2;
-            transform: translateY(-1px);
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+
         }
         
-        .btn-secondary {
-            background: var(--text-muted, #94A3B8);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--text-secondary, #64748B);
-        }
-        
-        .btn-cta {
-            background: var(--cta-orange, #FF8F00);
-        }
-        
-        .btn-cta:hover {
-            background: #F57C00;
+        @media (max-width: 480px) {
+            .metrics-section {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <!-- Logo -->
-                <div class="logo">
-                    <div class="logo-icon">
-                        <span>J</span>
-                    </div>
-                    <span class="logo-text">Jarvis Analyst</span>
-                </div>
-                
-                <!-- Actions -->
-                <div class="header-actions">
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                        <i data-lucide="sun" class="sun-icon"></i>
-                        <i data-lucide="moon" class="moon-icon"></i>
-                    </button>
-                    <button class="btn btn-primary" onclick="window.location.href='/'">
-                        <i data-lucide="arrow-left"></i>
-                        Back to Jarvis Analyst
-                    </button>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i data-lucide="menu"></i>
+    <div class="main-container">
+        <!-- Header Simple -->
+        <div class="page-header">
+            <h1 class="page-title">Resultados del Sistema</h1>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+                <button class="btn btn-outline" onclick="window.location.href='/static/index.html'">
+                    <i data-lucide="arrow-left"></i>
+                    Volver al Chat
+                </button>
+                <button class="btn btn-primary" onclick="exportResults()">
+                    <i data-lucide="download"></i>
+                    Exportar
                 </button>
             </div>
         </div>
-    </header>
-
-    <div class="results-container">
-        <div class="results-header">
-            <h1>Resultados del Sistema</h1>
-        </div>
         
-        <div class="main-buttons" style="margin-bottom: 2rem; text-align: center;">
-            <button class="btn btn-primary" onclick="loadResults()">
-                <i data-lucide="refresh-cw"></i>
-                Actualizar Resultados
-            </button>
-            <button class="btn btn-primary" onclick="runTests()">
-                <i data-lucide="play"></i>
-                Ejecutar Pruebas
-            </button>
-            <button class="btn btn-primary" onclick="runEvaluations()">
-                <i data-lucide="check-circle"></i>
-                Ejecutar Evaluaciones
-            </button>
-        </div>
-        
-        <div id="loading" class="loading" style="display: none;">
-            Cargando resultados...
-        </div>
-        
-        <div id="error" class="error" style="display: none;"></div>
-        
-        <!-- Interactive Menu System -->
-        <div class="menu-system">
-            <div class="menu-tabs">
-                <button class="tab-button active" onclick="showTab('tests')">
+        <!-- Controles Principales -->
+        <div class="controls-section">
+            <h2 class="controls-title">
+                <i data-lucide="settings"></i>
+                Controles
+            </h2>
+            <div class="controls-grid">
+                <button class="btn btn-primary" onclick="loadResults()">
+                    <i data-lucide="refresh-cw"></i>
+                    Actualizar
+                </button>
+                <button class="btn btn-primary" onclick="runTests()">
+                    <i data-lucide="play"></i>
+                    Ejecutar Pruebas
+                </button>
+                <button class="btn btn-primary" onclick="runEvaluations()">
                     <i data-lucide="check-circle"></i>
-                    Tests Status
+                    Evaluaciones
                 </button>
-                <button class="tab-button" onclick="showTab('evaluations')">
-                    <i data-lucide="alert-circle"></i>
-                    Test Failures
-                </button>
-                <button class="tab-button" onclick="showTab('reactions')">
-                    <i data-lucide="message-circle"></i>
-                    Model Reactions
-                </button>
+
+            </div>
+        </div>
+        
+        <!-- Búsqueda -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar en resultados..." onkeyup="filterResults()">
+                <i data-lucide="search" class="search-icon"></i>
+            </div>
+        </div>
+        
+        <!-- Métricas -->
+        <div class="metrics-section">
+            <div class="metric-card">
+                <div class="metric-value" id="totalTests">0</div>
+                <div class="metric-label">Total Prompts</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="successRate">0%</div>
+                <div class="metric-label">Tasa de Éxito</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="avgTime">0s</div>
+                <div class="metric-label">Tiempo Promedio</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="uptime">0/100</div>
+                <div class="metric-label">Puntuación Media</div>
+            </div>
+            <button class="toggle-detailed-btn" onclick="toggleDetailedMetrics()" id="toggleDetailedBtn" style="display: none;">
+                <i data-lucide="chevron-down"></i>
+                Ver Análisis Detallado
+            </button>
+        </div>
+        
+        <!-- Métricas Detalladas -->
+        <div class="detailed-metrics-section" id="detailedMetrics" style="display: none;">
+            <h3 class="detailed-metrics-title">
+                <i data-lucide="bar-chart-3"></i>
+                Análisis Detallado
+            </h3>
+            <div class="metrics-grid">
+                <div class="metric-breakdown">
+                    <h4>Desglose por Categorías</h4>
+                    <div id="categoryBreakdown"></div>
+                </div>
+                <div class="metric-breakdown">
+                    <h4>Distribución de Tiempos</h4>
+                    <div id="timeBreakdown"></div>
+                </div>
+                <div class="metric-breakdown">
+                    <h4>Distribución de Puntuaciones</h4>
+                    <div id="scoreDistribution"></div>
+                </div>
+                <div class="metric-breakdown">
+                    <h4>Resumen de Rendimiento</h4>
+                    <div id="performanceSummary"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Resultados -->
+        <div class="results-section">
+            <h2 class="results-title">Resultados</h2>
+            
+            <div id="loadingMessage" class="loading" style="display: none;">
+                <i data-lucide="loader-2" style="animation: spin 1s linear infinite;"></i>
+                Cargando resultados...
             </div>
             
-            <div class="tab-content">
-                <!-- Tests Status Tab -->
-                <div id="tests-tab" class="tab-panel active">
-                    <div class="panel-header">
-                        <h3>Tests Status by System Properties</h3>
-                    </div>
-                    <div class="status-sections">
-                        <div class="status-section passed">
-                            <h4><i data-lucide="check"></i> Passed Tests</h4>
-                            <div id="passed-tests-list" class="items-list">
-                                <div class="loading">Loading passed tests...</div>
-                            </div>
-                        </div>
-                        <div class="status-section failed">
-                            <h4><i data-lucide="x"></i> Failed Tests</h4>
-                            <div id="failed-tests-list" class="items-list">
-                                <div class="loading">Loading failed tests...</div>
-                            </div>
-                        </div>
-                    </div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+            
+            <div id="resultsContainer">
+                <div class="no-results">
+                    <i data-lucide="inbox"></i>
+                    <p>No hay resultados disponibles</p>
                 </div>
-                
-                <!-- Test Failures Tab -->
-                <div id="evaluations-tab" class="tab-panel">
-                    <div class="panel-header">
-                        <h3>Why Tests Failed</h3>
-                    </div>
-                    <div id="test-failures-list" class="items-list">
-                        <div class="loading">Loading test failure reasons...</div>
-                    </div>
-                </div>
-                
-                <!-- Model Reactions Tab -->
-                <div id="reactions-tab" class="tab-panel">
-                    <div class="panel-header">
-                        <h3>Model Evaluation Reactions</h3>
-                    </div>
-                    <div id="model-reactions-list" class="items-list">
-                        <div class="loading">Loading model reactions...</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Results Container -->
-        <div class="results-box">
-            <div class="results-box-header">
-                <h3><i data-lucide="file-text"></i> Resultados del Sistema</h3>
-                <div class="results-count" id="results-count">0 resultados</div>
-            </div>
-            <div id="results-content" class="results-content-wrapper">
-                <!-- Los resultados se cargarán aquí dinámicamente -->
             </div>
         </div>
     </div>
-
+    
     <script>
-        // Función para cargar resultados
+        // Variables globales
+        let allResults = [];
+        let filteredResults = [];
+        
+        // Cargar resultados
         async function loadResults() {
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const content = document.getElementById('results-content');
+            const loadingEl = document.getElementById('loadingMessage');
+            const errorEl = document.getElementById('errorMessage');
+            const containerEl = document.getElementById('resultsContainer');
             
-            loading.style.display = 'block';
-            error.style.display = 'none';
-            content.innerHTML = '';
+            loadingEl.style.display = 'block';
+            errorEl.style.display = 'none';
             
             try {
                 const response = await fetch('/api/results/list');
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
                 }
                 
                 const data = await response.json();
-                displayResults(data);
-            } catch (err) {
-                console.error('Error loading results:', err);
-                error.textContent = `Error al cargar resultados: ${err.message}`;
-                error.style.display = 'block';
+                allResults = Array.isArray(data) ? data : (data.results || []);
+                filteredResults = [...allResults];
+                
+                displayResults();
+                updateMetrics();
+                
+            } catch (error) {
+                console.error('Error loading results:', error);
+                errorEl.textContent = `Error al cargar resultados: ${error.message}`;
+                errorEl.style.display = 'block';
             } finally {
-                loading.style.display = 'none';
+                loadingEl.style.display = 'none';
             }
         }
         
-        // Función para mostrar resultados
-        function displayResults(data) {
-            const content = document.getElementById('results-content');
-            const counter = document.getElementById('results-count');
-            
-            // Actualizar contador
-            const count = data ? data.length : 0;
-            counter.textContent = `${count} resultado${count !== 1 ? 's' : ''}`;
-            
-            // Limpiar contenido anterior
-            content.innerHTML = '';
-            
-            if (!data || data.length === 0) {
-                return; // El CSS se encarga de mostrar el mensaje "No hay resultados disponibles"
-            }
-            
-            data.forEach(result => {
-                const card = document.createElement('div');
-                card.className = 'result-card';
-                
-                if (result.data && result.data.modelos_evaluados) {
-                    // Format evaluation results
-                    card.innerHTML = formatEvaluationResult(result);
-                } else if (result.data && (result.data.categories || result.data.test_details || result.data.total_tests !== undefined)) {
-                    // Format test results
-                    card.innerHTML = formatTestResult(result);
-                } else {
-                    // Default JSON format for other types
-                    card.innerHTML = `
-                        <div class="result-header">
-                            <div class="result-title">${result.title || 'Resultado'}</div>
-                            <div class="result-timestamp">${result.timestamp || ''}</div>
-                        </div>
-                        <div class="result-content">
-                            <pre class="json-content">${JSON.stringify(result, null, 2)}</pre>
-                        </div>
-                    `;
-                }
-                
-                content.appendChild(card);
-            });
-        }
+        // Variables para paginación virtual
+        let currentPage = 1;
+        const itemsPerPage = 20;
         
-        function formatEvaluationResult(result) {
-            const data = result.data;
-            const modelData = Object.values(data.modelos_evaluados)[0]; // Get first model
+        // Mostrar resultados con paginación virtual
+        function displayResults() {
+            const container = document.getElementById('resultsContainer');
             
-            let categoriesHtml = '';
-            if (modelData && modelData.categorias) {
-                Object.entries(modelData.categorias).forEach(([category, categoryData]) => {
-                    categoriesHtml += `
-                        <div class="category-section">
-                            <h4 class="category-title">${category.charAt(0).toUpperCase() + category.slice(1)}</h4>
-                            <div class="metrics-grid">
-                                <div class="metric-card">
-                                    <div class="metric-value">${categoryData.puntuacion_promedio?.toFixed(1) || 'N/A'}</div>
-                                    <div class="metric-label">Puntuación Promedio</div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-value">${categoryData.mejor_puntuacion || 'N/A'}</div>
-                                    <div class="metric-label">Mejor Puntuación</div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-value">${categoryData.peor_puntuacion || 'N/A'}</div>
-                                    <div class="metric-label">Peor Puntuación</div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-value">${categoryData.prompts?.length || 0}</div>
-                                    <div class="metric-label">Total Prompts</div>
-                                </div>
-                            </div>
-                            
-                            <div class="prompts-table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Prompt</th>
-                                            <th>Puntuación</th>
-                                            <th>Tiempo (s)</th>
-                                            <th>Longitud</th>
-                                            <th>Criterios</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${categoryData.prompts?.map(prompt => `
-                                            <tr>
-                                                <td class="prompt-text">${prompt.prompt?.substring(0, 50) || 'N/A'}...</td>
-                                                <td><span class="score-badge score-${getScoreClass(prompt.puntuacion)}">${prompt.puntuacion || 'N/A'}</span></td>
-                                                <td>${prompt.tiempo_respuesta?.toFixed(2) || 'N/A'}</td>
-                                                <td>${prompt.longitud_respuesta || 'N/A'}</td>
-                                                <td class="criteria-list">
-                                                    ${Object.entries(prompt.criterios || {}).map(([key, value]) => 
-                                                        `<span class="criteria-item ${value ? 'passed' : 'failed'}">${key}</span>`
-                                                    ).join('')}
-                                                </td>
-                                            </tr>
-                                        `).join('') || '<tr><td colspan="5">No hay datos de prompts</td></tr>'}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            return `
-                <div class="result-header">
-                    <div class="result-title">${result.title || 'Evaluación'}</div>
-                    <div class="result-timestamp">${result.timestamp || ''}</div>
-                </div>
-                <div class="result-content">
-                    <div class="evaluation-summary">
-                        <div class="summary-metrics">
-                            <div class="metric-card primary">
-                                <div class="metric-value">${modelData?.resumen?.puntuacion_total || 'N/A'}</div>
-                                <div class="metric-label">Puntuación Total</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value">${modelData?.resumen?.prompts_evaluados || 0}</div>
-                                <div class="metric-label">Prompts Evaluados</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value">${modelData?.resumen?.prompts_exitosos || 0}</div>
-                                <div class="metric-label">Prompts Exitosos</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value">${modelData?.modelo || 'N/A'}</div>
-                                <div class="metric-label">Modelo</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="categories-container">
-                        ${categoriesHtml}
-                    </div>
-                </div>
-            `;
-        }
-        
-        function formatTestResult(result) {
-            const data = result.data;
-            
-            // Build categories HTML
-            let categoriesHtml = '';
-            if (data && data.categories) {
-                Object.entries(data.categories).forEach(([category, categoryData]) => {
-                    const categoryName = category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    categoriesHtml += `
-                        <div class="category-section">
-                            <h4 class="category-title">${categoryName}</h4>
-                            <div class="metrics-grid">
-                                <div class="metric-card success">
-                                    <div class="metric-value">${categoryData.passed || 0}</div>
-                                    <div class="metric-label">Exitosas</div>
-                                </div>
-                                <div class="metric-card error">
-                                    <div class="metric-value">${categoryData.failed || 0}</div>
-                                    <div class="metric-label">Fallidas</div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-value">${categoryData.skipped || 0}</div>
-                                    <div class="metric-label">Omitidas</div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-value">${(categoryData.passed + categoryData.failed + categoryData.skipped) || 0}</div>
-                                    <div class="metric-label">Total</div>
-                                </div>
-                            </div>
-                            
-                            <div class="tests-table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Prueba</th>
-                                            <th>Estado</th>
-                                            <th>Duración</th>
-                                            <th>Mensaje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${categoryData.tests?.map(test => `
-                                            <tr>
-                                                <td class="test-name">${test.name || test.id || 'N/A'}</td>
-                                                <td><span class="status-badge ${getTestStatusClass(test.status)}">${formatTestStatus(test.status)}</span></td>
-                                                <td>${test.duration || test.time || 'N/A'}</td>
-                                                <td class="test-message">${test.message || test.error || test.output || 'N/A'}</td>
-                                            </tr>
-                                        `).join('') || '<tr><td colspan="4">No hay pruebas en esta categoría</td></tr>'}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            // If no categories, show test_details if available
-            if (!categoriesHtml && data && data.test_details && data.test_details.length > 0) {
-                categoriesHtml = `
-                    <div class="category-section">
-                        <h4 class="category-title">Resultados de Pruebas</h4>
-                        <div class="tests-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Prueba</th>
-                                        <th>Estado</th>
-                                        <th>Duración</th>
-                                        <th>Mensaje</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${data.test_details.map(test => `
-                                        <tr>
-                                            <td class="test-name">${test.name || test.id || 'N/A'}</td>
-                                            <td><span class="status-badge ${getTestStatusClass(test.status)}">${formatTestStatus(test.status)}</span></td>
-                                            <td>${test.duration || test.time || 'N/A'}</td>
-                                            <td class="test-message">${test.message || test.error || test.output || 'N/A'}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
+            if (filteredResults.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <i data-lucide="inbox"></i>
+                        <p>No hay resultados disponibles</p>
                     </div>
                 `;
+                lucide.createIcons();
+                return;
+            }
+            
+            // Calcular elementos a mostrar
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredResults.length);
+            const visibleResults = filteredResults.slice(startIndex, endIndex);
+            
+            // Crear fragmento de documento para mejor rendimiento
+            const fragment = document.createDocumentFragment();
+            
+            visibleResults.forEach((result, index) => {
+                // Asignar ID único si no existe
+                if (!result.id) {
+                    result.id = `result_${startIndex + index}_${Date.now()}`;
+                }
+                
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'result-card';
+                resultDiv.innerHTML = `
+                    <div class="result-header">
+                        <h3 class="result-title">${result.title || 'Resultado'}</h3>
+                        <span class="result-timestamp">${formatTimestamp(result.timestamp)}</span>
+                    </div>
+                    <div class="result-content">
+                        ${formatResultContent(result)}
+                    </div>
+                `;
+                fragment.appendChild(resultDiv);
+            });
+            
+            // Limpiar y agregar contenido
+            container.innerHTML = '';
+            container.appendChild(fragment);
+            
+            // Agregar controles de paginación
+            addPaginationControls(container);
+            
+            lucide.createIcons();
+        }
+        
+        // Agregar controles de paginación
+        function addPaginationControls(container) {
+            const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
+            
+            if (totalPages <= 1) return;
+            
+            const paginationDiv = document.createElement('div');
+            paginationDiv.className = 'pagination-controls';
+            paginationDiv.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                margin: 20px 0;
+                padding: 20px;
+            `;
+            
+            // Botón anterior
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'btn btn-outline';
+            prevBtn.textContent = '← Anterior';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayResults();
+                }
+            };
+            
+            // Información de página
+            const pageInfo = document.createElement('span');
+            pageInfo.textContent = `Página ${currentPage} de ${totalPages} (${filteredResults.length} resultados)`;
+            pageInfo.style.cssText = 'color: var(--text-muted); font-size: 14px;';
+            
+            // Botón siguiente
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn btn-outline';
+            nextBtn.textContent = 'Siguiente →';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayResults();
+                }
+            };
+            
+            paginationDiv.appendChild(prevBtn);
+            paginationDiv.appendChild(pageInfo);
+            paginationDiv.appendChild(nextBtn);
+            container.appendChild(paginationDiv);
+        }
+        
+        // Formatear contenido con lazy loading
+        function formatResultContent(result) {
+            if (result.content && typeof result.content === 'string') {
+                return `<p>${result.content}</p>`;
+            }
+            
+            const dataToFormat = result.data || result;
+            const resultId = result.id || Math.random().toString(36).substr(2, 9);
+            
+            // Check if this is evaluation data
+            if (dataToFormat.modelos_evaluados) {
+                return formatEvaluationData(dataToFormat, resultId);
             }
             
             return `
-                <div class="result-header">
-                    <div class="result-title">${result.title || 'Pruebas'}</div>
-                    <div class="result-timestamp">${result.timestamp || ''}</div>
+                <div class="interactive-controls">
+                    <div class="test-counter">
+                        <span class="counter-label">Elementos:</span>
+                        <span class="counter-value" id="counter-${resultId}">${getObjectCount(dataToFormat)}</span>
+                    </div>
+                    <button class="json-btn" onclick="copyResultJSON('${resultId}')" title="Copiar JSON">
+                        📋 Copiar
+                    </button>
+                    <button class="json-btn secondary" onclick="downloadResultJSON('${resultId}')" title="Descargar JSON">
+                        💾 Descargar
+                    </button>
                 </div>
-                <div class="result-content">
-                    <div class="test-summary">
-                        <div class="summary-metrics">
-                            <div class="metric-card primary">
-                                <div class="metric-value">${data?.total_tests || 0}</div>
-                                <div class="metric-label">Total Pruebas</div>
-                            </div>
-                            <div class="metric-card success">
-                                <div class="metric-value">${data?.passed_tests || 0}</div>
-                                <div class="metric-label">Exitosas</div>
-                            </div>
-                            <div class="metric-card error">
-                                <div class="metric-value">${data?.failed_tests || 0}</div>
-                                <div class="metric-label">Fallidas</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value">${data?.skipped_tests || 0}</div>
-                                <div class="metric-label">Omitidas</div>
-                            </div>
+                <div class="interactive-list" id="list-${resultId}">
+                    ${formatInteractiveList(dataToFormat, resultId)}
+                </div>
+            `;
+        }
+        
+        // Cargar contenido detallado bajo demanda
+        function loadDetailedContent(resultId) {
+            const result = allResults.find(r => r.id === resultId) || filteredResults.find(r => r.id === resultId);
+            if (!result) return;
+            
+            const container = document.querySelector(`#list-${resultId}`);
+            if (!container) return;
+            
+            // Mostrar indicador de carga
+            container.innerHTML = `
+                <div class="loading-content">
+                    <i data-lucide="loader-2" style="animation: spin 1s linear infinite;"></i>
+                    <span>Cargando contenido...</span>
+                </div>
+            `;
+            
+            // Simular carga asíncrona para no bloquear la UI
+            setTimeout(() => {
+                const dataToFormat = result.data || result;
+                container.innerHTML = formatInteractiveList(dataToFormat, resultId);
+                lucide.createIcons();
+            }, 100);
+        }
+        
+        // Format evaluation data with simplified summary
+        function formatEvaluationData(data, resultId) {
+            const models = Object.keys(data.modelos_evaluados);
+            
+            // Calculate overall statistics
+            let totalPrompts = 0;
+            let successfulPrompts = 0;
+            let totalErrors = 0;
+            let avgScore = 0;
+            let totalTime = 0;
+            
+            models.forEach(modelKey => {
+                const model = data.modelos_evaluados[modelKey];
+                if (model && model.categorias) {
+                    Object.values(model.categorias).forEach(category => {
+                        const prompts = category.prompts || [];
+                        totalPrompts += prompts.length;
+                        prompts.forEach(p => {
+                            if (p.error) totalErrors++;
+                            else successfulPrompts++;
+                            avgScore += p.puntuacion || 0;
+                            totalTime += p.tiempo_respuesta || 0;
+                        });
+                    });
+                }
+            });
+            
+            avgScore = totalPrompts > 0 ? (avgScore / totalPrompts).toFixed(1) : 0;
+            const avgTime = totalPrompts > 0 ? (totalTime / totalPrompts).toFixed(2) : 0;
+            const successRate = totalPrompts > 0 ? ((successfulPrompts / totalPrompts) * 100).toFixed(1) : 0;
+            
+            return `
+                <div class="evaluation-summary">
+                    <div class="summary-header">
+                        <h4>📊 Resumen de Evaluación</h4>
+                        <span class="models-count">${models.length} modelo(s) evaluado(s)</span>
+                    </div>
+                    
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">${totalPrompts}</span>
+                            <span class="stat-label">Total Prompts</span>
+                        </div>
+                        <div class="stat-item success">
+                            <span class="stat-value">${successfulPrompts}</span>
+                            <span class="stat-label">Exitosos</span>
+                        </div>
+                        <div class="stat-item ${totalErrors > 0 ? 'error' : 'success'}">
+                            <span class="stat-value">${totalErrors}</span>
+                            <span class="stat-label">Errores</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${successRate}%</span>
+                            <span class="stat-label">Tasa Éxito</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${avgScore}</span>
+                            <span class="stat-label">Puntuación</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${avgTime}s</span>
+                            <span class="stat-label">Tiempo Medio</span>
                         </div>
                     </div>
                     
-                    <div class="categories-container">
-                        ${categoriesHtml || '<div class="no-results">No hay datos de pruebas disponibles</div>'}
+                    <div class="models-summary">
+                        ${models.map(modelKey => {
+                            const model = data.modelos_evaluados[modelKey];
+                            const categories = Object.keys(model.categorias || {});
+                            return `
+                                <div class="model-summary">
+                                    <strong>${modelKey.toUpperCase()}</strong>: ${categories.length} categorías evaluadas
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    
+                    <div class="json-controls">
+                        <button class="json-btn" onclick="copyResultJSON('${resultId}')" title="Copiar JSON completo">
+                            📋 Copiar Datos
+                        </button>
+                        <button class="json-btn secondary" onclick="downloadResultJSON('${resultId}')" title="Descargar JSON">
+                            💾 Descargar
+                        </button>
                     </div>
                 </div>
             `;
         }
         
-        function getTestStatusClass(status) {
-            if (!status) return 'unknown';
-            const statusLower = status.toLowerCase();
-            if (statusLower.includes('pass') || statusLower === 'ok' || statusLower === 'success') return 'passed';
-            if (statusLower.includes('fail') || statusLower === 'error' || statusLower.includes('failed')) return 'failed';
-            if (statusLower.includes('skip') || statusLower === 'skipped') return 'skipped';
-            return 'unknown';
+        // Función formatJSONWithSyntaxHighlighting removida - ya no se necesita
+        
+        // Contar elementos en un objeto
+        function getObjectCount(obj) {
+            if (Array.isArray(obj)) {
+                return obj.length;
+            }
+            if (typeof obj === 'object' && obj !== null) {
+                return Object.keys(obj).length;
+            }
+            return 1;
         }
         
-        function formatTestStatus(status) {
-            if (!status) return 'Desconocido';
-            const statusLower = status.toLowerCase();
-            if (statusLower.includes('pass') || statusLower === 'ok' || statusLower === 'success') return 'Exitosa';
-            if (statusLower.includes('fail') || statusLower === 'error' || statusLower.includes('failed')) return 'Fallida';
-            if (statusLower.includes('skip') || statusLower === 'skipped') return 'Omitida';
-            return status;
+        // Formatear lista interactiva
+        function formatInteractiveList(obj, resultId, path = '') {
+            if (obj === null || obj === undefined) {
+                return '<div class="list-item"><span class="item-key">null</span></div>';
+            }
+            
+            if (typeof obj !== 'object') {
+                return `<div class="list-item"><span class="item-value">${obj}</span></div>`;
+            }
+            
+            let html = '';
+            
+            if (Array.isArray(obj)) {
+                obj.forEach((item, index) => {
+                    const itemPath = path ? `${path}[${index}]` : `[${index}]`;
+                    html += `
+                        <div class="list-item expandable" onclick="toggleListItem(this)">
+                            <span class="item-toggle">▶</span>
+                            <span class="item-key">[${index}]</span>
+                            <span class="item-type">(${Array.isArray(item) ? 'array' : typeof item})</span>
+                            <div class="item-children" style="display: none;">
+                                ${formatInteractiveList(item, resultId, itemPath)}
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                Object.keys(obj).forEach(key => {
+                    const value = obj[key];
+                    const itemPath = path ? `${path}.${key}` : key;
+                    
+                    if (typeof value === 'object' && value !== null) {
+                        html += `
+                            <div class="list-item expandable" onclick="toggleListItem(this)">
+                                <span class="item-toggle">▶</span>
+                                <span class="item-key">${key}</span>
+                                <span class="item-type">(${Array.isArray(value) ? 'array' : 'object'})</span>
+                                <div class="item-children" style="display: none;">
+                                    ${formatInteractiveList(value, resultId, itemPath)}
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="list-item">
+                                <span class="item-key">${key}:</span>
+                                <span class="item-value">${value}</span>
+                            </div>
+                        `;
+                    }
+                });
+            }
+            
+            return html;
         }
         
-        function getScoreClass(score) {
-            if (score >= 80) return 'excellent';
-            if (score >= 60) return 'good';
-            if (score >= 40) return 'fair';
-            return 'poor';
+        // Toggle list item expansion
+        function toggleListItem(element) {
+            const children = element.querySelector('.item-children');
+            const toggle = element.querySelector('.item-toggle');
+            
+            if (children.style.display === 'none') {
+                children.style.display = 'block';
+                toggle.textContent = '▼';
+            } else {
+                children.style.display = 'none';
+                toggle.textContent = '▶';
+            }
         }
         
-        // Función para ejecutar pruebas
+        // Formatear timestamp
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'Sin fecha';
+            return new Date(timestamp).toLocaleString('es-ES');
+        }
+        
+        // Debounce function para optimizar búsqueda
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Filtrar resultados con debouncing
+        const filterResults = debounce(function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm.trim()) {
+                filteredResults = [...allResults];
+            } else {
+                filteredResults = allResults.filter(result => {
+                    const searchableText = [
+                        result.title || '',
+                        result.content || '',
+                        result.timestamp || ''
+                    ].join(' ').toLowerCase();
+                    
+                    return searchableText.includes(searchTerm);
+                });
+            }
+            
+            // Resetear a la primera página cuando se filtra
+            currentPage = 1;
+            displayResults();
+        }, 300);
+        
+        // Actualizar métricas
+        function updateMetrics() {
+            const total = allResults.length;
+            let totalPrompts = 0;
+            let successfulPrompts = 0;
+            let totalResponseTime = 0;
+            let responseCount = 0;
+            let categoryScores = {};
+            let categoryBreakdown = {};
+            
+            // Analizar datos de evaluación (optimizado)
+            for (const result of allResults) {
+                if (!result.data?.modelos_evaluados) continue;
+                
+                for (const modelo of Object.values(result.data.modelos_evaluados)) {
+                    if (modelo.resumen) {
+                        totalPrompts += modelo.resumen.prompts_evaluados || 0;
+                        successfulPrompts += modelo.resumen.prompts_exitosos || 0;
+                    }
+                    
+                    if (modelo.categorias) {
+                        for (const [categoria, data] of Object.entries(modelo.categorias)) {
+                            if (!categoryScores[categoria]) {
+                                categoryScores[categoria] = [];
+                                categoryBreakdown[categoria] = { total: 0, time: 0 };
+                            }
+                            
+                            if (data.prompts) {
+                                for (const prompt of data.prompts) {
+                                    if (prompt.puntuacion !== undefined) {
+                                        categoryScores[categoria].push(prompt.puntuacion);
+                                    }
+                                    if (prompt.tiempo_respuesta !== undefined) {
+                                        totalResponseTime += prompt.tiempo_respuesta;
+                                        responseCount++;
+                                        categoryBreakdown[categoria].time += prompt.tiempo_respuesta;
+                                        categoryBreakdown[categoria].total++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            const successRate = totalPrompts > 0 ? Math.round((successfulPrompts / totalPrompts) * 100) : 0;
+            const avgTime = responseCount > 0 ? (totalResponseTime / responseCount).toFixed(2) : 0;
+            
+            // Calcular puntuación promedio general
+            const allScores = Object.values(categoryScores).flat();
+            const avgScore = allScores.length > 0 ? (allScores.reduce((a, b) => a + b, 0) / allScores.length).toFixed(1) : 0;
+            
+            document.getElementById('totalTests').textContent = totalPrompts;
+            document.getElementById('successRate').textContent = `${successRate}%`;
+            document.getElementById('avgTime').textContent = `${avgTime}s`;
+            document.getElementById('uptime').textContent = `${avgScore}/100`;
+            
+            // Actualizar métricas detalladas si existen
+            updateDetailedMetrics(categoryScores, categoryBreakdown, totalResponseTime);
+        }
+        
+        // Alternar métricas detalladas
+         function toggleDetailedMetrics() {
+             const detailedSection = document.getElementById('detailedMetrics');
+             const toggleBtn = document.getElementById('toggleDetailedBtn');
+             const icon = toggleBtn.querySelector('i');
+             
+             if (detailedSection.style.display === 'none' || !detailedSection.style.display) {
+                 detailedSection.style.display = 'block';
+                 toggleBtn.innerHTML = '<i data-lucide="chevron-up"></i> Ocultar Análisis Detallado';
+             } else {
+                 detailedSection.style.display = 'none';
+                 toggleBtn.innerHTML = '<i data-lucide="chevron-down"></i> Ver Análisis Detallado';
+             }
+             lucide.createIcons();
+         }
+         
+         // Actualizar métricas detalladas
+         function updateDetailedMetrics(categoryScores, categoryBreakdown, totalResponseTime) {
+             const detailedSection = document.getElementById('detailedMetrics');
+             const toggleBtn = document.getElementById('toggleDetailedBtn');
+             if (!detailedSection) return;
+             
+             // Mostrar botón y preparar sección si hay datos
+             if (Object.keys(categoryScores).length > 0) {
+                 toggleBtn.style.display = 'block';
+                 detailedSection.style.display = 'none'; // Inicialmente oculto
+                
+                // Desglose por categorías
+                const categoryEl = document.getElementById('categoryBreakdown');
+                if (categoryEl) {
+                    categoryEl.innerHTML = Object.entries(categoryScores).map(([categoria, scores]) => {
+                        const avgScore = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
+                        const percentage = Math.min(100, (avgScore / 100) * 100);
+                        
+                        return `
+                            <div class="category-item">
+                                <div>
+                                    <div class="metric-name">${categoria}</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-value-detail">${avgScore}/100</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                // Distribución de tiempos
+                const timeEl = document.getElementById('timeBreakdown');
+                if (timeEl) {
+                    timeEl.innerHTML = Object.entries(categoryBreakdown).map(([categoria, data]) => {
+                        const avgTime = data.total > 0 ? (data.time / data.total).toFixed(2) : 0;
+                        const maxTime = 10; // Tiempo máximo esperado en segundos
+                        const percentage = Math.min(100, (avgTime / maxTime) * 100);
+                        
+                        return `
+                            <div class="time-item">
+                                <div>
+                                    <div class="metric-name">${categoria}</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-value-detail">${avgTime}s</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                // Distribución de puntuaciones
+                const scoreEl = document.getElementById('scoreDistribution');
+                if (scoreEl) {
+                    const allScores = Object.values(categoryScores).flat();
+                    const ranges = {
+                        'Excelente (90-100)': allScores.filter(s => s >= 90).length,
+                        'Bueno (70-89)': allScores.filter(s => s >= 70 && s < 90).length,
+                        'Regular (50-69)': allScores.filter(s => s >= 50 && s < 70).length,
+                        'Bajo (<50)': allScores.filter(s => s < 50).length
+                    };
+                    
+                    const total = allScores.length;
+                    scoreEl.innerHTML = Object.entries(ranges).map(([range, count]) => {
+                        const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
+                        const barWidth = total > 0 ? (count / total) * 100 : 0;
+                        
+                        return `
+                            <div class="score-item">
+                                <div>
+                                    <div class="metric-name">${range}</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${barWidth}%"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-value-detail">${count} (${percentage}%)</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                // Resumen de rendimiento
+                const performanceEl = document.getElementById('performanceSummary');
+                if (performanceEl) {
+                    const allScores = Object.values(categoryScores).flat();
+                    const avgScore = allScores.length > 0 ? (allScores.reduce((a, b) => a + b, 0) / allScores.length).toFixed(1) : 0;
+                    const totalCategories = Object.keys(categoryScores).length;
+                    const totalPrompts = allScores.length;
+                    
+                    performanceEl.innerHTML = `
+                        <div class="performance-item">
+                            <div class="metric-name">Categorías Evaluadas</div>
+                            <div class="metric-value-detail">${totalCategories}</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="metric-name">Total Prompts</div>
+                            <div class="metric-value-detail">${totalPrompts}</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="metric-name">Puntuación Media</div>
+                            <div class="metric-value-detail">${avgScore}/100</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="metric-name">Estado General</div>
+                            <div class="metric-value-detail">${avgScore >= 80 ? '🟢 Excelente' : avgScore >= 60 ? '🟡 Bueno' : '🔴 Necesita Mejora'}</div>
+                        </div>
+                    `;
+                }
+             } else {
+                 toggleBtn.style.display = 'none';
+                 detailedSection.style.display = 'none';
+             }
+         }
+        
+        // Ejecutar pruebas
         async function runTests() {
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const button = event.target;
-            
-            // Deshabilitar botón y mostrar estado de carga
-            button.disabled = true;
-            button.innerHTML = '<i data-lucide="loader"></i> Ejecutando Pruebas...';
-            loading.style.display = 'block';
-            error.style.display = 'none';
-            
             try {
-                const response = await fetch('/api/results/run-tests', {
-                    method: 'POST'
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
+                const response = await fetch('/api/results/run-tests', { method: 'POST' });
                 const result = await response.json();
-                console.log('Tests completed:', result);
-                
-                // Mostrar mensaje de éxito
-                const successMsg = document.createElement('div');
-                successMsg.className = 'success-message';
-                successMsg.style.cssText = 'background: #10b981; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;';
-                successMsg.innerHTML = `<i data-lucide="check-circle"></i> Pruebas ejecutadas exitosamente. Exit code: ${result.exit_code}`;
-                document.querySelector('.results-container').insertBefore(successMsg, document.querySelector('.results-box'));
-                
-                // Remover mensaje después de 5 segundos
-                setTimeout(() => successMsg.remove(), 5000);
-                
-                // Recargar resultados después de ejecutar pruebas
-                setTimeout(loadResults, 1000);
-            } catch (err) {
-                console.error('Error running tests:', err);
-                error.textContent = `Error al ejecutar pruebas: ${err.message}`;
-                error.style.display = 'block';
-            } finally {
-                loading.style.display = 'none';
-                // Restaurar botón
-                button.disabled = false;
-                button.innerHTML = '<i data-lucide="play"></i> Ejecutar Pruebas';
-                lucide.createIcons();
+                showNotification('Pruebas ejecutadas correctamente');
+                loadResults();
+            } catch (error) {
+                showNotification('Error al ejecutar pruebas', 'error');
             }
         }
         
-        // Función para ejecutar evaluaciones
+        // Ejecutar evaluaciones
         async function runEvaluations() {
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const button = event.target;
-            
-            // Deshabilitar botón y mostrar estado de carga
-            button.disabled = true;
-            button.innerHTML = '<i data-lucide="loader"></i> Ejecutando Evaluaciones...';
-            loading.style.display = 'block';
-            error.style.display = 'none';
-            
             try {
-                const response = await fetch('/api/results/run-evaluations', {
-                    method: 'POST'
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
+                const response = await fetch('/api/results/run-evaluations', { method: 'POST' });
                 const result = await response.json();
-                console.log('Evaluations completed:', result);
-                
-                // Mostrar mensaje de éxito
-                const successMsg = document.createElement('div');
-                successMsg.className = 'success-message';
-                successMsg.style.cssText = 'background: #10b981; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;';
-                successMsg.innerHTML = `<i data-lucide="check-circle"></i> Evaluaciones ejecutadas exitosamente. Exit code: ${result.exit_code}`;
-                document.querySelector('.results-container').insertBefore(successMsg, document.querySelector('.results-box'));
-                
-                // Remover mensaje después de 5 segundos
-                setTimeout(() => successMsg.remove(), 5000);
-                
-                // Recargar resultados después de ejecutar evaluaciones
-                setTimeout(loadResults, 1000);
-            } catch (err) {
-                console.error('Error running evaluations:', err);
-                error.textContent = `Error al ejecutar evaluaciones: ${err.message}`;
-                error.style.display = 'block';
-            } finally {
-                loading.style.display = 'none';
-                // Restaurar botón
-                button.disabled = false;
-                button.innerHTML = '<i data-lucide="check-circle"></i> Ejecutar Evaluaciones';
-                lucide.createIcons();
+                showNotification('Evaluaciones ejecutadas correctamente');
+                loadResults();
+            } catch (error) {
+                showNotification('Error al ejecutar evaluaciones', 'error');
             }
         }
         
-        // Cargar resultados al cargar la página
-        document.addEventListener('DOMContentLoaded', loadResults);
+
         
-        // Initialize Lucide icons
-        lucide.createIcons();
+        // Exportar resultados
+        function exportResults() {
+            const dataStr = JSON.stringify(allResults, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `resultados_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            showNotification('Resultados exportados correctamente');
+        }
         
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        // Mostrar notificación
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#dc2626' : '#22c55e'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Toggle tema
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        
+        // Funciones para controles JSON individuales
+        
+        // Copiar JSON de resultado individual
+        function copyResultJSON(resultId) {
+            const result = filteredResults.find(r => r.id === resultId);
+            if (!result) {
+                showNotification('No se pudo encontrar el resultado', 'error');
+                return;
+            }
+            
+            const dataToFormat = result.data || result;
+            const jsonString = JSON.stringify(dataToFormat, null, 2);
+            
+            navigator.clipboard.writeText(jsonString).then(() => {
+                showNotification('JSON copiado al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar:', err);
+                showNotification('Error al copiar JSON', 'error');
             });
         }
         
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                const nav = document.querySelector('.nav');
-                nav.classList.toggle('mobile-open');
+        // Descargar JSON de resultado individual
+        function downloadResultJSON(resultId) {
+            const result = filteredResults.find(r => r.id === resultId);
+            if (!result) {
+                showNotification('No se pudo encontrar el resultado', 'error');
+                return;
+            }
+            
+            const dataToFormat = result.data || result;
+            const jsonString = JSON.stringify(dataToFormat, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `resultado_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showNotification('JSON descargado correctamente');
+        }
+        
+        // Función removida: toggleJSONFormat ya no es necesaria con la lista interactiva
+        
+        // Cargar resultados de pruebas HTML
+        async function loadTestResults() {
+            try {
+                const response = await fetch('/api/results/test-results');
+                if (response.ok) {
+                    const testResults = await response.json();
+                    displayTestResults(testResults);
+                }
+            } catch (error) {
+                console.error('Error loading test results:', error);
+            }
+        }
+        
+        // Mostrar resultados de pruebas
+        function displayTestResults(testResults) {
+            if (!testResults || testResults.length === 0) return;
+            
+            // Parse test data from the first result (assuming it contains the test summary)
+            const testData = testResults[0]?.data || {};
+            const passedTests = testData.passed_tests || 0;
+            const failedTests = testData.failed_tests || 0;
+            const skippedTests = testData.skipped_tests || 0;
+            const totalTests = testData.total_tests || 0;
+            const testDetails = testData.test_details || [];
+            
+            // Create status summary
+            const statusCounts = {
+                passed: passedTests,
+                failed: failedTests,
+                skipped: skippedTests
+            };
+            
+            // Generate keyword list
+            const keywordList = testDetails.map(test => {
+                const status = test.status === 'passed' ? '✅ passed' : 
+                              test.status === 'failed' ? '❌ error' : 
+                              test.status === 'skipped' ? '⏭️ skipped' : '⚠️ unknown';
+                return `<li>${test.name.split('::').pop()} - ${status}</li>`;
+            }).join('');
+            
+            const testSection = document.createElement('div');
+            testSection.className = 'test-results-section';
+            testSection.innerHTML = `
+                <h2 class="results-title">Reportes de Pruebas</h2>
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3 class="result-title">Resumen de Pruebas</h3>
+                        <span class="result-timestamp">${formatTimestamp(testData.timestamp)}</span>
+                    </div>
+                    <div class="result-content">
+                        <div class="test-counter">
+                            <div class="counter-item">
+                                <span class="counter-value">${totalTests}</span>
+                                <span class="counter-label">Total</span>
+                            </div>
+                            <div class="counter-item success">
+                                <span class="counter-value">${passedTests}</span>
+                                <span class="counter-label">Passed</span>
+                            </div>
+                            <div class="counter-item error">
+                                <span class="counter-value">${failedTests}</span>
+                                <span class="counter-label">Failed</span>
+                            </div>
+                            <div class="counter-item warning">
+                                <span class="counter-value">${skippedTests}</span>
+                                <span class="counter-label">Skipped</span>
+                            </div>
+                        </div>
+                        <div class="test-list">
+                            <h4>Detalles de Pruebas:</h4>
+                            <ul class="keyword-list">
+                                ${keywordList}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const resultsSection = document.querySelector('.results-section');
+            resultsSection.parentNode.insertBefore(testSection, resultsSection);
+        }
+        
+
+        
+        // Enhanced copy function for evaluation data
+        function copyEvaluationData(resultId, format = 'json') {
+            const result = allResults.find(r => r.id === resultId);
+            if (!result) return;
+            
+            let textToCopy = '';
+            
+            if (format === 'summary') {
+                // Create a summary text
+                const data = result.data;
+                const models = Object.keys(data.modelos_evaluados);
+                
+                textToCopy = `Resumen de Evaluación\n`;
+                textToCopy += `Timestamp: ${data.timestamp}\n\n`;
+                
+                models.forEach(modelKey => {
+                    const model = data.modelos_evaluados[modelKey];
+                    const categories = Object.keys(model.categorias || {});
+                    
+                    let totalPrompts = 0;
+                    let successfulPrompts = 0;
+                    let totalErrors = 0;
+                    
+                    categories.forEach(cat => {
+                        const prompts = model.categorias[cat].prompts || [];
+                        totalPrompts += prompts.length;
+                        prompts.forEach(p => {
+                            if (p.error) totalErrors++;
+                            else successfulPrompts++;
+                        });
+                    });
+                    
+                    textToCopy += `Modelo: ${modelKey.toUpperCase()}\n`;
+                    textToCopy += `- Total prompts: ${totalPrompts}\n`;
+                    textToCopy += `- Exitosos: ${successfulPrompts}\n`;
+                    textToCopy += `- Con errores: ${totalErrors}\n`;
+                    textToCopy += `- Tasa de éxito: ${totalPrompts > 0 ? ((successfulPrompts / totalPrompts) * 100).toFixed(1) : 0}%\n\n`;
+                });
+            } else {
+                textToCopy = JSON.stringify(result.data, null, 2);
+            }
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showNotification(`${format === 'summary' ? 'Resumen' : 'JSON'} copiado al portapapeles`);
+            }).catch(() => {
+                showNotification('Error al copiar al portapapeles', 'error');
             });
         }
         
-        // Tab switching functionality
-        function showTab(tabName) {
-            // Hide all tab panels
-            document.querySelectorAll('.tab-panel').forEach(panel => {
-                panel.classList.remove('active');
-            });
+        // Enhanced export function
+        function exportEvaluationData(resultId, format = 'json') {
+            const result = allResults.find(r => r.id === resultId);
+            if (!result) return;
             
-            // Remove active class from all tab buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
+            let content = '';
+            let filename = '';
+            let mimeType = '';
             
-            // Show selected tab panel
-            document.getElementById(tabName + '-tab').classList.add('active');
+            if (format === 'csv') {
+                // Convert to CSV format
+                const data = result.data;
+                const models = Object.keys(data.modelos_evaluados);
+                
+                content = 'Modelo,Categoría,Prompt,Puntuación,Tiempo_Respuesta,Error\n';
+                
+                models.forEach(modelKey => {
+                    const model = data.modelos_evaluados[modelKey];
+                    Object.entries(model.categorias || {}).forEach(([categoryName, categoryData]) => {
+                        const prompts = categoryData.prompts || [];
+                        prompts.forEach(prompt => {
+                            const row = [
+                                modelKey,
+                                categoryName,
+                                `"${prompt.prompt.replace(/"/g, '""')}"`,
+                                prompt.puntuacion || 0,
+                                prompt.tiempo_respuesta || 0,
+                                prompt.error ? `"${prompt.error.replace(/"/g, '""')}"` : ''
+                            ].join(',');
+                            content += row + '\n';
+                        });
+                    });
+                });
+                
+                filename = `evaluacion_${data.evaluacion_id || 'export'}.csv`;
+                mimeType = 'text/csv';
+            } else {
+                content = JSON.stringify(result.data, null, 2);
+                filename = `evaluacion_${result.data.evaluacion_id || 'export'}.json`;
+                mimeType = 'application/json';
+            }
             
-            // Add active class to clicked button
-            event.target.classList.add('active');
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            showNotification(`Datos exportados como ${format.toUpperCase()}`);
         }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Cargar resultados iniciales
+            loadResults();
+            loadTestResults();
+            
+            // Inicializar iconos
+            lucide.createIcons();
+        });
     </script>
 </body>
 </html>
