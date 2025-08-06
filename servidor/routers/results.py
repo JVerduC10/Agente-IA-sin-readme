@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Query
 from pydantic import BaseModel
 
 # Configurar logging
@@ -160,6 +160,18 @@ async def _update_evaluation_progress(session_id: str, progress_info: Dict[str, 
 @router.post("/run-tests")
 async def run_tests(background_tasks: BackgroundTasks) -> Dict[str, Any]:
     """Ejecuta las pruebas del sistema - OPTIMIZADO con progreso en tiempo real"""
+    # Verificar configuración de API antes de ejecutar
+    config_check = await check_api_configuration()
+    if not config_check["can_run_tests"]:
+        raise HTTPException(
+            status_code=400, 
+            detail={
+                "error": "missing_api_keys",
+                "message": "No se pueden ejecutar pruebas: faltan claves API",
+                "details": config_check["details"]
+            }
+        )
+    
     session_id = f"test_{int(time.time())}_{os.getpid()}"
     
     # Inicializar progreso
@@ -195,13 +207,25 @@ async def run_tests(background_tasks: BackgroundTasks) -> Dict[str, Any]:
 async def _run_optimized_tests_background(session_id: str):
     """Ejecuta pruebas optimizadas en segundo plano"""
     try:
-        # Configurar callback de progreso
+        # Configurar callback de progreso thread-safe
         def progress_callback(progress_info):
-            asyncio.create_task(_update_test_progress(session_id, {
-                "status": "running",
-                "session_id": session_id,
-                **progress_info
-            }))
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.run_coroutine_threadsafe(
+                    _update_test_progress(session_id, {
+                        "status": "running",
+                        "session_id": session_id,
+                        **progress_info
+                    }),
+                    loop
+                )
+            else:
+                # Fallback para casos donde no hay loop activo
+                asyncio.create_task(_update_test_progress(session_id, {
+                    "status": "running",
+                    "session_id": session_id,
+                    **progress_info
+                }))
         
         # Ejecutar pruebas optimizadas
         result = await asyncio.get_event_loop().run_in_executor(
@@ -408,6 +432,18 @@ async def _update_test_cache(pytest_result):
 @router.post("/run-evaluations")
 async def run_evaluations(background_tasks: BackgroundTasks) -> Dict[str, Any]:
     """Ejecuta las evaluaciones automáticas - OPTIMIZADO con progreso en tiempo real"""
+    # Verificar configuración de API antes de ejecutar
+    config_check = await check_api_configuration()
+    if not config_check["can_run_evaluations"]:
+        raise HTTPException(
+            status_code=400, 
+            detail={
+                "error": "missing_api_keys",
+                "message": "No se pueden ejecutar evaluaciones: falta clave API de Groq",
+                "details": config_check["details"]
+            }
+        )
+    
     session_id = f"eval_{int(time.time())}_{os.getpid()}"
     
     # Inicializar progreso
@@ -443,13 +479,25 @@ async def run_evaluations(background_tasks: BackgroundTasks) -> Dict[str, Any]:
 async def _run_optimized_evaluations_background(session_id: str):
     """Ejecuta evaluaciones optimizadas en segundo plano"""
     try:
-        # Configurar callback de progreso
+        # Configurar callback de progreso thread-safe
         def progress_callback(progress_info):
-            asyncio.create_task(_update_evaluation_progress(session_id, {
-                "status": "running",
-                "session_id": session_id,
-                **progress_info
-            }))
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.run_coroutine_threadsafe(
+                    _update_evaluation_progress(session_id, {
+                        "status": "running",
+                        "session_id": session_id,
+                        **progress_info
+                    }),
+                    loop
+                )
+            else:
+                # Fallback para casos donde no hay loop activo
+                asyncio.create_task(_update_evaluation_progress(session_id, {
+                    "status": "running",
+                    "session_id": session_id,
+                    **progress_info
+                }))
         
         # Crear instancia de evaluación optimizada
         evaluacion = EvaluacionAutomatica(
@@ -549,3 +597,140 @@ async def get_test_status() -> Dict[str, Any]:
     except Exception as e:
         logger.error(f"Error getting test status: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/metadata")
+async def get_results_metadata(
+    page: int = Query(1, ge=1, description="Número de página"),
+    limit: int = Query(10, ge=1, le=100, description="Elementos por página")
+) -> Dict[str, Any]:
+    """Obtiene metadatos de resultados con paginación"""
+    try:
+        results_dir = Path("resultados")
+        if not results_dir.exists():
+            return {
+                "metadata": [],
+                "total": 0,
+                "page": page,
+                "limit": limit,
+                "total_pages": 0
+            }
+        
+        # Obtener archivos JSON
+        json_files = list(results_dir.glob("*.json"))
+        json_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
+        
+        total = len(json_files)
+        total_pages = (total + limit - 1) // limit
+        
+        # Calcular offset
+        offset = (page - 1) * limit
+        page_files = json_files[offset:offset + limit]
+        
+        # Generar metadatos
+        metadata = []
+        for file_path in page_files:
+            try:
+                stat = file_path.stat()
+                # Leer solo las primeras líneas para obtener metadatos básicos
+                with open(file_path, "r", encoding="utf-8") as f:
+                    content = f.read(500)  # Solo primeros 500 caracteres
+                    try:
+                        partial_data = json.loads(content + "}" if not content.endswith("}") else content)
+                    except:
+                        partial_data = {}
+                
+                metadata.append({
+                    "id": file_path.stem,
+                    "filename": file_path.name,
+                    "size": stat.st_size,
+                    "created": datetime.fromtimestamp(stat.st_ctime).isoformat(),
+                    "modified": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+                    "type": "evaluation" if "evaluacion" in file_path.name else "test",
+                    "status": "completed",
+                    "summary": {
+                        "timestamp": partial_data.get("timestamp", ""),
+                        "models": len(partial_data.get("modelos_evaluados", {})),
+                        "categories": len(partial_data.get("categorias", {}))
+                    }
+                })
+            except Exception as e:
+                logger.warning(f"Error reading metadata for {file_path}: {e}")
+                continue
+        
+        return {
+            "metadata": metadata,
+            "total": total,
+            "page": page,
+            "limit": limit,
+            "total_pages": total_pages
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting results metadata: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/detail/{result_id}")
+async def get_result_detail(result_id: str) -> Dict[str, Any]:
+    """Obtiene el detalle completo de un resultado específico"""
+    try:
+        results_dir = Path("resultados")
+        result_file = results_dir / f"{result_id}.json"
+        
+        if not result_file.exists():
+            raise HTTPException(status_code=404, detail="Resultado no encontrado")
+        
+        with open(result_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        
+        return {
+            "id": result_id,
+            "data": data,
+            "metadata": {
+                "size": result_file.stat().st_size,
+                "modified": datetime.fromtimestamp(result_file.stat().st_mtime).isoformat()
+            }
+        }
+        
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Resultado no encontrado")
+    except Exception as e:
+        logger.error(f"Error getting result detail: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/config-check")
+async def check_api_configuration() -> Dict[str, Any]:
+    """Verifica la configuración de las claves API"""
+    try:
+        from servidor.config.settings import get_settings
+        settings = get_settings()
+        
+        # Verificar claves API necesarias
+        config_status = {
+            "groq_api_key": bool(getattr(settings, 'GROQ_API_KEY', None)),
+            "openai_api_key": bool(getattr(settings, 'OPENAI_API_KEY', None)),
+            "anthropic_api_key": bool(getattr(settings, 'ANTHROPIC_API_KEY', None))
+        }
+        
+        # Determinar si hay al menos una clave configurada
+        has_any_key = any(config_status.values())
+        
+        return {
+            "status": "ready" if has_any_key else "missing_keys",
+            "message": "Configuración lista" if has_any_key else "Faltan claves API",
+            "details": config_status,
+            "can_run_tests": has_any_key,
+            "can_run_evaluations": config_status.get("groq_api_key", False)
+        }
+        
+    except Exception as e:
+        logger.error(f"Error checking API configuration: {e}")
+        return {
+            "status": "error",
+            "message": f"Error verificando configuración: {str(e)}",
+            "details": {},
+            "can_run_tests": False,
+            "can_run_evaluations": False
+        }
