@@ -209,8 +209,8 @@ async def _run_optimized_tests_background(session_id: str):
     try:
         # Configurar callback de progreso thread-safe
         def progress_callback(progress_info):
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
+            try:
+                loop = asyncio.get_running_loop()
                 asyncio.run_coroutine_threadsafe(
                     _update_test_progress(session_id, {
                         "status": "running",
@@ -219,13 +219,13 @@ async def _run_optimized_tests_background(session_id: str):
                     }),
                     loop
                 )
-            else:
-                # Fallback para casos donde no hay loop activo
-                asyncio.create_task(_update_test_progress(session_id, {
+            except RuntimeError:
+                # No hay loop activo, actualizar directamente el progreso
+                _test_progress[session_id] = {
                     "status": "running",
                     "session_id": session_id,
                     **progress_info
-                }))
+                }
         
         # Ejecutar pruebas optimizadas
         result = await asyncio.get_event_loop().run_in_executor(
@@ -481,8 +481,8 @@ async def _run_optimized_evaluations_background(session_id: str):
     try:
         # Configurar callback de progreso thread-safe
         def progress_callback(progress_info):
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
+            try:
+                loop = asyncio.get_running_loop()
                 asyncio.run_coroutine_threadsafe(
                     _update_evaluation_progress(session_id, {
                         "status": "running",
@@ -491,13 +491,13 @@ async def _run_optimized_evaluations_background(session_id: str):
                     }),
                     loop
                 )
-            else:
-                # Fallback para casos donde no hay loop activo
-                asyncio.create_task(_update_evaluation_progress(session_id, {
+            except RuntimeError:
+                # No hay loop activo, actualizar directamente el progreso
+                _evaluation_progress[session_id] = {
                     "status": "running",
                     "session_id": session_id,
                     **progress_info
-                }))
+                }
         
         # Crear instancia de evaluación optimizada
         evaluacion = EvaluacionAutomatica(

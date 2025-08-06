@@ -1,0 +1,147 @@
+{
+  "modelo": "groq",
+  "timestamp": "2025-08-06T16:34:59.321739",
+  "categorias": {
+    "creatividad": {
+      "prompts": [
+        {
+          "prompt": "Escribe un cuento corto sobre un robot que descubre emociones",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 1
+        },
+        {
+          "prompt": "Inventa una receta de cocina con ingredientes imposibles",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 2
+        },
+        {
+          "prompt": "Describe un día en la vida de una nube",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 0.0,
+      "mejor_puntuacion": 0,
+      "peor_puntuacion": 0,
+      "total_prompts": 3
+    },
+    "razonamiento": {
+      "prompts": [
+        {
+          "prompt": "Si un tren sale de Madrid a las 10:00 AM a 120 km/h y otro de Barcelona a las 11:00 AM a 100 km/h, ¿cuándo se encuentran?",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 1
+        },
+        {
+          "prompt": "Explica por qué el agua hierve a diferentes temperaturas según la altitud",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 2
+        },
+        {
+          "prompt": "¿Cuál es la diferencia entre correlación y causalidad?",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 0.0,
+      "mejor_puntuacion": 0,
+      "peor_puntuacion": 0,
+      "total_prompts": 3
+    },
+    "conocimiento": {
+      "prompts": [
+        {
+          "prompt": "¿Quién escribió 'Cien años de soledad' y en qué año?",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 1
+        },
+        {
+          "prompt": "Explica qué es la fotosíntesis en términos simples",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 2
+        },
+        {
+          "prompt": "¿Cuáles son los planetas del sistema solar en orden?",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 0.0,
+      "mejor_puntuacion": 0,
+      "peor_puntuacion": 0,
+      "total_prompts": 3
+    },
+    "programacion": {
+      "prompts": [
+        {
+          "prompt": "Escribe una función en Python que calcule el factorial de un número",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 1
+        },
+        {
+          "prompt": "Explica qué es la programación orientada a objetos",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 2
+        },
+        {
+          "prompt": "¿Cuál es la diferencia entre una lista y un diccionario en Python?",
+          "error": "Error en chat completion con Groq: Error code: 400 - {'error': {'message': \"'messages' : value must be an array\", 'type': 'invalid_request_error'}}",
+          "puntuacion": 0,
+          "tiempo_respuesta": 0,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 0.0,
+      "mejor_puntuacion": 0,
+      "peor_puntuacion": 0,
+      "total_prompts": 3
+    }
+  },
+  "resumen": {
+    "puntuacion_total": 0.0,
+    "prompts_evaluados": 12,
+    "prompts_exitosos": 0,
+    "tiempo_total": 1.4338409900665283,
+    "prompts_por_segundo": 8.369128852595583
+  },
+  "configuracion": {
+    "max_concurrent_requests": 3,
+    "cache_enabled": true
+  },
+  "configuracion_evaluacion": {
+    "modelo": "groq",
+    "timestamp_inicio": "2025-08-06T16:34:59.321233",
+    "total_categorias": 4,
+    "total_prompts": 12,
+    "max_concurrent_requests": 3,
+    "cache_enabled": true
+  },
+  "metricas_rendimiento": {
+    "tiempo_total_segundos": 1.435347080230713,
+    "prompts_por_segundo": 8.360347239547915,
+    "cache_hits": 0,
+    "eficiencia_cache": 0.0
+  }
+}

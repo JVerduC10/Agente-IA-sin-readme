@@ -237,7 +237,7 @@ class JarvisChat {
     }
 
     async sendToAPI(message) {
-        const response = await fetch('/api/chat/completion', {
+        const response = await fetch('http://localhost:8000/api/chat/completion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
