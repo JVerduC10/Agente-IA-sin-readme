@@ -79,7 +79,7 @@ class ModelManager:
         """Realiza una completación de chat con Groq.
 
         Args:
-            messages: Lista de mensajes en formato OpenAI
+            messages: Lista de mensajes en formato estándar
             provider: Ignorado - solo Groq disponible
             model: Modelo específico a usar
             temperature: Temperatura para la generación

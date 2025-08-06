@@ -4,7 +4,7 @@ import json
 
 from servidor.config.settings import get_settings
 from servidor.core.error_handler import RAGError, handle_errors
-# from .utils.azure_search import azure_chat_completion  # ELIMINADO - Azure integration removed
+
 from servidor.services.model_selector import select_model_from_message
 
 logger = logging.getLogger(__name__)

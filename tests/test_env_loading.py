@@ -21,7 +21,7 @@ def test_env_loading():
     print("\n=== Cargando configuración ===")
     settings = get_settings()
     
-    # Eliminado Azure - Sistema monocliente Groq
+    # Sistema basado en Groq
     print("Sistema configurado para Groq únicamente")
 
 if __name__ == "__main__":

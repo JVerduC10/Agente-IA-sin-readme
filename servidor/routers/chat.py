@@ -18,6 +18,14 @@ from servidor.auth.handlers import check_api_key_header
 from servidor.services.scraping import WebScrapingError, extraer_contenido_multiple
 from servidor.clients.groq.manager import ModelManager
 
+# Importar sistema de preguntas
+try:
+    from servidor.services.question_manager import question_manager
+    from servidor.models.questions import Question
+    questions_available = True
+except ImportError:
+    questions_available = False
+
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -68,6 +76,7 @@ class ChatResponse(BaseModel):
     tokens_used: Optional[int] = None
     response_time: Optional[float] = None
     web_search_results: Optional[List[Dict[str, Any]]] = None
+    suggested_questions: Optional[List[Dict[str, Any]]] = None
     
     def __init__(self, **data):
         if 'response' in data and 'answer' not in data:
@@ -151,13 +160,48 @@ async def chat_completion(
         
         response_time = time.time() - start_time
         
+        # Generar sugerencias de preguntas si está habilitado
+        suggested_questions = None
+        if (questions_available and 
+            settings.QUESTIONS_ENABLED and 
+            settings.QUESTIONS_AUTO_TRIGGER):
+            try:
+                # Crear historial de chat para el contexto
+                chat_history = [msg.content for msg in request.messages if msg.role == "user"]
+                chat_history.append(response_text)  # Incluir la respuesta actual
+                
+                # Evaluar contexto para sugerencias
+                suggestion = question_manager.evaluate_context(
+                    chat_history, 
+                    len(request.messages)
+                )
+                
+                if suggestion.questions and suggestion.confidence >= settings.QUESTIONS_MIN_CONFIDENCE:
+                    suggested_questions = [
+                        {
+                            "id": q.id,
+                            "text": q.text,
+                            "category": q.category.value,
+                            "priority": q.priority
+                        }
+                        for q in suggestion.questions[:settings.QUESTIONS_MAX_SUGGESTIONS]
+                    ]
+                    
+                    # Activar las preguntas sugeridas para estadísticas
+                    for question in suggestion.questions[:settings.QUESTIONS_MAX_SUGGESTIONS]:
+                        question_manager.activate_question(question.id)
+                        
+            except Exception as e:
+                logger.warning(f"Error generando sugerencias de preguntas: {e}")
+        
         return ChatResponse(
             response=response_text,
             answer=response_text,
             model_used=response.get("model", "groq-model"),
             tokens_used=response.get("usage", {}).get("total_tokens"),
             response_time=response_time,
-            web_search_results=web_results
+            web_search_results=web_results,
+            suggested_questions=suggested_questions
         )
         
     except HTTPException:

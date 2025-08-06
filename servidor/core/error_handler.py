@@ -24,7 +24,7 @@ class ValidationError(ApplicationError):
         self.field = field
 
 class ExternalServiceError(ApplicationError):
-    """Error en servicios externos (APIs, etc.) - Azure removed"""
+    """Error en servicios externos (APIs, etc.)"""
     def __init__(self, service: str, message: str, details: Optional[Dict[str, Any]] = None):
         super().__init__(f"{service}: {message}", "EXTERNAL_SERVICE_ERROR", details)
         self.service = service

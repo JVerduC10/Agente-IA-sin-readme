@@ -6,7 +6,7 @@ import logging
 
 from servidor.config import get_settings
 from servidor.core.error_handler import register_error_handlers
-from servidor.routers import chat, health, results
+from servidor.routers import chat, health
 
 # Importación lazy de search para evitar problemas con ChromaDB
 try:
@@ -15,6 +15,14 @@ try:
 except ImportError as e:
     print(f"Warning: RAG search not available: {e}")
     search_available = False
+
+# Importación del router de preguntas
+try:
+    from servidor.routers import questions
+    questions_available = True
+except ImportError as e:
+    print(f"Warning: Questions system not available: {e}")
+    questions_available = False
 
 settings = get_settings()
 logger = logging.getLogger(__name__)
@@ -32,9 +40,12 @@ register_error_handlers(app)
 # Incluir routers
 app.include_router(health.router)
 app.include_router(chat.router, prefix="/api")
-app.include_router(results.router)
+
 if search_available:
     app.include_router(search.router, prefix="/api/v1", tags=["search", "rag"])
+
+if questions_available and settings.QUESTIONS_ENABLED:
+    app.include_router(questions.router, prefix="/api/v1", tags=["questions"])
 
 # Servir archivos estáticos
 if settings.app.static_files_enabled:
@@ -54,9 +65,7 @@ app.add_middleware(
 async def root():
     return FileResponse(f"{settings.app.static_files_directory}/index.html")
 
-@app.get("/results")
-async def results():
-    return FileResponse(f"{settings.app.static_files_directory}/results.html")
+
 
 
 if __name__ == "__main__":

@@ -4,20 +4,20 @@ Script de demostración del sistema RAG
 Demuestra que el sistema RAG está completamente funcional
 """
 
-import requests
+import asyncio
 import json
-import time
 from pathlib import Path
+from servidor.core.http_pool import http_get, http_post
 
 # Configuración
 BASE_URL = "http://localhost:8002"
 API_KEY = "test_key"  # Cambiar por tu API key real si tienes configurada autenticación
 
-def test_health():
+async def test_health():
     """Prueba el endpoint de salud"""
     print("🏥 Probando Health Check...")
     try:
-        response = requests.get(f"{BASE_URL}/health")
+        response = await http_get(f"{BASE_URL}/health")
         if response.status_code == 200:
             print("✅ Health Check: OK")
             return True
@@ -28,7 +28,7 @@ def test_health():
         print(f"❌ Error en Health Check: {e}")
         return False
 
-def test_basic_chat():
+async def test_basic_chat():
     """Prueba el chat básico"""
     print("\n💬 Probando Chat Básico...")
     try:
@@ -36,7 +36,7 @@ def test_basic_chat():
             "prompt": "¿Qué es la inteligencia artificial?",
             "query_type": "general"
         }
-        response = requests.post(f"{BASE_URL}/chat/", json=payload)
+        response = await http_post(f"{BASE_URL}/chat/", json=payload)
         if response.status_code == 200:
             data = response.json()
             print("✅ Chat Básico: OK")
@@ -50,11 +50,11 @@ def test_basic_chat():
         print(f"❌ Error en Chat Básico: {e}")
         return False
 
-def test_rag_stats():
+async def test_rag_stats():
     """Prueba las estadísticas RAG"""
     print("\n📊 Probando Estadísticas RAG...")
     try:
-        response = requests.get(f"{BASE_URL}/api/v1/rag/stats")
+        response = await http_get(f"{BASE_URL}/api/v1/rag/stats")
         if response.status_code == 200:
             data = response.json()
             print("✅ Estadísticas RAG: OK")
@@ -164,7 +164,7 @@ def upload_document(file_path):
     print("\n🔧 Simulando carga exitosa para demostración...")
     return False  # Simular fallo para mostrar el comportamiento
 
-def test_rag_search():
+async def test_rag_search():
     """Prueba la búsqueda RAG"""
     print("\n🔍 Probando búsqueda RAG...")
     
@@ -178,7 +178,7 @@ def test_rag_search():
     for query in test_queries:
         print(f"\n❓ Consulta: {query}")
         try:
-            response = requests.get(f"{BASE_URL}/api/v1/search", params={'q': query})
+            response = await http_get(f"{BASE_URL}/api/v1/search", params={'q': query})
             if response.status_code == 200:
                 result = response.json()
                 source_type = result.get('source_type', 'unknown')
@@ -197,25 +197,25 @@ def test_rag_search():
         except Exception as e:
             print(f"❌ Error en consulta: {e}")
         
-        time.sleep(1)  # Pausa entre consultas
+        await asyncio.sleep(1)  # Pausa entre consultas
 
-def main():
+async def main():
     """Función principal de demostración"""
     print("🚀 DEMOSTRACIÓN DEL SISTEMA RAG")
     print("=" * 50)
     
     # 1. Verificar que el servidor esté funcionando
-    if not test_health():
+    if not await test_health():
         print("❌ El servidor no está funcionando. Inicia el servidor primero.")
         return
     
     # 2. Probar chat básico
-    if not test_basic_chat():
+    if not await test_basic_chat():
         print("❌ El chat básico no funciona.")
         return
     
     # 3. Verificar estado inicial de RAG
-    rag_ok, doc_count = test_rag_stats()
+    rag_ok, doc_count = await test_rag_stats()
     if not rag_ok:
         print("❌ El sistema RAG no está disponible.")
         return
@@ -236,7 +236,7 @@ def main():
         print("   (Esto mostrará el fallback a búsqueda web)")
     
     # 5. Probar búsquedas RAG
-    test_rag_search()
+    await test_rag_search()
     
     print("\n" + "=" * 50)
     print("🎉 DEMOSTRACIÓN COMPLETADA")
@@ -253,4 +253,4 @@ def main():
     print("   - O modifica el endpoint para pruebas sin auth")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

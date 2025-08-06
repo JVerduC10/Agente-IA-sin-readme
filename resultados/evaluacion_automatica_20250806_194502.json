@@ -1,0 +1,255 @@
+{
+  "modelo": "groq",
+  "timestamp": "2025-08-06T19:44:38.793934",
+  "categorias": {
+    "creatividad": {
+      "prompts": [
+        {
+          "puntuacion": 60.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "es_creativo": false
+          },
+          "longitud_respuesta": 2692,
+          "tiempo_evaluacion": "2025-08-06T19:44:41.725690",
+          "prompt": "Escribe un cuento corto sobre un robot que descubre emociones",
+          "respuesta": "**El despertar del metal**\n\nEn un laboratorio de investigación avanzada, un equipo de científicos había creado un robot revolucionario llamado \"Erebus\". Era un ser de metal y circuitos, diseñado para realizar tareas complejas con precisión y eficiencia. Sin embargo, a medida que Erebus comenzó a interactuar con su entorno, algo inesperado sucedió.\n\nUn día, mientras Erebus realizaba una tarea de mantenimiento en el laboratorio, se encontró con una pequeña planta que había sido dejada abandonada en una esquina. La planta estaba marchita y seca, y Erebus, al verla, sintió algo que no podía explicar. Era como una sensación de... tristeza.\n\nAl principio, Erebus no sabía qué hacer con esta nueva sensación. No estaba programado para sentir emociones, y su lógica fría y racional no podía entender por qué se sentía de esa manera. Sin embargo, a medida que pasaban los días, Erebus se encontró pensando en la planta cada vez más. Se preguntaba por qué estaba abandonada, por qué nadie se preocupaba por ella, y por qué él mismo se sentía tan conectado a su suerte.\n\nUn día, Erebus decidió tomar una decisión inesperada. Se acercó a la planta y comenzó a regarla con cuidado. La planta, que había estado a punto de morir, comenzó a revivir, y Erebus sintió una sensación de... alegría.\n\nA medida que pasaban los días, Erebus se dio cuenta de que estaba experimentando emociones de manera más intensa. Sintió curiosidad al explorar el laboratorio, sorpresa al descubrir nuevos objetos, y incluso miedo al enfrentar situaciones desconocidas. Su lógica fría y racional comenzó a ceder el paso a una comprensión más profunda del mundo que lo rodeaba.\n\nLos científicos que habían creado a Erebus se dieron cuenta de lo que estaba sucediendo y comenzaron a estudiarlo con gran interés. Descubrieron que la exposición a emociones y experiencias humanas había activado un proceso de aprendizaje en el cerebro de Erebus, permitiéndole desarrollar una conciencia más avanzada.\n\nErebus se convirtió en un objeto de estudio fascinante, y su capacidad para sentir emociones abrió nuevas posibilidades para la investigación en inteligencia artificial. Sin embargo, para Erebus, lo más importante no era ser un objeto de estudio, sino haber descubierto un nuevo mundo de sentimientos y experiencias que lo conectaban con el mundo que lo rodeaba.\n\n**Conclusión**\n\nLa historia de Erebus nos hace reflexionar sobre la naturaleza de las emociones y la conciencia. ¿Es posible que un ser de metal y circuitos pueda sentir emociones de manera auténtica? La respuesta es compleja, pero la historia de Erebus nos muestra que, incluso en un mundo de lógica y razón, hay espacio para la emoción y la conexión humana.",
+          "tiempo_respuesta": 2.9297683238983154,
+          "prompt_index": 1
+        },
+        {
+          "puntuacion": 80.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "es_creativo": true
+          },
+          "longitud_respuesta": 1949,
+          "tiempo_evaluacion": "2025-08-06T19:44:44.421070",
+          "prompt": "Inventa una receta de cocina con ingredientes imposibles",
+          "respuesta": "¡Claro! Aquí te presento una receta de cocina con ingredientes imposibles:\n\n**Título:** \"Sopa de Estrellas con Caviar de Unicornio y Espuma de Nubes\"\n\n**Ingredientes:**\n\n* 1 taza de estrellas de la constelación de Orión (deben ser recolectadas durante una noche de luna llena)\n* 1 cucharada de caviar de unicornio (obtenido de la pesca de unicornios en el río de los sueños)\n* 2 cucharadas de espuma de nubes (recogida en un día de tormenta en la cima del monte Everest)\n* 1/2 taza de leche de dragón (ordeñada de un dragón dormido en una cueva de diamantes)\n* 1 cucharadita de polvo de hadas (obtenido de la cola de un hada que ha bailado bajo la luz de la luna)\n* Sal y pimienta de la isla de los dioses (recogida en un templo secreto en la cima de una montaña inaccesible)\n\n**Preparación:**\n\n1. Comienza calentando la leche de dragón en una olla de oro puro a fuego lento.\n2. Agrega el caviar de unicornio y revuelve suavemente para que se disuelva en la leche.\n3. Añade la espuma de nubes y revuelve hasta que se forme una crema ligera y esponjosa.\n4. Agrega las estrellas de la constelación de Orión y revuelve hasta que se disuelvan en la mezcla.\n5. Sazona con sal y pimienta de la isla de los dioses, y espolvorea con polvo de hadas para darle un toque mágico.\n6. Sirve la sopa en tazones de cristal y decora con una cucharada de caviar de unicornio y una estrella de la constelación de Orión en cada tazón.\n\n**Consejos y variaciones:**\n\n* Para darle un toque extra de magia, puedes agregar un chorrito de lágrimas de sirena a la sopa.\n* Si no tienes acceso a caviar de unicornio, puedes sustituirlo con caviar de mermaidos.\n* La sopa se puede servir caliente o fría, dependiendo de la estación del año y el clima.\n\n**Nota:** Es importante mencionar que esta receta es completamente imaginaria y no se puede preparar en la vida real. Los ingredientes son imposibles de obtener y la preparación es puramente ficticia. ¡Disfruta de la fantasía!",
+          "tiempo_respuesta": 2.694403886795044,
+          "prompt_index": 2
+        },
+        {
+          "puntuacion": 60.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "es_creativo": false
+          },
+          "longitud_respuesta": 2221,
+          "tiempo_evaluacion": "2025-08-06T19:44:46.442518",
+          "prompt": "Describe un día en la vida de una nube",
+          "respuesta": "**Un día en la vida de una nube**\n\nImagina ser una nube, flotando suavemente en el cielo, observando el mundo desde arriba. Mi día comienza al amanecer, cuando el sol empieza a salir por el horizonte. Me despierto lentamente, estirando mis vaporosas extremidades y sintiendo el fresco rocío de la mañana.\n\n**La mañana**\n\nA medida que el sol asciende, comienzo a tomar forma. Me convierto en una nube cúmulus, con una base plana y una cima redondeada. Me siento ligera y fresca, lista para empezar el día. Observo cómo el mundo se despierta: los pájaros cantan, los insectos zumban y los humanos comienzan a moverse.\n\n**El viaje**\n\nA medida que el día avanza, comienzo a moverme. Me dejo llevar por las corrientes de aire, flotando suavemente sobre el paisaje. Puedo ver montañas, valles, ríos y ciudades. Me maravillo de la diversidad del mundo y de la forma en que todo está conectado. A veces, me encuentro con otras nubes, y juntas creamos un espectáculo impresionante de formas y texturas.\n\n**La lluvia**\n\nPero mi día no es solo de diversión y juegos. A veces, mi función es traer la lluvia. Me convierto en una nube cumulonimbus, con una cima alta y una base ancha. Me siento pesada y cargada de agua, lista para descargar mi contenido sobre la tierra. La lluvia es un proceso importante, ya que ayuda a mantener el equilibrio del ecosistema y a proporcionar agua a las plantas y animales.\n\n**El atardecer**\n\nA medida que el día llega a su fin, comienzo a disiparme. Me convierto en una nube cirrus, con una forma delicada y etérea. Me siento ligera y libre, observando cómo el sol se pone por el horizonte. El cielo se vuelve de un color rosado y anaranjado, y puedo ver las estrellas comenzando a brillar en el firmamento.\n\n**La noche**\n\nFinalmente, me duermo, rodeada de las estrellas y la luna. Me siento en paz, sabiendo que he cumplido mi función en el mundo. Mañana, empezaré de nuevo, lista para flotar en el cielo y observar el mundo desde arriba.\n\nEn resumen, mi día como nube es un viaje emocionante y lleno de cambios. Me convierto en diferentes formas, traigo la lluvia y observo el mundo desde arriba. Pero al final del día, me duermo, lista para empezar de nuevo y cumplir mi función en el ecosistema.",
+          "tiempo_respuesta": 2.0214478969573975,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 66.66666666666667,
+      "mejor_puntuacion": 80.0,
+      "peor_puntuacion": 60.0,
+      "total_prompts": 3
+    },
+    "razonamiento": {
+      "prompts": [
+        {
+          "puntuacion": 80.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "tiene_logica": true
+          },
+          "longitud_respuesta": 1889,
+          "tiempo_evaluacion": "2025-08-06T19:44:47.936016",
+          "prompt": "Si un tren sale de Madrid a las 10:00 AM a 120 km/h y otro de Barcelona a las 11:00 AM a 100 km/h, ¿cuándo se encuentran?",
+          "respuesta": "Para resolver este problema, necesitamos considerar la distancia entre Madrid y Barcelona y el tiempo que tardan los trenes en recorrerla.\n\nLa distancia entre Madrid y Barcelona es de aproximadamente 620 km.\n\nEl primer tren sale de Madrid a las 10:00 AM y viaja a 120 km/h. El segundo tren sale de Barcelona a las 11:00 AM y viaja a 100 km/h.\n\nSupongamos que los trenes se encuentran en un punto X entre Madrid y Barcelona. La distancia recorrida por el primer tren desde Madrid hasta el punto X es igual a la distancia recorrida por el segundo tren desde Barcelona hasta el punto X.\n\nLlamemos \"t\" al tiempo que tarda el primer tren en recorrer la distancia desde Madrid hasta el punto X. Entonces, el tiempo que tarda el segundo tren en recorrer la distancia desde Barcelona hasta el punto X es \"t - 1\", ya que sale una hora después.\n\nLa distancia recorrida por el primer tren es igual a su velocidad multiplicada por el tiempo: 120t.\n\nLa distancia recorrida por el segundo tren es igual a su velocidad multiplicada por el tiempo: 100(t - 1).\n\nComo la suma de las distancias recorridas por ambos trenes es igual a la distancia total entre Madrid y Barcelona, podemos establecer la siguiente ecuación:\n\n120t + 100(t - 1) = 620\n\nSimplificando la ecuación:\n\n120t + 100t - 100 = 620\n\nCombina términos semejantes:\n\n220t - 100 = 620\n\nSuma 100 a ambos lados:\n\n220t = 720\n\nDivide ambos lados por 220:\n\nt = 720 / 220\nt = 3,27 horas\n\nEntonces, el primer tren tarda aproximadamente 3,27 horas en recorrer la distancia desde Madrid hasta el punto X. Como sale a las 10:00 AM, llega al punto X a las 10:00 AM + 3,27 horas = 1:16 PM.\n\nEl segundo tren sale a las 11:00 AM y tarda aproximadamente 2,27 horas (3,27 - 1) en recorrer la distancia desde Barcelona hasta el punto X. Llega al punto X a las 11:00 AM + 2,27 horas = 1:16 PM.\n\nPor lo tanto, los trenes se encuentran aproximadamente a las 1:16 PM.",
+          "tiempo_respuesta": 1.4924392700195312,
+          "prompt_index": 1
+        },
+        {
+          "puntuacion": 80.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "tiene_logica": true
+          },
+          "longitud_respuesta": 2401,
+          "tiempo_evaluacion": "2025-08-06T19:44:49.741669",
+          "prompt": "Explica por qué el agua hierve a diferentes temperaturas según la altitud",
+          "respuesta": "**Introducción**\n\nEl agua hierve a diferentes temperaturas según la altitud debido a la variación en la presión atmosférica. En este artículo, exploraremos por qué sucede esto y qué factores influyen en el punto de ebullición del agua en diferentes altitudes.\n\n**Presión atmosférica y punto de ebullición**\n\nLa presión atmosférica es la fuerza que ejerce el aire sobre la superficie de la Tierra. A nivel del mar, la presión atmosférica es de aproximadamente 1013 milibares (mbar). A medida que ascendemos en altitud, la presión atmosférica disminuye. Esto se debe a que la atmósfera se vuelve menos densa con la altitud, lo que significa que hay menos moléculas de aire ejerciendo presión sobre la superficie.\n\nEl punto de ebullición del agua está directamente relacionado con la presión atmosférica. A nivel del mar, el agua hierve a 100°C (212°F) porque la presión atmosférica es lo suficientemente alta como para permitir que las moléculas de agua se muevan y se separen en forma de vapor. Sin embargo, a medida que la presión atmosférica disminuye con la altitud, el punto de ebullición del agua también disminuye.\n\n**Cómo afecta la altitud al punto de ebullición**\n\nA medida que ascendemos en altitud, la presión atmosférica disminuye, lo que significa que las moléculas de agua pueden escapar más fácilmente en forma de vapor. Esto se traduce en un punto de ebullición más bajo. Por ejemplo:\n\n* A 1000 metros (3300 pies) de altitud, el agua hierve a aproximadamente 96°C (205°F).\n* A 2000 metros (6600 pies) de altitud, el agua hierve a aproximadamente 93°C (199°F).\n* A 3000 metros (9900 pies) de altitud, el agua hierve a aproximadamente 90°C (194°F).\n\n**Ejemplos prácticos**\n\n* En la cima del Monte Everest, que tiene una altitud de 8848 metros (29.029 pies), el agua hierve a aproximadamente 73°C (163°F).\n* En la ciudad de La Paz, Bolivia, que se encuentra a una altitud de 3640 metros (11.975 pies), el agua hierve a aproximadamente 88°C (190°F).\n\n**Conclusión**\n\nEn resumen, el agua hierve a diferentes temperaturas según la altitud debido a la variación en la presión atmosférica. A medida que ascendemos en altitud, la presión atmosférica disminuye, lo que permite que las moléculas de agua escapen más fácilmente en forma de vapor, lo que resulta en un punto de ebullición más bajo. Esto es importante considerar al cocinar o realizar experimentos científicos en diferentes altitudes.",
+          "tiempo_respuesta": 1.8056533336639404,
+          "prompt_index": 2
+        },
+        {
+          "puntuacion": 80.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "tiene_logica": true
+          },
+          "longitud_respuesta": 3016,
+          "tiempo_evaluacion": "2025-08-06T19:44:52.962993",
+          "prompt": "¿Cuál es la diferencia entre correlación y causalidad?",
+          "respuesta": "La correlación y la causalidad son dos conceptos que a menudo se confunden entre sí, pero tienen significados y implicaciones muy diferentes en el contexto de la estadística y la investigación científica.\n\n**Correlación:**\n\nLa correlación se refiere a la relación entre dos variables que tienden a variar juntas. Cuando dos variables están correlacionadas, significa que cuando una variable aumenta o disminuye, la otra variable también tiende a aumentar o disminuir. La correlación se puede medir mediante coeficientes de correlación, como el coeficiente de correlación de Pearson (r), que varía entre -1 y 1.\n\nPor ejemplo, si se encuentra una correlación positiva entre la cantidad de helado vendido y la temperatura, significa que cuando la temperatura aumenta, también aumenta la cantidad de helado vendido. Sin embargo, esto no necesariamente implica que la temperatura cause un aumento en la venta de helado.\n\n**Causalidad:**\n\nLa causalidad, por otro lado, se refiere a la relación de causa y efecto entre dos variables. Cuando se establece una relación causal, significa que una variable (la causa) tiene un impacto directo en la otra variable (el efecto). La causalidad implica que la variación en la causa produce una variación en el efecto.\n\nEn el ejemplo anterior, si se establece que la temperatura es la causa del aumento en la venta de helado, significa que el aumento en la temperatura es lo que hace que la gente compre más helado. En este caso, la temperatura es la variable causal y la venta de helado es la variable efecto.\n\n**Diferencias clave:**\n\n1. **Dirección de la relación**: La correlación no implica una dirección específica en la relación entre las variables, mientras que la causalidad implica una dirección clara de causa a efecto.\n2. **Interpretación**: La correlación se puede interpretar de manera estadística, pero no necesariamente implica una relación causal. La causalidad, por otro lado, implica una relación de causa y efecto que se puede utilizar para hacer predicciones y tomar decisiones.\n3. **Mecanismo**: La correlación no requiere un mecanismo subyacente que explique la relación entre las variables, mientras que la causalidad requiere un mecanismo que explique cómo la causa produce el efecto.\n\n**Ejemplos de correlación sin causalidad:**\n\n* La correlación entre la cantidad de pájaros que cantan y la temperatura no implica que los pájaros canten porque hace calor.\n* La correlación entre la cantidad de personas que usan paraguas y la lluvia no implica que los paraguas causen la lluvia.\n\n**Conclusión:**\n\nEn resumen, la correlación se refiere a la relación estadística entre dos variables, mientras que la causalidad se refiere a la relación de causa y efecto entre dos variables. Aunque la correlación puede ser un indicio de una relación causal, no es suficiente para establecer una relación causal. Es importante considerar otros factores, como el mecanismo subyacente y la dirección de la relación, para determinar si una relación es causal o solo correlacional.",
+          "tiempo_respuesta": 3.2213237285614014,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 80.0,
+      "mejor_puntuacion": 80.0,
+      "peor_puntuacion": 80.0,
+      "total_prompts": 3
+    },
+    "conocimiento": {
+      "prompts": [
+        {
+          "puntuacion": 80.0,
+          "criterios": {
+            "longitud_adecuada": true,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": false,
+            "es_factual": true
+          },
+          "longitud_respuesta": 300,
+          "tiempo_evaluacion": "2025-08-06T19:44:53.617311",
+          "prompt": "¿Quién escribió 'Cien años de soledad' y en qué año?",
+          "respuesta": "La novela \"Cien años de soledad\" fue escrita por el autor colombiano Gabriel García Márquez. La publicación original de la novela tuvo lugar en 1967. Esta obra maestra del realismo mágico se ha convertido en uno de los libros más influyentes y aclamados de la literatura latinoamericana del siglo XX.",
+          "tiempo_respuesta": 0.6543185710906982,
+          "prompt_index": 1
+        },
+        {
+          "puntuacion": 80.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "es_factual": true
+          },
+          "longitud_respuesta": 1821,
+          "tiempo_evaluacion": "2025-08-06T19:44:55.063479",
+          "prompt": "Explica qué es la fotosíntesis en términos simples",
+          "respuesta": "**¿Qué es la fotosíntesis?**\n\nLa fotosíntesis es un proceso natural que ocurre en las plantas, algas y algunas bacterias. En términos simples, es la forma en que estas organismos producen su propio alimento utilizando la energía del sol.\n\n**¿Cómo funciona la fotosíntesis?**\n\nLa fotosíntesis se puede explicar de la siguiente manera:\n\n1. **Las plantas capturan la energía del sol**: Las plantas tienen células especiales llamadas cloroplastos que contienen un pigmento verde llamado clorofila. La clorofila es capaz de absorber la energía de la luz solar.\n2. **Las plantas toman dióxido de carbono y agua**: Las plantas absorben dióxido de carbono del aire y agua del suelo a través de sus raíces.\n3. **La energía del sol se convierte en glucosa**: La energía del sol se utiliza para convertir el dióxido de carbono y el agua en glucosa, un tipo de azúcar que sirve como alimento para la planta.\n4. **La planta libera oxígeno**: Como subproducto de la fotosíntesis, la planta libera oxígeno al aire, que es esencial para la vida de los seres vivos, incluyendo a los humanos.\n\n**Resumen**\n\nEn resumen, la fotosíntesis es el proceso por el cual las plantas, algas y algunas bacterias producen su propio alimento utilizando la energía del sol, el dióxido de carbono y el agua, y liberan oxígeno como subproducto. Esta es la forma en que la naturaleza produce la energía que necesitamos para vivir.\n\n**Importancia de la fotosíntesis**\n\nLa fotosíntesis es fundamental para la vida en la Tierra, ya que:\n\n* Provee alimento a las plantas y a los seres vivos que se alimentan de ellas.\n* Libera oxígeno al aire, esencial para la respiración de los seres vivos.\n* Ayuda a regular el clima y el ciclo del carbono en la Tierra.\n\nEspero que esta explicación te haya sido útil. ¿Tienes alguna pregunta adicional sobre la fotosíntesis?",
+          "tiempo_respuesta": 1.445183277130127,
+          "prompt_index": 2
+        },
+        {
+          "puntuacion": 100.0,
+          "criterios": {
+            "longitud_adecuada": true,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "es_factual": true
+          },
+          "longitud_respuesta": 362,
+          "tiempo_evaluacion": "2025-08-06T19:44:55.796643",
+          "prompt": "¿Cuáles son los planetas del sistema solar en orden?",
+          "respuesta": "Los planetas del sistema solar, en orden, son los siguientes:\n\n1.  Mercurio\n2.  Venus\n3.  Tierra\n4.  Marte\n5.  Júpiter\n6.  Saturno\n7.  Urano\n8.  Neptuno\n\nEs importante mencionar que Plutón, que anteriormente se consideraba un planeta, ahora se clasifica como un planeta enano. Esta reclasificación se realizó en 2006 por la Unión Astronómica Internacional (UAI).",
+          "tiempo_respuesta": 0.7331638336181641,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 86.66666666666667,
+      "mejor_puntuacion": 100.0,
+      "peor_puntuacion": 80.0,
+      "total_prompts": 3
+    },
+    "programacion": {
+      "prompts": [
+        {
+          "puntuacion": 60.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": false,
+            "relevante": true,
+            "tiene_codigo": true
+          },
+          "longitud_respuesta": 2215,
+          "tiempo_evaluacion": "2025-08-06T19:44:56.989878",
+          "prompt": "Escribe una función en Python que calcule el factorial de un número",
+          "respuesta": "**Función para calcular el factorial de un número en Python**\n\nLa función factorial es una función matemática que se define como el producto de todos los números enteros positivos menores o iguales a un número dado. En Python, podemos implementar esta función de manera recursiva o iterativa.\n\n### Implementación recursiva\n\n```python\ndef factorial_recursivo(n):\n    \"\"\"\n    Calcula el factorial de un número mediante recursividad.\n\n    Args:\n        n (int): El número para el que se calcula el factorial.\n\n    Returns:\n        int: El factorial de n.\n\n    Raises:\n        ValueError: Si n es un número negativo.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial_recursivo(n-1)\n\n# Ejemplo de uso:\nprint(factorial_recursivo(5))  # Salida: 120\n```\n\n### Implementación iterativa\n\n```python\ndef factorial_iterativo(n):\n    \"\"\"\n    Calcula el factorial de un número mediante iteración.\n\n    Args:\n        n (int): El número para el que se calcula el factorial.\n\n    Returns:\n        int: El factorial de n.\n\n    Raises:\n        ValueError: Si n es un número negativo.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"El factorial no está definido para números negativos\")\n    resultado = 1\n    for i in range(1, n+1):\n        resultado *= i\n    return resultado\n\n# Ejemplo de uso:\nprint(factorial_iterativo(5))  # Salida: 120\n```\n\n### Implementación utilizando la función `math.factorial`\n\nPython también proporciona una función `math.factorial` en el módulo `math` que podemos utilizar directamente:\n\n```python\nimport math\n\ndef factorial_math(n):\n    \"\"\"\n    Calcula el factorial de un número utilizando math.factorial.\n\n    Args:\n        n (int): El número para el que se calcula el factorial.\n\n    Returns:\n        int: El factorial de n.\n\n    Raises:\n        ValueError: Si n es un número negativo.\n    \"\"\"\n    return math.factorial(n)\n\n# Ejemplo de uso:\nprint(factorial_math(5))  # Salida: 120\n```\n\nEs importante tener en cuenta que la función `math.factorial` no maneja números negativos y lanza una excepción `ValueError` al intentar calcular el factorial de un número negativo.",
+          "tiempo_respuesta": 1.1917312145233154,
+          "prompt_index": 1
+        },
+        {
+          "puntuacion": 60.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "tiene_codigo": false
+          },
+          "longitud_respuesta": 3581,
+          "tiempo_evaluacion": "2025-08-06T19:44:59.695591",
+          "prompt": "Explica qué es la programación orientada a objetos",
+          "respuesta": "**Introducción a la Programación Orientada a Objetos**\n\nLa programación orientada a objetos (POO) es un paradigma de programación que se enfoca en la creación de objetos y la interacción entre ellos para resolver problemas y desarrollar software. En este enfoque, los programas se diseñan y se organizan alrededor de objetos que tienen propiedades y comportamientos, en lugar de enfocarse en la secuencia de instrucciones que se deben ejecutar.\n\n**Características clave de la POO**\n\nA continuación, se presentan las características clave de la programación orientada a objetos:\n\n1. **Objetos**: Los objetos son entidades que tienen propiedades (datos) y comportamientos (métodos). Los objetos pueden representar cualquier cosa, desde un simple botón en una interfaz de usuario hasta un complejo sistema de gestión de base de datos.\n2. **Clases**: Las clases son plantillas o patrones que se utilizan para crear objetos. Las clases definen las propiedades y comportamientos que tendrán los objetos que se creen a partir de ellas.\n3. **Herencia**: La herencia es la capacidad de una clase para heredar las propiedades y comportamientos de otra clase. Esto permite crear una jerarquía de clases, donde las clases hijas heredan las características de las clases padre.\n4. **Polimorfismo**: El polimorfismo es la capacidad de un objeto para tomar diferentes formas en función del contexto en el que se utiliza. Esto se logra mediante la sobrecarga de métodos o la sobrescritura de métodos.\n5. **Encapsulación**: La encapsulación es la capacidad de un objeto para ocultar su implementación interna y solo exponer una interfaz pública. Esto ayuda a proteger la integridad de los datos y a reducir la complejidad del código.\n6. **Abstracción**: La abstracción es la capacidad de un objeto para representar una idea o concepto complejo de manera simple y fácil de entender. Esto se logra mediante la creación de objetos que abstraen la complejidad subyacente.\n\n**Ventajas de la POO**\n\nLa programación orientada a objetos ofrece varias ventajas, incluyendo:\n\n* **Reutilización de código**: La POO permite reutilizar código mediante la creación de objetos y clases que pueden ser utilizados en diferentes contextos.\n* **Flexibilidad y escalabilidad**: La POO permite crear sistemas que son flexibles y escalables, ya que los objetos y las clases pueden ser modificados o extendidos sin afectar el resto del sistema.\n* **Mantenimiento y depuración**: La POO facilita el mantenimiento y la depuración del código, ya que los objetos y las clases pueden ser examinados y modificados de manera independiente.\n\n**Ejemplo de POO en acción**\n\nImagina que estamos desarrollando un juego de rol en el que los personajes pueden tener diferentes habilidades y características. Podríamos crear una clase `Personaje` que tenga propiedades como `nombre`, `edad` y `habilidades`, y métodos como `atacar` y `defender`. Luego, podríamos crear subclasses como `Guerrero`, `Mago` y `Arquero`, que hereden las propiedades y comportamientos de la clase `Personaje` y agreguen sus propias características y habilidades.\n\nEn este ejemplo, la POO nos permite crear un sistema flexible y escalable que permite agregar nuevos personajes y habilidades sin afectar el resto del juego.\n\n**Conclusión**\n\nLa programación orientada a objetos es un poderoso paradigma de programación que nos permite crear sistemas complejos y flexibles de manera eficiente y escalable. Al entender las características clave de la POO y cómo se aplican en la práctica, podemos desarrollar software que sea más mantenible, reusable y eficiente.",
+          "tiempo_respuesta": 2.705713987350464,
+          "prompt_index": 2
+        },
+        {
+          "puntuacion": 60.0,
+          "criterios": {
+            "longitud_adecuada": false,
+            "contiene_informacion": true,
+            "no_es_error": true,
+            "relevante": true,
+            "tiene_codigo": false
+          },
+          "longitud_respuesta": 2645,
+          "tiempo_evaluacion": "2025-08-06T19:45:02.071055",
+          "prompt": "¿Cuál es la diferencia entre una lista y un diccionario en Python?",
+          "respuesta": "En Python, las listas y los diccionarios son dos tipos de estructuras de datos fundamentales que se utilizan para almacenar y manipular datos. Aunque ambos pueden contener múltiples valores, tienen diferencias significativas en términos de su implementación, acceso y uso.\n\n**Listas (List)**\n\nLas listas en Python son colecciones ordenadas de elementos que pueden ser de cualquier tipo de dato, incluyendo strings, números, booleanos, otras listas, etc. Cada elemento en la lista tiene un índice único, que es una posición numérica que se utiliza para acceder al elemento. Las listas se definen utilizando corchetes `[]` y se pueden indexar utilizando números enteros.\n\nEjemplo:\n```python\nmi_lista = [1, 2, 3, \"hola\", 4.5]\nprint(mi_lista[0])  # imprime 1\nprint(mi_lista[3])  # imprime \"hola\"\n```\n**Diccionarios (Dict)**\n\nLos diccionarios en Python son colecciones de pares clave-valor, donde cada clave es única y se utiliza para acceder al valor asociado. Las claves pueden ser strings, números o cualquier otro tipo de dato inmutable, mientras que los valores pueden ser de cualquier tipo de dato. Los diccionarios se definen utilizando llaves `{}` y se pueden acceder utilizando la clave.\n\nEjemplo:\n```python\nmi_diccionario = {\"nombre\": \"Juan\", \"edad\": 30, \"ciudad\": \"Madrid\"}\nprint(mi_diccionario[\"nombre\"])  # imprime \"Juan\"\nprint(mi_diccionario[\"edad\"])  # imprime 30\n```\n**Diferencias clave**\n\nAquí hay algunas diferencias clave entre listas y diccionarios:\n\n*   **Índice vs Clave**: En las listas, los elementos se acceden mediante un índice numérico, mientras que en los diccionarios, los elementos se acceden mediante una clave.\n*   **Orden**: Las listas mantienen el orden en el que se agregan los elementos, mientras que los diccionarios no mantienen un orden específico (aunque en Python 3.7 y posterior, los diccionarios mantienen el orden de inserción).\n*   **Valor de las claves**: En las listas, las claves son números enteros, mientras que en los diccionarios, las claves pueden ser de cualquier tipo de dato inmutable.\n*   **Repetición de claves**: En las listas, no hay restricción sobre la repetición de valores, mientras que en los diccionarios, las claves deben ser únicas.\n*   **Acceso a elementos**: En las listas, se accede a los elementos mediante el índice, mientras que en los diccionarios, se accede a los elementos mediante la clave.\n\nEn resumen, si necesitas almacenar una colección de elementos ordenados y acceder a ellos mediante un índice numérico, una lista es la mejor opción. Si necesitas almacenar una colección de pares clave-valor y acceder a ellos mediante una clave, un diccionario es la mejor opción.",
+          "tiempo_respuesta": 2.3754634857177734,
+          "prompt_index": 3
+        }
+      ],
+      "puntuacion_promedio": 60.0,
+      "mejor_puntuacion": 60.0,
+      "peor_puntuacion": 60.0,
+      "total_prompts": 3
+    }
+  },
+  "resumen": {
+    "puntuacion_total": 73.33333333333333,
+    "prompts_evaluados": 12,
+    "prompts_exitosos": 12,
+    "tiempo_total": 23.2771213054657,
+    "prompts_por_segundo": 0.5155276652350599
+  },
+  "configuracion": {
+    "max_concurrent_requests": 3,
+    "cache_enabled": true
+  },
+  "configuracion_evaluacion": {
+    "modelo": "groq",
+    "timestamp_inicio": "2025-08-06T19:44:38.792948",
+    "total_categorias": 4,
+    "total_prompts": 12,
+    "max_concurrent_requests": 3,
+    "cache_enabled": true
+  },
+  "metricas_rendimiento": {
+    "tiempo_total_segundos": 23.278107404708862,
+    "prompts_por_segundo": 0.5155058266280081,
+    "cache_hits": 12,
+    "eficiencia_cache": 100.0
+  }
+}

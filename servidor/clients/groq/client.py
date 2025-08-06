@@ -1,11 +1,11 @@
 """Cliente para la API de Groq."""
 
-import os
 from typing import Any, Dict, List, Optional
 
 from groq import Groq
 
 from servidor.config.settings import get_settings
+from servidor.core.http_pool import HTTPClientPool
 
 settings = get_settings()
 
@@ -22,6 +22,7 @@ class GroqClient:
         """
         self.api_key = api_key or settings.GROQ_API_KEY
         self.model = model or settings.GROQ_MODEL or "llama-3.1-70b-versatile"
+        self.http_pool = HTTPClientPool()
 
         if not self.api_key:
             raise ValueError("API key de Groq es requerida")
@@ -39,7 +40,7 @@ class GroqClient:
         """Realiza una completación de chat usando Groq.
 
         Args:
-            messages: Lista de mensajes en formato OpenAI
+            messages: Lista de mensajes en formato estándar
             temperature: Temperatura para la generación
             max_tokens: Máximo número de tokens
             stream: Si usar streaming

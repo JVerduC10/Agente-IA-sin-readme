@@ -36,6 +36,16 @@ class Settings(BaseSettings):
     # ===== CONFIGURACIONES DE API =====
     API_KEYS: list = []
 
+    # ===== CONFIGURACIONES DEL SISTEMA DE PREGUNTAS =====
+    QUESTIONS_ENABLED: bool = True
+    QUESTIONS_STORAGE_PATH: str = "data/questions.json"
+    QUESTIONS_AUTO_TRIGGER: bool = True
+    QUESTIONS_MESSAGE_TRIGGER_COUNT: int = 3
+    QUESTIONS_MAX_SUGGESTIONS: int = 5
+    QUESTIONS_MIN_CONFIDENCE: float = 0.3
+    QUESTIONS_RAG_INTEGRATION: bool = True
+    QUESTIONS_WEB_SEARCH_INTEGRATION: bool = True
+
     # ===== CONFIGURACIONES MODULARES =====
     rag: RAGConfig = RAGConfig()
     security: SecurityConfig = SecurityConfig()

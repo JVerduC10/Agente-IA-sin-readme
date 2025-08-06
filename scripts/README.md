@@ -21,7 +21,7 @@ scripts/
 ├── demo_converter.py          # Script de demostración
 └── README.md                  # Esta documentación
 
-resultados/html_examples/      # Ejemplos generados
+# resultados/html_examples/ eliminado - directorio removido
 ├── sample_success.json        # JSON con pruebas exitosas
 ├── report_success.html        # HTML correspondiente
 ├── sample_no_tests.json       # JSON sin pruebas

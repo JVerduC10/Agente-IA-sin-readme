@@ -83,8 +83,8 @@ Content-Type: text/plain
 Este es un documento de ejemplo para el sistema RAG.
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### Test Results
-GET {{baseUrl}}/results/list
+### Results API - ELIMINADO
+# GET {{baseUrl}}/results/list - endpoint eliminado
 
 ### Metrics (Prometheus format)
 GET {{baseUrl}}/metrics

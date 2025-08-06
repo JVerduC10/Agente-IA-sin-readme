@@ -60,9 +60,8 @@ def get_search_status() -> Dict[str, Any]:
         Dict con estado del sistema de búsqueda
     """
     return {
-        "web_search_enabled": False,  # Azure removed - ready for new providers
+        "web_search_enabled": False,
         "rag_enabled": True,
-        "azure_ai_foundry_enabled": False,  # ELIMINADO - Azure integration removed
         "last_search_time": None,
         "search_count": 0
     }
@@ -85,22 +84,7 @@ def get_rag_stats() -> Dict[str, Any]:
     }
 
 
-def get_azure_search_status() -> Dict[str, Any]:
-    """Obtiene el estado de Azure AI Foundry.
-    
-    ELIMINADO: Azure integration removed - ready for new providers
-    
-    Returns:
-        Dict con estado de Azure AI Foundry (deprecated)
-    """
-    return {
-        "enabled": False,  # ELIMINADO - Azure integration removed
-        "endpoint_configured": False,
-        "authentication_status": "removed",
-        "last_request_time": None,
-        "request_count": 0,
-        "status": "deprecated - use new providers like Groq"
-    }
+
 
 
 def validate_api_configuration() -> Dict[str, bool]:
@@ -118,7 +102,7 @@ def validate_api_configuration() -> Dict[str, bool]:
         return {
             "groq_configured": bool(keys.get("GROQ_API_KEY")),
             "bing_configured": bool(keys.get("BING_SEARCH_API_KEY")),
-            "azure_configured": False,  # ELIMINADO - Azure integration removed  # ELIMINADO - Azure integration removed
+
             "encryption_working": True
         }
     except Exception as e:
@@ -126,7 +110,7 @@ def validate_api_configuration() -> Dict[str, bool]:
         return {
             "groq_configured": False,
             "bing_configured": False,
-            "azure_configured": False,
+
             "encryption_working": False
         }
 
@@ -148,7 +132,7 @@ def get_model_info() -> Dict[str, Any]:
         ],
         "default_model": "gpt-4.1-mini",
         "model_count": 4,
-        "providers": ["groq"]  # Azure removed - ready for new providers
+        "providers": ["groq"]
     }
 
 

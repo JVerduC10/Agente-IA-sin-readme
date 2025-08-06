@@ -147,7 +147,7 @@ El proyecto combina un backend robusto en **FastAPI** con una interfaz moderna e
 │   │   ├── __init__.py
 │   │   ├── chat.py               # Endpoints de chat
 │   │   ├── health.py             # Health checks
-│   │   ├── results.py            # Gestión de resultados
+│   │   ├── # results.py eliminado - funcionalidad removida
 │   │   └── search.py             # Endpoints de búsqueda
 │   ├── 📁 services/              # Lógica de negocio
 │   │   ├── __init__.py
@@ -194,7 +194,7 @@ El proyecto combina un backend robusto en **FastAPI** con una interfaz moderna e
 ├── 📁 archivos_estaticos/        # Archivos estáticos
 │   ├── chat.js                  # JavaScript del chat
 │   ├── index.html               # Página principal
-│   ├── results.html             # Página de resultados
+│   ├── # results.html eliminado - página removida
 │   ├── styles.css               # Estilos CSS
 │   └── *.html                   # Otros archivos HTML
 ├── 📁 tests/                     # Tests del proyecto
@@ -222,9 +222,7 @@ El proyecto combina un backend robusto en **FastAPI** con una interfaz moderna e
 │   ├── test_model_manager.py    # Tests del gestor de modelos
 │   ├── update_test_results.py   # Actualización de resultados
 │   └── verify_improvements.py   # Verificación de mejoras
-├── 📁 resultados/                # Resultados de evaluaciones
-│   ├── 📁 html_examples/         # Ejemplos HTML
-│   └── *.json                   # Archivos de resultados
+├── # 📁 resultados/ eliminado - directorio removido
 ├── 📁 configuraciones/           # Configuraciones
 │   ├── .env.example             # Plantilla de variables
 │   ├── .env.admin               # Configuración real
@@ -530,16 +528,7 @@ El sistema incluye un framework completo de evaluación que permite:
 
 #### Endpoints de Metadatos
 
-- **GET /api/results/metadata**: Lista paginada de metadatos
-- **GET /api/results/detail/{result_id}**: Detalles completos de resultado
-- **GET /api/results/config-check**: Verificación de configuración API
-- **GET /api/results/progress/{session_id}**: Estado de progreso
-
-#### Mejoras en Endpoints Existentes
-
-- **POST /api/results/run-tests**: Con tracking de progreso
-- **POST /api/results/run-evaluations**: Con tracking de progreso
-- **GET /api/results/list**: Optimizado con cache
+# Endpoints de results eliminados - funcionalidad removida
 
 ---
 

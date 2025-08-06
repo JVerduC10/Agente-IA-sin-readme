@@ -76,16 +76,15 @@ class SearchRouter:
     
     def search_web(self, query: str) -> Dict[str, Any]:
         """
-        Búsqueda web usando nuevos proveedores
+        Realiza búsqueda web usando servicios externos.
         
-        NOTA: Todas las integraciones con Azure han sido eliminadas.
-        Esta función está preparada para integración con nuevos proveedores.
+        Esta función está preparada para integración con proveedores de búsqueda.
         """
         try:
             logger.info(f"Búsqueda web solicitada: '{query}'")
             
             return {
-                "error": "Servicio de búsqueda web no disponible. Todas las integraciones con Azure han sido eliminadas. Preparado para integración con nuevos proveedores como Groq.",
+                "error": "Servicio de búsqueda web no disponible. Preparado para integración con nuevos proveedores.",
                 "source_type": "service_unavailable",
                 "query": query,
                 "next_steps": [
@@ -106,8 +105,6 @@ class SearchRouter:
     def get_search_stats(self) -> Dict[str, Any]:
         """
         Obtiene estadísticas del sistema de búsqueda
-        
-        NOTA: Estadísticas de Azure eliminadas, preparado para nuevos proveedores.
         """
         try:
             rag_info = self.rag_system.get_collection_info()
@@ -119,7 +116,7 @@ class SearchRouter:
                     "web_search_available": False,
                     "fallback_enabled": False,
                     "web_search_provider": "none_configured",
-                    "azure_status": "removed",
+
                     "ready_for_integration": ["groq", "openai"]
                 }
             }
@@ -135,8 +132,7 @@ async def buscar_web(
     """
     Función principal de búsqueda web.
 
-    NOTA: Todas las integraciones con Azure han sido eliminadas.
-    Esta función está preparada para integración con nuevos proveedores.
+    Esta función está preparada para integración con proveedores de búsqueda.
 
     Args:
         query: Consulta de búsqueda
@@ -151,8 +147,7 @@ async def buscar_web(
 
         raise WebSearchError(
             "Servicio de búsqueda no disponible. "
-            "Todas las integraciones con Azure han sido eliminadas. "
-            "Preparado para integración con nuevos proveedores como Groq."
+            "Preparado para integración con proveedores de búsqueda."
         )
 
     except Exception as e:
@@ -166,8 +161,7 @@ async def buscar_web_completa(
     """
     Realiza búsqueda web completa.
 
-    NOTA: Todas las integraciones con Azure han sido eliminadas.
-    Esta función está preparada para integración con nuevos proveedores.
+    Esta función está preparada para integración con proveedores de búsqueda.
 
     Args:
         query: Consulta de búsqueda
@@ -195,8 +189,7 @@ async def refinar_query(query: str, settings=None) -> str:
     """
     Refina una consulta de búsqueda.
 
-    NOTA: Todas las integraciones con Azure han sido eliminadas.
-    Esta función está preparada para integración con nuevos proveedores.
+    Esta función está preparada para integración con proveedores de IA.
 
     Args:
         query: Consulta original
@@ -208,7 +201,7 @@ async def refinar_query(query: str, settings=None) -> str:
     try:
         logger.info(f"Refinamiento de consulta solicitado: '{query}'")
 
-        logger.warning("Usando refinamiento básico - proveedores Azure eliminados")
+        logger.info("Usando refinamiento básico")
         return query.strip()
 
     except Exception as e:
@@ -225,8 +218,7 @@ async def generar_respuesta(
     """
     Genera una respuesta usando proveedores de IA.
 
-    NOTA: Todas las integraciones con Azure han sido eliminadas.
-    Esta función está preparada para integración con nuevos proveedores.
+    Esta función está preparada para integración con proveedores de IA.
 
     Args:
         messages: Lista de mensajes de conversación
@@ -240,8 +232,7 @@ async def generar_respuesta(
         logger.info("Generación de respuesta solicitada")
         raise WebSearchError(
             "Servicio de generación de respuestas no disponible. "
-            "Todas las integraciones con Azure han sido eliminadas. "
-            "Preparado para integración con nuevos proveedores."
+            "Preparado para integración con proveedores de IA."
         )
 
     except Exception as e:

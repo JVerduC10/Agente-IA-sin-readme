@@ -192,9 +192,11 @@ class EvaluacionAutomatica:
 
                 # Generar respuesta
                 start_time = time.time()
-                respuesta = await self.model_manager.chat_completion(
-                    prompt, temperature=0.7
+                messages = [{"role": "user", "content": prompt}]
+                response = await self.model_manager.chat_completion(
+                    messages=messages, temperature=0.7
                 )
+                respuesta = response["choices"][0]["message"]["content"]
                 response_time = time.time() - start_time
 
                 # Evaluar respuesta
@@ -489,13 +491,18 @@ class EvaluacionAutomatica:
 
         # Mostrar estadísticas generales
         print("\n📈 ESTADÍSTICAS:")
-        total_prompts = sum(
-            datos.get("resumen", {}).get("prompts_evaluados", 0)
-            for datos in resultados["modelos_evaluados"].values()
-        )
-        print(f"  Total de prompts evaluados: {total_prompts}")
-        print(f"  Modelos evaluados: {len(resultados['modelos_evaluados'])}")
-        print(f"  Categorías: {len(resultados['configuracion']['categorias'])}")
+        if "resumen" in resultados:
+            print(f"  Total de prompts evaluados: {resultados['resumen'].get('prompts_evaluados', 0)}")
+            print(f"  Prompts exitosos: {resultados['resumen'].get('prompts_exitosos', 0)}")
+            print(f"  Tiempo total: {resultados['resumen'].get('tiempo_total', 0):.2f}s")
+            print(f"  Prompts por segundo: {resultados['resumen'].get('prompts_por_segundo', 0):.2f}")
+        if "categorias" in resultados:
+            print(f"  Categorías evaluadas: {len(resultados['categorias'])}")
+        if "modelo" in resultados:
+            print(f"  Modelo evaluado: {resultados['modelo']}")
+        if "configuracion_evaluacion" in resultados:
+            print(f"  Concurrencia máxima: {resultados['configuracion_evaluacion'].get('max_concurrent_requests', 'N/A')}")
+            print(f"  Cache habilitado: {resultados['configuracion_evaluacion'].get('cache_enabled', 'N/A')}")
 
 
 async def main():
