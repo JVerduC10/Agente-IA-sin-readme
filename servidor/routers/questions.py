@@ -89,7 +89,7 @@ async def get_question_suggestions(
     try:
         # Simular historial de chat con el contexto proporcionado
         chat_history = [context]
-        suggestion = question_manager.evaluate_context(chat_history)
+        suggestion = await question_manager.evaluate_context(chat_history)
         
         # Limitar el número de sugerencias
         if len(suggestion.questions) > limit:
@@ -115,7 +115,7 @@ async def get_relevant_questions(
         raise HTTPException(status_code=503, detail="Sistema de preguntas deshabilitado")
     
     try:
-        questions = question_manager.get_relevant_questions(context, limit)
+        questions = await question_manager.get_relevant_questions(context, limit)
         return questions
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error obteniendo preguntas relevantes: {str(e)}")
@@ -199,7 +199,7 @@ async def evaluate_context_for_questions(
         return QuestionSuggestion(trigger_reason="auto_trigger_disabled")
     
     try:
-        suggestion = question_manager.evaluate_context(chat_history, message_count)
+        suggestion = await question_manager.evaluate_context(chat_history, message_count)
         
         # Filtrar por confianza mínima
         if suggestion.confidence < settings.QUESTIONS_MIN_CONFIDENCE:
